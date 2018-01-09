@@ -23,10 +23,9 @@ test:
   pool: 5
 
 production:
-  adapter: postgresql
-  #host: 127.0.0.1
-  #username: postgres
-  #password: event123
-  encoding: utf8
-  pool: 15
-  database: my_app_production
+ adapter: postgresql
+ encoding: unicode
+ host: localhost
+ # For details on connection pooling, see rails configuration guide
+ # http://guides.rubyonrails.org/configuring.html#database-pooling
+ pool: 5
