@@ -9,6 +9,7 @@ Rails.application.configure do
   # and those relying on copy on write to perform better.
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
+  config.secret_key_base = '31e47e1453db7ae917c8ae8daa2c768da8087a43d66a75025f3a1cc22c2c573a44418850f1eb5a52e94f70b119560c02f861580aac629b9e271f63b958b1564e'
 
   #config.action_mailer.default_url_options = { host:'www.welcome.ai', port: '80' }
 
