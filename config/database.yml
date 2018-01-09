@@ -25,7 +25,10 @@ test:
 production:
  adapter: postgresql
  encoding: unicode
- host: localhost
+ host: ec2-23-21-246-25.compute-1.amazonaws.com
+ username: yabydnixmxhvho
+ password: 636ba331e22274f5565a0075e0a84c62ff030cc7027a3694f80e9dd45dba7bba
+ database: d8akhc79fbnfa6
  # For details on connection pooling, see rails configuration guide
  # http://guides.rubyonrails.org/configuring.html#database-pooling
  pool: 5
