@@ -42,7 +42,9 @@
 <div class="row">
     <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
       <!-- <form role="form"> -->
-        <%= form_for(resource, as: resource_name, url: user_registration_path(resource_name)) do |f| %>
+    <form class="new_user" id="new_user" action="/users" accept-charset="UTF-8" method="post">
+      <input name="utf8" type="hidden" value="✓">
+      <input type="hidden" name="authenticity_token" value="bHfxZ8b/VlaE2G4DiDGTTEkg403m2D+CUpzsaJque8AaHuR8qMQlUKYSl1v5dBqtTytPP6MqMb904prhe1XrOA==">
       <h2>Welcome <small>Sign up</small></h2>
       <hr class="colorgraph">
       <div class="row">
@@ -86,7 +88,6 @@
         <div class="col-xs-12 col-md-6"><a href="<%= new_user_session_url%>" class="btn btn-success btn-block btn-lg">Sign In</a></div>
       </div>
     </form>
-    <%end%>
   </div>
 </div>
 

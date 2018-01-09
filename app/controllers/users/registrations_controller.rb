@@ -7,25 +7,25 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   # POST /resource/sign_in
-  def create
-  # if params[:user][:address].blank?
-  #   flash[:notice] = "please fill location"
-  #   redirect_to new_user_registration_path and return
-  # end
-  super
-    #resource = User.new(sign_up_params)
+  # def create
+  # # if params[:user][:address].blank?
+  # #   flash[:notice] = "please fill location"
+  # #   redirect_to new_user_registration_path and return
+  # # end
+  # super
+  #   #resource = User.new(sign_up_params)
 
-    if resource.save
-      # users_location = resource.locations.new(user_location_params)
-      # if users_location.save
-      # end
-      #flash[:notice] = "user sign success"
-      #redirect_to root_path
-    # else
-    #   flash[:errors] = resource.errors.full_messages
-    #   redirect_to new_user_registration_path
-    end
-  end
+  #   if resource.save
+  #     # users_location = resource.locations.new(user_location_params)
+  #     # if users_location.save
+  #     # end
+  #     #flash[:notice] = "user sign success"
+  #     #redirect_to root_path
+  #   # else
+  #   #   flash[:errors] = resource.errors.full_messages
+  #   #   redirect_to new_user_registration_path
+  #   end
+  # end
 
   # DELETE /resource/sign_out
   # def destroy
