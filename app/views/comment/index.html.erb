@@ -1,8 +1,1 @@
-<%= form_for @user, url: user_create_path(@user) do |form| %>
-<div class="form-group">
-    <label for="exampleInputEmail1"> Name</label>
-    <%= form.text_field :name , class: "form-control", :placeholder=> " name"%>
-</div>
-                                
-<%= form.submit "Submit",class: "btn btn-info" %>
-<%end%>
+<%= link_to "new" comment_new_path%>

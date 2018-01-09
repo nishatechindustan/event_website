@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   get 'comment/index'
-  get 'comment/create'
+  post 'comment/create'
+
+  get 'comment/new'
 
   	  root to: 'home#index'
 	#devise_for :users, :controllers => {confirmations: 'confirmations',registrations: "users/registrations", sessions: "users/sessions", omniauth_callbacks: 'callbacks' }
