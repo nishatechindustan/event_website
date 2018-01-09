@@ -24,10 +24,9 @@ test:
 
 production:
   adapter: postgresql
-  host: 127.0.0.1
-  username: postgres
-  password: event123
-  encoding: unicode
+  #host: 127.0.0.1
+  #username: postgres
+  #password: event123
+  encoding: utf8
+  pool: 15
   database: my_app_production
-  pool: 5
-  port: 5432
