@@ -24,7 +24,7 @@ test:
 
 production:
   adapter: postgresql
-  host: localhost
+  #host: localhost
   username: postgres
   password: event123
   encoding: unicode
