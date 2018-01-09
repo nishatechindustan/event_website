@@ -30,3 +30,4 @@ production:
   encoding: unicode
   database: my_app_production
   pool: 5
+  port: 5432
