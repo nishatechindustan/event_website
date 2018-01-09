@@ -1,0 +1,161 @@
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBH9pFQ9UtLOElJgg86OG3yZzhDvDP3CtQ&libraries=places&callback=initAutocomplete" async defer></script>
+<section id="main-content">
+  <section class="wrapper">
+    <div class="form-w3layouts">
+      <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+            <header class="panel-heading">
+               NEW EVENT
+            </header>
+            <div class="panel-body">
+              <div class="position-center">
+                <%= form_for @event, url: admin_events_path(@event) do |form| %>
+                  <div class="form-group">
+                      <label>Event Title<font color="red">*</font></label>
+                    <%= form.text_field :title , :placeholder => "Title" ,:required => true , :class => "form-control"%>
+                  </div>
+                  <div class="form-group">
+                    <label>Event Categories<font color="red">*</font></label>
+                    <select id="select-category" name ="category_ids[]" multiple="multiple"  class="form-control" required>
+                      <% @categories.each do |category| %>
+                        <option value="<%= category.id %>"><%= category.name %></option>
+                      <% end %>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Add Artist<font color="red">*</font></label>
+                      <select id="select-artist" name ="artist_ids[]" multiple="multiple" class="form-control" required>
+                      <% @artists.each do |artist| %>
+                        <option value="<%= artist.id %>"><%= artist.name %></option>
+                      <% end %>
+                      </select>
+                  </div>
+                  <div class="form-group">
+                    <%= form.label :description, 'Event Description'%>
+                    <%= form.text_area(:description, size: '25x5', style: "margin: 0px; width: 527px; height: 173px;" ,:placeholder => "place some text here" ) %>
+                  </div>
+                  <div class="form-group">
+                    <%= form.label :ticket_available, 'Ticket Available'%>
+                    <%= form.text_field :ticket_available, :placeholder => "ticket related information", :class => "form-control"%><br/>
+                  </div>
+                  <div class="form-group">
+                    <%= form.label :image%>
+                    <%= form.file_field :attachment%>
+                  </div>
+                  <div class="form-group">
+                    <label>Date Range <font color="red">*</font></label><br>
+                    <label>Start Date</label>
+                      <div id="datetimepicker" class="input-append date">
+                        <input type="text" name="event_date[start_date]" ></input>
+                        <span class="add-on" style="display: inline-block;" >
+                          <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                        </span>
+                      </div>
+                      <label>End Date</label>
+                      <div id="datetimepicker1" class="input-append date">
+                        <input type="text" name="event_date[end_date]" ></input>
+                        <span class="add-on" style="display: inline-block;">
+                          <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                        </span>
+                      </div>
+                        <label>Start Time</label>
+                        <div id="datetimepicker3" class="input-append">
+                          <input data-format="hh:mm:ss" type="text" name="event_date[start_time]"></input>
+                          <span class="add-on">
+                            <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+                              </i>
+                          </span>
+                        </div>
+                        <label>End Time</label>
+                        <div id="datetimepicker4" class="input-append">
+                          <input data-format="hh:mm:ss" type="text" name="event_date[end_time]"></input>
+                          <span class="add-on">
+                            <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+                              </i>
+                          </span>
+                        </div>
+                  </div>
+                  <div class="form-group">
+                  <%= form.label :cost%>
+                  <%= form.text_field :cost, :placeholder => 'Amount' , :class =>"form-control"%><br>
+                  </div>
+                  <div class="form-group">
+                    <%= form.label :currency%>
+                    <select name="event[currency]"> 
+                      <option selected disabled>select currency</option>
+                      <option value="AED">AED</option>
+                      <option value="USD">USD</option>
+                      <option value="AUD">AUD</option>
+                      <option value="EURO">EURO</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                     <%= form.label :email%>
+                    <%= form.email_field :email, :placeholder => 'Email Address', :class => "form-control" %><br>
+
+                  </div>
+                  <div class="form-group">
+                    <%= form.label :number , "Contact Number"%>
+                    <%= form.text_field :contact_number, :placeholder => 'Contact Number', :class => "form-control" %>
+                  </div>
+                  <div class="form-group">
+                     <%= form.label :cost_offer , "Cost Offers"%>
+                    <%= form.text_field :cost_offers , :placeholder => "Please Enter Price Related Offers" , :class => "form-control"%>
+                  </div>
+                  <div class="form-group">
+                    <label>Location<font color="red">*</font></label>
+
+                    <div id="locationField">
+                        <input id="autocomplete" placeholder="Enter your address"
+                               onFocus="geolocate()" type="text" name="location[address]" class="form-control"></input>
+                      </div>
+                      <label>Latitude<font color="red">*</font></label>
+                      <input type="text" id="latitude" class="form-control" name="location[latitude]" value="" placeholder="latitude">
+                      <label>Longitude<font color="red">*</font></label>
+                      <input type="text" id="longitude" class="form-control" name="location[longitude]" value="" placeholder="longitude"><br>
+
+                      <label>Venue<font color="red">*</font></label>
+                      <input type="text" name="location[venue]" value="" placeholder="Venue" class="form-control"><br>
+                    </div>
+                  </div>    
+                <%= form.submit "Submit",class: "btn btn-info" %>
+                <%= link_to "Cancel", admin_events_path, class: "btn btn-info"%>
+              <%end%>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+  </section>
+</section>
+<script type="text/javascript">
+    $(document).ready(function() {
+    $('#select-category').select2({
+      placeholder: "choose categories"
+  });
+  $('#select-artist').select2({
+      placeholder: "choose artists"
+  });
+
+  $('#datetimepicker').datetimepicker({
+    format: 'dd/MM/yyyy',
+    pickTime: false
+  });
+  $('#datetimepicker1').datetimepicker({
+  format: 'dd/MM/yyyy',
+  pickTime: false
+  });
+  $('#datetimepicker3').datetimepicker({
+    pickDate: false,
+    pickSeconds: false,
+    pick12HourFormat: true
+  });
+$('#datetimepicker4').datetimepicker({
+  pickDate: false,
+  pick12HourFormat: true,
+  pickSeconds: false
+  });
+});
+</script>

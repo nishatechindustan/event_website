@@ -1,0 +1,187 @@
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBH9pFQ9UtLOElJgg86OG3yZzhDvDP3CtQ&libraries=places&callback=initAutocomplete" async defer></script>
+<section id="main-content">
+  <section class="wrapper">
+    <div class="form-w3layouts">
+        <!-- page start-->
+        <!-- page start-->
+        <div class="row">
+            <div class="col-lg-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                           EDIT EVENT
+                        </header>
+                        <div class="panel-body">
+                            <div class="position-center">
+                                <!-- <form role="form"> -->
+                                <%= form_tag admin_event_path , method: "put" , :multipart => true do %>
+                                <div class="form-group">
+                                    <label>Event Title<font color="red">*</font></label>
+                                    <%= text_field_tag("event[title]", @event.title,:class => "form-control")%>
+                                </div>
+                                <div class="form-group">
+                                  <label>Event Categories<font color="red">*</font></label>
+                                  <select id="select-category" name ="category_ids[]" multiple="multiple" class="form-control">
+                                    <% @categories.each do |category| %>
+                                      <%if @event_categories.present? && @event_categories.include?(category)  %>
+                                        <option value="<%= category.id %>" selected><%= category.name %></option>
+                                    <%else%>
+                                      <option value="<%= category.id %>"><%= category.name %></option>
+                                      <%end%>
+                                    <% end %>
+                                  </select>
+                                </div>
+                                <div class="form-group">
+                                  <label>Event Artist<font color="red">*</font></label>
+                                   <select id="select-artist" name ="artist_ids[]" multiple="multiple" class="form-control">
+                                      <% @artists.each do |artist| %>
+                                        <%if @event_artists.present? && @event_artists.include?(artist)  %>
+                                          <option value="<%= artist.id %>" selected><%= artist.name %></option>
+                                      <%else%>
+                                        <option value="<%= artist.id %>"><%= artist.name %></option>
+                                        <%end%>
+                                      <% end %>
+                                  </select>
+                                </div>
+                                <div class="form-group">
+                                  <%= label_tag :description, 'Event Description'%>
+                                  <%= text_area_tag 'event[description]', @event.description ,size: '25x5', style: "margin: 0px; width: 527px; height: 173px;" ,:placeholder => "place some text here" %>
+                                </div>
+                                <div class="form-group">
+                                  <%= label_tag :ticket_available, 'Ticket Available'%>
+                                  <%= text_field_tag("event[ticket_available]",  @event.ticket_available , placeholder: "ticket related information")%><br/>
+                                </div>
+                                <div class="form-group">
+                                  <% if @event.attachments.present? %>
+                                    <img src="<%=@event.attachments.first.attachment.url(:thumb)%>">
+                                  <% end %>
+                                  <%= label_tag :image%>
+                                  <%=file_field_tag("event[attachment]")%>
+                                </div>
+                                <div class="form-group">
+                                  <label>Date Range <font color="red">*</font></label>
+                                  <label>Start Date</label>
+                                    <div id="datetimepicker" class="input-append date">
+                                      <input type="text" name="event_date[start_date]" value="<%= @event_dates.start_date%>" ></input>
+                                      <span class="add-on" style="display: inline-block;">
+                                        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                                      </span>
+                                    </div>
+                                    <label>End Date</label>
+                                    <div id="datetimepicker1" class="input-append date">
+                                      <input type="text" name="event_date[end_date]" value="<%= @event_dates.end_date%>" ></input>
+                                      <span class="add-on" style="display: inline-block;">
+                                        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                                      </span>
+                                    </div>
+                                      <label>Start Time</label>
+                                      <div id="datetimepicker3" class="input-append">
+                                        <input data-format="hh:mm:ss" type="text" name="event_date[start_time]" value="<%= convert_date_time_to_time(@event_dates.start_time)%>"></input>
+                                        <span class="add-on">
+                                          <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+                                            </i>
+                                        </span>
+                                      </div>
+                                      <label>End Time</label>
+                                      <div id="datetimepicker4" class="input-append">
+                                        <input data-format="hh:mm:ss" type="text" name="event_date[end_time]" value="<%= convert_date_time_to_time(@event_dates.end_time)%>"></input>
+                                        <span class="add-on">
+                                          <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+                                            </i>
+                                        </span>
+                                      </div>
+                                </div>
+                                <div class="form-group">
+                                  <%= label_tag :cost%>
+                                <%= text_field_tag("event[cost]", @event.cost, :placeholder => 'Amount' , :class =>"form-control")%>
+                                </div>
+                                <div class="form-group">
+                                  <%= label_tag :cost_offers, "Cost Offers"%>
+                                  <%= text_field_tag("event[cost_offers]", @event.cost_offers, placeholder: "Please enter the price of cost offers" , class: "form-control")%>
+                                </div>
+                                <div class="form-group">
+                                  <%= label_tag :currency%>
+                                  <%currency = ["AED","USD","AUD","EURO"]%>
+                                    <select name="event[currency]"> 
+                                      <%if @event_currency.blank?%>
+                                        <option selected disabled>select currency</option>
+                                        <%currency.each do |curr|%>
+                                          <option value="<%= curr%>"><%= curr%></option>
+                                        <%end%>
+                                      <%else%>
+                                        <%currency.each do |curr|%>
+                                          <%if curr.include?(@event.currency)%>
+                                              <option value="<%= curr%>" selected><%= curr%></option>
+                                          <%else%>
+                                              <option value="<%= curr%>"><%= curr%></option>
+                                          <%end%>
+                                        <%end%>
+                                      <%end%>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                   <%= label_tag :email%>
+                                  <%= text_field_tag("event[email]", @event.email , placeholder: "Email", class: "form-control")%>
+    
+                                </div>
+                                <div class="form-group">
+                                  <%= label_tag :number, "Contact number"%>
+                                  <%= text_field_tag("event[contact_number]", @event.contact_number, placeholder: "Contact Number", class: "form-control")%>
+                                </div>
+                                <div class="form-group">
+                               <label>Add Location</label>
+                                <label>Location<font color="red">*</font></label>
+                                <div id="locationField">
+                                  <input id="autocomplete" placeholder="Enter your address"
+                                         onFocus="geolocate()" type="text" name="location[address]" value="<%= @event_location.address%>" class= "form-control"></input>
+                                </div>
+                                <label>Latitude<font color="red">*</font></label>
+                                <input type="text" id="latitude" class="form-control" name="location[latitude]" value="<%= @event_location.latitude%>" placeholder="latitude">
+                                <label>Longitude<font color="red">*</font></label>
+                                <input type="text" id="longitude" class="form-control" name="location[longitude]" value="<%= @event_location.longitude%>" placeholder="longitude">
+
+                                <label>Venue<font color="red">*</font></label>
+                                <input type="text" name="location[venue]" value="<%= @event_location.venue%>" placeholder="Venue" class= "form-control">
+                                </div>
+                                
+                                <%= submit_tag "Submit",class: "btn btn-info" %>
+                                <%= link_to "Cancel", admin_events_path, class: "btn btn-info"%>
+                            <%end%>
+                            </div>
+
+                        </div>
+                    </section>
+
+            </div>
+        </div>
+  
+</section>
+</section>
+<script type="text/javascript">
+    $(document).ready(function() {
+    $('#select-category').select2({
+      placeholder: "choose categories"
+  });
+  $('#select-artist').select2({
+      placeholder: "choose artists"
+  });
+
+  $('#datetimepicker').datetimepicker({
+    format: 'dd/MM/yyyy',
+    pickTime: false
+  });
+  $('#datetimepicker1').datetimepicker({
+  format: 'dd/MM/yyyy',
+  pickTime: false
+  });
+  $('#datetimepicker3').datetimepicker({
+    pickDate: false,
+    pickSeconds: false,
+    pick12HourFormat: true
+  });
+$('#datetimepicker4').datetimepicker({
+  pickDate: false,
+  pick12HourFormat: true,
+  pickSeconds: false
+  });
+});
+</script>

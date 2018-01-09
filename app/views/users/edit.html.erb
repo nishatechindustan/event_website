@@ -1,0 +1,82 @@
+<div class="container">
+    
+        
+            
+                <h6 class="title">SETTINGS</a></h6>
+                 Logged in as <strong><%= current_user.email %></strong>.
+                <hr>
+                <!-- <form method="post" action="/users/update" enctype="multipart/form-data"> -->
+                   <%= form_tag "/users/update", :method => :post, :multipart => true do %>
+                    <div class="input-with-label text-left">
+                        <span>Your User Name </span>
+                        <input type="text" name="user[user_name]" value="<%=@user.user_name %>" placeholder="Type in your User Name e.g. ashish">
+                    </div>
+                    <div class="input-with-label text-left">
+                        <span>First Name</span>
+                        <input type="text" name="user[first_name]" value="<%=@user.first_name %>">
+                    </div>
+                    <div class="input-with-label text-left">
+                        <span>Last Name</span>
+                        <input type="text" name="user[last_name]" value="<%=@user.last_name %>">
+                    </div>
+                    <div class="input-with-label text-left">
+                        <span>Email Address</span>
+                        <%if @user.email.include?("twitter") || @user.email.include?("facebook") %>
+                            <input type="text" name="user[email]" value="<%#=@user.email %>">
+                        <%else%>
+                            <input type="text" name="user[email]" value="<%=@user.email %>" placeholder="your.name@your-company.com">
+                        <%end%>
+                    </div>
+                    <div class="input-with-label text-left">
+                        <div class="settingsimg">
+                            <% if @user.attachments.present? %>
+                                <img src="<%=@user.attachments.first.attachment.url(:thumb)
+                                %>">
+                            <% end %>
+                        </div>
+                        <span>Upload Profile Image</span>
+                        <input class="mb0" type="file" name="user[avatar_image[attachment]]" placeholder="Upload button" accept="image/png,image/gif,image/jpeg,image/jpg">
+                    </div>
+                    <hr>
+                    <button class="btn btn-success" type="submit">Update</button>
+                    
+                <%end%>
+            </div>
+     
+</div>
+<!DOCTYPE html>
+<html>
+<style>
+input[type=text]{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+</style>
+
+
+
+<%# = render "users/shared/error_messages", :target => @user.errors%>
+ <!-- eturn if (status = env[:status]) < 400
+      case status
+      when 404
+        raise Errors::NotFound
+      when 422
+        raise Errors::UnprocessableEntity
+      else
+        raise Errors::InternalServerError # Treat any other errors as 500
+      end -->

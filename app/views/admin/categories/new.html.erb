@@ -1,0 +1,33 @@
+<section id="main-content">
+	<section class="wrapper">
+		<div class="form-w3layouts">
+        <!-- page start-->
+        <!-- page start-->
+        <div class="row">
+            <div class="col-lg-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                           NEW CATEGORY
+                        </header>
+                        <div class="panel-body">
+                            <div class="position-center">
+                                <!-- <form role="form"> -->
+                                <%= form_for @category, url: admin_categories_path(@category) do |form| %>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Category Name</label>
+                                    <%= form.text_field :name , class: "form-control", :placeholder=> "category name"%>
+                                </div>
+                                
+                                <%= form.submit "Submit",class: "btn btn-info" %>
+                                <%= link_to "Cancel", admin_categories_path, class: "btn btn-info"%>
+                            <%end%>
+                            </div>
+
+                        </div>
+                    </section>
+
+            </div>
+        </div>
+	
+</section>
+</section>

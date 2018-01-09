@@ -1,0 +1,49 @@
+<section id="main-content">
+	<section class="wrapper">
+	<div class="table-agile-info">
+ <div class="panel panel-default">
+    <div class="panel-heading">
+     Artists
+    </div>
+    <%= button_to "ADD", new_admin_artist_path, method: :get, class: "btn btn-info pull-right"%>
+    <div>
+   	<%if @artists.present?%>
+      <table class="table" ui-jq="footable" ui-options='{
+        "paging": {
+          "enabled": true
+        },
+        "filtering": {
+          "enabled": true
+        },
+        "sorting": {
+          "enabled": true
+        }}'>
+        <thead>
+          <tr>
+           <th>Artist Name</th>
+			<th>Address</th>
+			<th>Description</th>
+			<th>Photo</th>
+			<th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%@artists.each do |artist|%>
+			<tr>
+				<td><%= artist.name%></td>
+				<td><%= artist.address%></td>
+				<td><%= artist.description%></td>
+				<td><%= image_tag artist.attachments.present? ? artist.attachments.first.attachment.url(:thumb) : 'default_image.jpg'%></td>
+				<td><%= link_to "Edit", edit_admin_artist_path(artist)%> |
+				<%= link_to 'Delete',admin_artist_url(artist.id),method: :delete, data: {confirm: "Are you sure?"} %></td>
+			</tr>
+		<%end%>
+        </tbody>
+      </table>
+      <%else%>
+	<h2>There is no artists present.</h2>
+	<%end%>
+    </div>
+  </div>
+</div>
+</section>

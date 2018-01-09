@@ -1,14 +1,82 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Myappfgfg</title>
-    <%= csrf_meta_tags %>
+<head>
+  <meta charset="utf-8">
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <nav class="navbar navbar-inverse" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="<%= root_url%>">Home</a>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      
+      <ul class="nav navbar-nav navbar-right">
+        <!-- <li><a href="#">Add Event</a></li> -->
+        <li class="dropdown">
+          <% if !user_signed_in? %>
+            <li> <%= link_to "Login/Signup", new_user_session_path, :class => 'navbar-link'  %></li>
+          <%else%>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= image_tag(current_user.attachments.present? ? current_user.attachments.first.attachment.url(:thumb) : '/assets/default_image.jpg' , :size => "40x40") %>
+            <ul class="dropdown-menu" role="menu">
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
-
-  <body>
-    <%= yield %>
-  </body>
+               <li><%= link_to 'Edit profile', users_setting_path, :class => 'navbar-link' %></li>
+                <li><%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %></li>
+                <%#if current_user.is_admin? %>
+                  <!-- li class="divider"></li>
+                  <li><a href="<%= admin_url%>">Admin</a></li> -->
+                <%#end%>
+            </ul>
+          <%end%>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<%= yield %>
+</body>
 </html>
+<script src="/assets/notify.js"></script>
+<script type="text/javascript">
+
+  <% if flash[:notice].present? %>
+    message = "<%= flash[:notice]%>"
+    type = 'info'
+    notification(message,type)
+  <%end%>
+  <% if flash[:alert].present? %>
+    message = "<%= flash[:alert]%>"
+    type = 'info'
+    notification(message,type)
+  <%end%>
+  <% if flash[:message].present?%>
+    message = "<%= flash[:message]%>"
+    type = 'info'
+    notification(message,type)
+  <%end%>
+  <% if flash[:errors].present?%>
+    <%flash[:errors].each do |err|%>
+      message = "<%= err.html_safe %>"
+      type = 'info'
+      notification(message,type)
+    <%end%>
+  <% end %>
+  function notification(message,type){
+    $.notify(message, {
+      className:type,
+      clickToHide: false,
+      globalPosition: 'top left'
+    });
+  }
+</script>
+<style type="text/css">
+  html{
+  background-color: $blue;
+  font-family: $heading-font
+}
+</style>

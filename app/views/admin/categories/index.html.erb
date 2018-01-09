@@ -1,0 +1,44 @@
+
+<section id="main-content">
+	<section class="wrapper">
+	<div class="table-agile-info">
+ <div class="panel panel-default">
+    <div class="panel-heading">
+     Categories
+    </div>
+    <%= button_to "ADD", new_admin_category_path, method: :get, class: "btn btn-info pull-right"%>
+    <div>
+   	<%if @categories.present?%>
+      <table class="table" ui-jq="footable" ui-options='{
+        "paging": {
+          "enabled": true
+        },
+        "filtering": {
+          "enabled": true
+        },
+        "sorting": {
+          "enabled": true
+        }}'>
+        <thead>
+          <tr>
+            <th>Category Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%@categories.each do |category|%>
+			<tr>
+				<td><%= category.name%></td>
+				<td><%= link_to "Edit", edit_admin_category_path(category)%>|
+				<%= link_to 'Delete',admin_category_url(category.id),method: :delete, data: {confirm: "Are you sure?"} %></td>
+			</tr>
+		<%end%>
+        </tbody>
+      </table>
+      <%else%>
+	<h2>There is no category are present.</h2>
+	<%end%>
+    </div>
+  </div>
+</div>
+</section>

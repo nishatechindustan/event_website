@@ -1,0 +1,50 @@
+<section id="main-content">
+    <section class="wrapper">
+    <div class="table-agile-info">
+ <div class="panel panel-default">
+    <div class="panel-heading">
+     Events
+    </div>
+    <%= button_to "ADD", new_admin_event_path, method: :get, class: "btn btn-info pull-right"%>
+    <div>
+    <%if @events.present?%>
+      <table class="table" ui-jq="footable" ui-options='{
+        "paging": {
+          "enabled": true
+        },
+        "filtering": {
+          "enabled": true
+        },
+        "sorting": {
+          "enabled": true
+        }}'>
+        <thead>
+          <tr>
+           <th>Added By</th>
+            <th>Event Title</th>
+            <!-- <th>Location</th>
+            <th>Date</th>
+            <th>Event Category</th> -->
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+            <%@events.each do|event|%>
+                <tr>
+                    <td>Admin</td>
+                    <td><%= event.title%></td>
+                    <td><%= link_to "Edit", edit_admin_event_url(event)%> |
+                    <%= link_to "show detail", admin_event_url(event)%>| 
+                    <%= link_to 'Delete',admin_event_url(event.id),method: :delete, data: {confirm: "Are you sure?"} %></td>
+                </td>
+                </tr>
+            <%end%>
+        </tbody>
+      </table>
+      <%else%>
+    <h2>There is no Events are  present.</h2>
+    <%end%>
+    </div>
+  </div>
+</div>
+</section>
