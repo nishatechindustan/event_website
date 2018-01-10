@@ -276,7 +276,7 @@ Devise.setup do |config|
   # config.omniauth_path_prefix = '/my_engine/users/auth'
   config.omniauth :facebook, "179291802671278","4b4d85642a32b362aa7c1a43fca211c6" , scope: 'email' ,info_fields: 'name, email,first_name,last_name,gender,birthday,location,picture', image_size: 'large'
 
-  config.omniauth :google_oauth2, ENV['GOOGLE_KEY'],ENV['GOOGLE_SECRET'], scope: 'email'
+  config.omniauth :google_oauth2, "762440819226-kjs4a7k6mdibhm00989gt48i8o5mto8s.apps.googleusercontent.com","rRcs2HF8UAWkdtnjcLTCrULd", scope: 'email'
 
   # config.omniauth :twitter, ENV["TWITTER_KEY"],ENV["TWITTER_SECRET"],scope: "email,r_fullprofile, r_emailaddress", image_size: 'original'
   
