@@ -9,7 +9,7 @@ Rails.application.configure do
   # and those relying on copy on write to perform better.
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
-  config.action_mailer.default_url_options = { :host => 'eventwebsite.herokuapp.com' , port: 443}
+  config.action_mailer.default_url_options = { :host => 'eventwebsite.herokuapp.com'}
 
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
@@ -101,9 +101,8 @@ Rails.application.configure do
     password:       'Ashish@123',
     domain:         'techindustan.com',
     address:       'smtp.gmail.com',
-    port:          '587',
+    port:          '25',
     authentication: :plain,
-    enable_starttls_auto: true
   }
-
 end
+    #enable_starttls_auto: true
