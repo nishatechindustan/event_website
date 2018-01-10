@@ -103,6 +103,7 @@ Rails.application.configure do
     address:       'smtp.gmail.com',
     port:          '25',
     authentication: :plain,
+    enable_starttls_auto: true
   }
+
 end
-    #enable_starttls_auto: true
