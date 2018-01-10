@@ -17,5 +17,4 @@
 //= require turbolinks
 // require moment
 // require bootstrap-datetimepicker
-//= require assets/notify.js
 //= require_tree .
