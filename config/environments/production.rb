@@ -9,7 +9,6 @@ Rails.application.configure do
   # and those relying on copy on write to perform better.
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
-  config.action_mailer.default_url_options = { :host => 'eventwebsite.herokuapp.com'}
 
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
@@ -91,6 +90,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  config.action_mailer.default_url_options = { :host => 'eventwebsite.herokuapp.com'}
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   #config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
@@ -99,9 +99,9 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     user_name:      'ashish.techindustan@gmail.com',
     password:       'Ashish@123',
-    domain:         'techindustan.com',
+    domain:         'eventwebsite.herokuapp.com:80',
     address:       'smtp.gmail.com',
-    port:          '25',
+    port:          '587',
     authentication: :plain,
     enable_starttls_auto: true
   }
