@@ -28,10 +28,7 @@
 
                <li><%= link_to 'Edit profile', users_setting_path, :class => 'navbar-link' %></li>
                 <li><%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %></li>
-                <%#if current_user.is_admin? %>
-                  <!-- li class="divider"></li>
-                  <li><a href="<%= admin_url%>">Admin</a></li> -->
-                <%#end%>
+               
             </ul>
           <%end%>
         </li>
