@@ -9,13 +9,13 @@ class CallbacksController < Devise::OmniauthCallbacksController
       authenticat_user(request.env["omniauth.auth"])
   end
 
-  def twitter
-  	authenticat_user(request.env["omniauth.auth"])
-  end
+  # def twitter
+  # 	authenticat_user(request.env["omniauth.auth"])
+  # end
 
-  def linkedin
-    authenticat_user(request.env["omniauth.auth"])
-  end
+  # def linkedin
+  #   authenticat_user(request.env["omniauth.auth"])
+  # end
 
   def failure
     #Could not authenticate you from Facebook because "Permissions error".
@@ -23,9 +23,9 @@ class CallbacksController < Devise::OmniauthCallbacksController
     redirect_to root_path and return
   end
 
-  def github
-    authenticat_user(request.env["omniauth.auth"])
-  end
+  # def github
+  #   authenticat_user(request.env["omniauth.auth"])
+  # end
 
   private
 
