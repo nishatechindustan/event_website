@@ -13,9 +13,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   redirect_to new_user_registration_path and return
   # end
   super
+    # resource.user_location =  params[:location]
     #resource = User.new(sign_up_params)
-
     if resource.save
+        #resource.locations.create(user_location_params)
       # users_location = resource.locations.new(user_location_params)
       # if users_location.save
       # end
@@ -42,11 +43,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
-  def sign_up_params
-    params.require(:user).permit(:user_name, :first_name, :last_name, :email, :password, :password_confirmation, :address)
-  end
+  # def sign_up_params
+  #   params.require(:user).permit(:user_name, :first_name, :last_name, :email, :password, :password_confirmation, :address)
+  # end
 
    def user_location_params
-    params.require(:user).permit(:latitude,:longitude,:address)
+    params.require(:location).permit(:latitude,:longitude,:address)
   end
 end

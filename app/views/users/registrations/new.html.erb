@@ -1,3 +1,5 @@
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAD5HonYNiAnDecD0Xniweaewl6zf__5-s&libraries=places&callback=initAutocomplete" async defer></script>
 <%flash[:errors] = resource.errors.full_messages%>
 <!-- <h2>Sign up</h2>
 <%#= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
@@ -38,58 +40,77 @@
 <%# end %>
 <%#= render "devise/shared/links" %>
  -->
-<div class="container">
-<div class="row">
-    <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-      <!-- <form role="form"> -->
-        <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-      <h2>Welcome <small>Sign up</small></h2>
-      <hr class="colorgraph">
-      <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-6">
-          <div class="form-group">
-                        <input type="text" name="user[first_name]" id="first_name" class="form-control input-lg" placeholder="First Name" tabindex="1">
+  <div class="registration-form">
+    <div class="form-login-user">
+        <!-- <form role="form"> -->
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <h2 style="text-align: center;">Welcome <small style="color: black">Sign up</small></h2>
+        <hr class="colorgraph">
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="form-group">
+                <input type="text" name="user[first_name]" id="first_name" class="form-control input-lg" placeholder="First Name" tabindex="1">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="form-group">
+              <input type="text" name="user[last_name]" id="last_name" class="form-control input-lg" placeholder="Last Name" tabindex="2">
+            </div>
           </div>
         </div>
-        <div class="col-xs-12 col-sm-6 col-md-6">
-          <div class="form-group">
-            <input type="text" name="user[last_name]" id="last_name" class="form-control input-lg" placeholder="Last Name" tabindex="2">
+        <!-- <div class="form-group">
+          
+        </div> -->
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="form-group">
+                         <input type="text" name="user[user_name]" id="user_name" class="form-control input-lg" placeholder="User Name" tabindex="3" required>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="form-group">
+              <div id="locationField">
+                <input id="autocomplete" placeholder="Enter your address" onFocus="geolocate()" type="text" name="location[address]" class="form-control input-lg" required >
+                         
+                </input>
+              </div>
+              <input type="hidden" id="latitude" class="form-control" name="location[latitude]" value="" placeholder="latitude">
+              <input type="hidden" id="longitude" class="form-control" name="location[longitude]" value="" placeholder="longitude"><br>
+            </div>
           </div>
         </div>
-      </div>
-      <!-- <div class="form-group">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-group">
+              <input type="email" name="user[email]"  class="form-control input-lg" placeholder="Email Address" required>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="form-group">
+              <input type="password" name="user[password]" id="password" class="form-control input-lg" placeholder="Password" tabindex="5">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="form-group">
+              <input type="password" name="user[password_confirmation]" id="password_confirmation" class="form-control input-lg" placeholder="Confirm Password" tabindex="6">
+            </div>
+          </div>
+        </div>
         
-      </div> -->
-      <div class="form-group">
-        <%#= f.label :user_name %>
-          <input type="text" name="user[user_name]" id="user_name" class="form-control input-lg" placeholder="User Name" tabindex="3">
-      </div>
-      <div class="form-group">
-        <input type="email" name="user[email]" id="email" class="form-control input-lg" placeholder="Email Address" tabindex="4">
-      </div>
-      <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-6">
-          <div class="form-group">
-            <input type="password" name="user[password]" id="password" class="form-control input-lg" placeholder="Password" tabindex="5">
+        <hr class="colorgraph">
+          <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-6">
+            <input type="submit" value="Register" class="btn btn-primary-c btn-block btn-lg"></div>
+            <div class="col-xs-12 col-sm-6 col-md-6">
+            <a href="<%= new_user_session_url%>" class="btn btn-success btn-block btn-lg">Sign In</a></div>
           </div>
         </div>
-        <div class="col-xs-12 col-sm-6 col-md-6">
-          <div class="form-group">
-            <input type="password" name="user[password_confirmation]" id="password_confirmation" class="form-control input-lg" placeholder="Confirm Password" tabindex="6">
-          </div>
-        </div>
-      </div>
-      
-      <hr class="colorgraph">
-      <div class="row">
-        <div class="col-xs-12 col-md-6"><input type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>
-        <div class="col-xs-12 col-md-6"><a href="<%= new_user_session_url%>" class="btn btn-success btn-block btn-lg">Sign In</a></div>
-      </div>
-    </form>
-    <%end%>
-  </div>
+      </form>
+      <%end%>
+    </div>
 </div>
-
 </div>
 
 <style type="text/css">
@@ -100,5 +121,18 @@
   border-radius: 5px;
  
 }
+.registration-form {
+  margin-top: 10%;
+  width: 55%;
+  margin-left: 243px;
+  margin-bottom: 8%;
+  border: 2px solid rgba(24, 19, 19, 0.75);
+  background-color: #716e77f5;
+  
+}
+.form-login-user {
+    margin-left: 45px;
+    margin-right: 30px;
+    padding-bottom: 4%; 
 </style>
 

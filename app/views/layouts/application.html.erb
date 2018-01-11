@@ -5,38 +5,94 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
-<!-- <script src="/assets/notify.js"></script> -->
+<script src="/assets/notify.js"></script>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+  <!-- Bootstrap -->
+  <link href="/assets/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/font-awesome.min.css">
+  <link rel="stylesheet" href="/assets/animate.css">
+  <link rel="stylesheet" href="/assets/overwrite.css">
+  <link href="/assets/animate.min.css" rel="stylesheet">
+  <link href="/assets/style.css" rel="stylesheet" />
+  
+    <!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
+    <!-- <script src="/assets/jquery.min.js"></script> -->
+    <!-- <script src="/assets/skel.min.js"></script> -->
+    <!-- <script src="/assets/skel-layers.min.js"></script> -->
 </head>
 <body>
-  <nav class="navbar navbar-inverse" role="navigation">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <a class="navbar-brand" href="<%= root_url%>">Home</a>
-    </div>
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      
-      <ul class="nav navbar-nav navbar-right">
-        <!-- <li><a href="#">Add Event</a></li> -->
-        <li class="dropdown">
-          <% if !user_signed_in? %>
+ <header id="header">
+    <nav class="navbar navbar-fixed-top" role="banner">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+          <a class="navbar-brand" href="<%= root_path%>">Event Website</a>
+        </div>
+        <div class="collapse navbar-collapse navbar-right">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="<%= root_path%>">Home</a></li>
+            <li><a href="#">Advertise With Us</a></li>
+            <li><a href="#">Help Center</a></li>
+            <li><% if !user_signed_in? %>
             <li> <%= link_to "Login/Signup", new_user_session_path, :class => 'navbar-link'  %></li>
           <%else%>
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= image_tag(current_user.attachments.present? ? current_user.attachments.first.attachment.url(:thumb) : 'default_image.jpg' , :size => "40x40") %>
-            <ul class="dropdown-menu" role="menu">
-
                <li><%= link_to 'Edit profile', users_setting_path, :class => 'navbar-link' %></li>
                 <li><%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %></li>
-               
+                <%#if current_user.is_admin? %>
+                  <!-- li class="divider"></li>
+                  <li><a href="<%= admin_url%>">Admin</a></li> -->
+                <%#end%>
             </ul>
-          <%end%>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+          <%end%></li>
+          </ul>
+        </div>
+      </div>
+      <!--/.container-->
+    </nav>
+    <!--/nav-->
+  </header>
 <%= yield %>
+<footer>
+    
+    
+    <div class="social-icon">
+      <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+          <ul class="social-network">
+            <li><a href="#" class="fb tool-tip" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+            <li><a href="#" class="twitter tool-tip" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+            <li><a href="#" class="gplus tool-tip" title="Google Plus"><i class="fa fa-google-plus"></i></a></li>
+            <li><a href="#" class="linkedin tool-tip" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
+            <li><a href="#" class="ytube tool-tip" title="You Tube"><i class="fa fa-youtube-play"></i></a></li>
+            <li><a href="#" class="dribbble tool-tip" title="Dribbble"><i class="fa fa-dribbble"></i></a></li>
+            <li><a href="#" class="pinterest tool-tip" title="Pinterest"><i class="fa fa-pinterest-square"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="text-center">
+      <div class="copyright">
+        &copy; Bikin Theme. All Rights Reserved.
+        <div class="credits">
+          <!--
+            All the links in the footer should remain intact.
+            You can delete the links only if you purchased the pro version.
+            Licensing information: https://bootstrapmade.com/license/
+            Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Bikin
+          -->
+          <a href="https://bootstrapmade.com/">Free Bootstrap Templates</a> by BootstrapMade
+        </div>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
 

@@ -34,7 +34,8 @@ class CallbacksController < Devise::OmniauthCallbacksController
     if @user.present?
       sign_in(@user)
       flash[:notice] = "you have already sign up."
-      redirect_to(user_profile_path(@user)) and return
+      #redirect_to(user_profile_path(@user)) and return
+      redirect_to(users_setting_path) and return
     else
       @user_new = User.from_omniauth(auth)
 
@@ -58,7 +59,8 @@ class CallbacksController < Devise::OmniauthCallbacksController
         if @user_new.sign_in_count==1
            redirect_to(users_setting_path) and return
         else
-          redirect_to(user_profile_path(@user_new)) and return
+          redirect_to(users_setting_path) and return
+          #redirect_to(user_profile_path(@user_new)) and return
         end
       end
     end

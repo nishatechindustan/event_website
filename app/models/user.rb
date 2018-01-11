@@ -1,31 +1,33 @@
 class User < ApplicationRecord
 
-  validates :user_name, presence: true, uniqueness: true, length: { maximum: 100 }
+	#attr_accessor :user_location
+
+  validates :user_name , presence: true, uniqueness: true, length: { maximum: 20 }
 
   has_many :locations,  as: :locatable , :dependent => :destroy
   has_many :events
   has_many :attachments, as: :attachable, dependent: :destroy
+
+
   #attr_accessor :address
 
-  #validates :address, presence: true, on: :create
-  #validates :address, presence: true, on: :update, if: :address_changed?
+  # validates :address, presence: true, on: :create
+  # validates :address, presence: true, on: :update, if: :address_changed?
 
   #accepts_nested_attributes_for :location, :allow_destroy => true   
 
 
 	devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:google_oauth2, :linkedin,:twitter,:facebook, :github]
-
+     #after_save :add_remove_locations
 
 	def self.from_omniauth(auth)
 		where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
 			if auth.info.email.blank?
 				if auth.provider.include?("facebook")
 					user.email = auth.uid + "@facebook.com"
-				elsif auth.provider.include?("twitter")
-					user.email = auth.uid + "@twitter.com"
-				elsif auth.provider.include?("linkedin")
-					user.email = auth.uid + "@linkedin.com"
+				elsif auth.provider.include?("google")
+					user.email = auth.uid + "@google.com"
 				end
 			else
 				user.email = auth.info.email
@@ -62,4 +64,14 @@ class User < ApplicationRecord
 	def address_changed?
     	!address.blank?
 	end
+
+	# def add_remove_locations
+	# 	debugger
+	# 	if self.locations.present?
+	# 		event_loca =  Location.find_by(:locatable_id=> self.id, :locatable_type=>"User")
+	# 		event_loca.update(user_location)
+	# 	else
+	# 	self.locations.create(user_location)
+	# 	end
+	# end
 end
