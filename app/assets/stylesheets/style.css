@@ -21,9 +21,8 @@ body {
   background: #fff;
   font-family:'Roboto', Arial, sans-serif;
   color:#333;
-  line-height:1.6em;
-  overflow-x:hidden;
-  /*background-image: url('/assets/pic04.jpg');*/
+  line-height: 1.6em;
+  overflow-x: hidden;
 }
 
 h1,
@@ -157,7 +156,7 @@ hr {
 	color: #ffd;
 	line-height: 24px;
 	display: inline-block;
-	text-transform:;
+	text-transform;
 	font-weight:500;
 	font-size:18px;
 	font-family:'Roboto';
@@ -867,7 +866,7 @@ ul.social-network li a {
 .social-network li:hover .fa-pinterest-square {
   color: #EA4B49; 
 }
-
 .login-form {
-    width: 35%;
-    margin-left: 341px;
+  width: 35%;
+  margin-left: 341px;
+}
