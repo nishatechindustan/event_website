@@ -1,11 +1,11 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
-  <%#= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
 
-  <%#= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%#= csrf_meta_tags %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
 <script src="/assets/jquery2.0.3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
    
@@ -56,9 +56,9 @@
                    
                     <a href="<%= admin_path%>">Dashboard</a></li>
                 </li>
-                <li><%#= link_to "Categories", admin_categories_path%></li>
-                <li><%#= link_to "Artist", admin_artists_path%></li>
-                <li><%#= link_to "All Users", admin_listusers_path%></li>
+                <li><%= link_to "Categories", admin_categories_path%></li>
+                <li><%= link_to "Artist", admin_artists_path%></li>
+                <li><%= link_to "All Users", admin_listusers_path%></li>
                 
                 <li class="sub-menu">
                     <a href="javascript:;">
@@ -85,33 +85,33 @@
 <script src="/assets/notify.js"></script>
 
 
-<%#= yield %>
+<%= yield %>
 </body>
 </html>
 <script type="text/javascript">
 
-  <%# if flash[:notice].present? %>
-    message = "<%#= flash[:notice]%>"
+  <% if flash[:notice].present? %>
+    message = "<%= flash[:notice]%>"
     type = 'info'
     notification(message,type)
-  <%#end%>
-  <%# if flash[:alert].present? %>
-    message = "<%#= flash[:alert]%>"
+  <%end%>
+  <% if flash[:alert].present? %>
+    message = "<%= flash[:alert]%>"
     type = 'info'
     notification(message,type)
-  <%#end%>
-  <%# if flash[:message].present?%>
-    message = "<%#= flash[:message]%>"
+  <%end%>
+  <% if flash[:message].present?%>
+    message = "<%= flash[:message]%>"
     type = 'info'
     notification(message,type)
-  <%#end%>
-  <%# if flash[:errors].present?%>
-    <%#flash[:errors].each do |err|%>
+  <%end%>
+  <% if flash[:errors].present?%>
+    <%flash[:errors].each do |err|%>
       message = "<%= err.html_safe %>"
       type = 'info'
       notification(message,type)
-    <%#end%>
-  <%# end %>
+    <%end%>
+  <% end %>
   function notification(message,type){
     $.notify(message, {
       className:type,
@@ -120,4 +120,3 @@
     });
   }
 </script>
- -->
