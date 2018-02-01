@@ -1,24 +1,22 @@
 class User < ApplicationRecord
 
 	#attr_accessor :user_location
-
-  validates :user_name , presence: true, uniqueness: true, length: { maximum: 20 }
-
+ #TOKEN_DELIMITER = ':'
+ #acts_as_token_authenticatable
+ #uniqueness: true, :validatable,:confirmable,
+  validates :user_name , presence: true,  length: { maximum: 50 }
+  # after_initialize :check_email, :if => :new_record?
   has_many :locations,  as: :locatable , :dependent => :destroy
   has_many :events
   has_many :attachments, as: :attachable, dependent: :destroy
-
-
-  #attr_accessor :address
-
-  # validates :address, presence: true, on: :create
-  # validates :address, presence: true, on: :update, if: :address_changed?
-
-  #accepts_nested_attributes_for :location, :allow_destroy => true   
-
+  validates_uniqueness_of    :email,     :case_sensitive => false, :allow_blank => true, :scope=>:provider, :if => :email_changed?
+  validates_format_of    :email,    :with  => Devise.email_regexp, :allow_blank => true, :if => :email_changed?
+  validates_presence_of    :password, :on=>:create
+  validates_confirmation_of    :password, :on=>:create
+  validates_length_of    :password, :within => Devise.password_length, :allow_blank => true
 
 	devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:google_oauth2, :linkedin,:twitter,:facebook, :github]
+         :recoverable, :rememberable, :trackable, :omniauthable, :omniauth_providers => [:google_oauth2,:facebook]
      #after_save :add_remove_locations
 
 	def self.from_omniauth(auth)
@@ -43,11 +41,31 @@ class User < ApplicationRecord
 			# 	user.image = auth.info.image # assuming the user model has an image
 			# end
 			#user.confirmed_at = Time.now()   # assuming the user model has a name
-			# If you are using confirmable and the provider(s) you use validate emails, 
+			# If you are using confirmable and the provider(s) you use validate emails,
 			# uncomment the line below to skip the confirmation emails.
 			# user.skip_confirmation!
 		end
 	end
+
+  def self.from_socialLogin(auth)
+    where(provider: auth[:provider], uid: auth[:uid]).first_or_create do |user|
+			if auth[:email].blank?
+				if auth[:provider].include?("facebook")
+					user.email = auth[:uid] + "@facebook.com"
+				elsif auth[:provider].include?("google")
+					user.email = auth[:uid] + "@google.com"
+				end
+			else
+				user.email = auth[:email]
+			end
+			user.password = Devise.friendly_token[0,20]
+			user.user_name = auth[:user_name]
+			user.first_name = auth[:first_name]
+			user.last_name = auth[:last_name]
+      user.auth_token = auth[:auth_token]
+      #user.skip_confirmation!
+		end
+  end
 
 	# def self.from_omniauth(auth)
 	# 	find_by(provider: auth['provider'], uid: auth['uid']) || create_user_from_omniauth(auth)
@@ -74,4 +92,23 @@ class User < ApplicationRecord
 	# 	self.locations.create(user_location)
 	# 	end
 	# end
+
+    def authentication_token
+      self.auth_token= SecureRandom.urlsafe_base64
+      self.save
+    end
+
+    def self.digest(token)
+      Digest::SHA1.hexdigest(token.to_s)
+    end
+
+    def check_email
+    #   debugger
+    #   user = User.find_by(:uid=> self.uid, :provider=> self.provider)
+    #   if user.present?
+    #       validates :email , presence: true, uniqueness: true
+    #   else
+    #     validates :email , presence: true
+    #   end
+    end
 end

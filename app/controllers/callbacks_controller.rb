@@ -1,7 +1,8 @@
 class CallbacksController < Devise::OmniauthCallbacksController
-
-
+ #skip_before_action:verify_authenticity_token
+  #before_action :add_cors_headers
   def facebook
+    debugger
       authenticat_user(request.env["omniauth.auth"])
   end
 
@@ -19,8 +20,9 @@ class CallbacksController < Devise::OmniauthCallbacksController
 
   def failure
     #Could not authenticate you from Facebook because "Permissions error".
-    flash[:alert] = "There was an error while trying to authenticate your account."
-    redirect_to root_path and return
+    # flash[:alert] = "There was an error while trying to authenticate your account."
+    # redirect_to root_path and return
+    render :json=> {:status=>false , :message=>"There was an error while trying to authenticate your account."}
   end
 
   # def github
@@ -32,16 +34,17 @@ class CallbacksController < Devise::OmniauthCallbacksController
   def authenticat_user(auth)
     @user = User.find_by(:uid => auth.uid)
     if @user.present?
-      sign_in(@user)
-      flash[:notice] = "you have already sign up."
+    #  sign_in(@user)
+      # flash[:notice] = "you have already sign up."
       #redirect_to(user_profile_path(@user)) and return
-      redirect_to(users_setting_path) and return
+      render :json=> {:status=>true , :message=>"you have already sign up.",:userDetails=>@user}
+      # redirect_to(users_setting_path) and return
     else
       @user_new = User.from_omniauth(auth)
-
       if !@user_new.persisted?
-        flash[:errors] = @user_new.errors.full_messages
-        redirect_to root_path
+        # flash[:errors] = @user_new.errors.full_messages
+        # redirect_to root_path
+        render :json=> {:status=>false , :message=>@user_new.errors.full_messages}
       else
         @user_attachment = @user_new.attachments.where(:attachable_id=> @user_new, :attachable_type => "User")
         if @user_attachment.present?
@@ -51,18 +54,25 @@ class CallbacksController < Devise::OmniauthCallbacksController
         end
 
         if @user_new.email.include?("facebook") || @user_new.email.include?("twitter") || @user_new.email.include?("linkedin")
-          flash[:notice] = 'Please update email address'
-        end 
-
-        sign_in(@user_new)
-        
-        if @user_new.sign_in_count==1
-           redirect_to(users_setting_path) and return
-        else
-          redirect_to(users_setting_path) and return
-          #redirect_to(user_profile_path(@user_new)) and return
+          # flash[:notice] = 'Please update email address'
         end
+        #sign_in(@user_new)
+        render :json=> {:status=>true , :message=>"You are signup successfully.",:userDetails=>@user_new}
+        #
+        # if @user_new.sign_in_count==1
+        #    redirect_to(users_setting_path) and return
+        # else
+        #   redirect_to(users_setting_path) and return
+        #   #redirect_to(user_profile_path(@user_new)) and return
+        # end
       end
     end
   end
-end	
+  # 
+  # def add_cors_headers
+  #   headers['Access-Control-Allow-Origin'] = '*'
+  #   headers['Access-Control-Allow-Methods'] = 'POST, PUT, DELETE, GET, OPTIONS'
+  #   headers['Access-Control-Request-Method'] = '*'
+  #   headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  # end
+end

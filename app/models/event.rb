@@ -1,5 +1,5 @@
 class Event < ApplicationRecord
-	
+
 	attr_accessor :category_ids
 	attr_accessor :artist_ids
 	attr_accessor :event_location
@@ -93,7 +93,7 @@ class Event < ApplicationRecord
 		end
 	end
 
-	#add date and time for the event 
+	#add date and time for the event
 	def add_event_dates
 		if self.event_adver_dates.present?
 			even_date_time = EventAdverDate.find_by(event_adver_datable_id: self.id, event_adver_datable_type: "Event")

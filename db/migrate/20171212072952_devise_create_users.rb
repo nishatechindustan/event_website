@@ -15,7 +15,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       #t.datetime :token_created_at
       #t.boolean :email_confirmed, default: false
       t.string :fcm_token
-      t.string :device_type 
+      t.string :device_type
 
       ## Recoverable
       t.string   :reset_password_token
@@ -46,7 +46,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.timestamps null: false
     end
 
-    add_index :users, :email,                unique: true
+    #add_index :users, :email,                unique: true
     add_index :users, :reset_password_token, unique: true
     add_index :users, :confirmation_token,   unique: true
    # add_index :users, :user_name,   unique: true

@@ -1,4 +1,4 @@
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAD5HonYNiAnDecD0Xniweaewl6zf__5-s&libraries=places&callback=initAutocomplete" async defer></script>
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAD5HonYNiAnDecD0Xniweaewl6zf__5-s&libraries=places&callback=initAutocomplete" async defer></script> -->
 <section id="main-content">
   <section class="wrapper">
     <div class="form-w3layouts">
@@ -82,7 +82,7 @@
                   </div>
                   <div class="form-group">
                     <%= form.label :currency%>
-                    <select name="event[currency]"> 
+                    <select name="event[currency]">
                       <option selected disabled>select currency</option>
                       <option value="AED">AED</option>
                       <option value="USD">USD</option>
@@ -118,7 +118,7 @@
                       <label>Venue<font color="red">*</font></label>
                       <input type="text" name="location[venue]" value="" placeholder="Venue" class="form-control"><br>
                     </div>
-                  </div>    
+                  </div>
                 <%= form.submit "Submit",class: "btn btn-info" %>
                 <%= link_to "Cancel", admin_events_path, class: "btn btn-info"%>
               <%end%>

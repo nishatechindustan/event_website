@@ -279,9 +279,8 @@ Devise.setup do |config|
   config.omniauth :google_oauth2, "762440819226-kjs4a7k6mdibhm00989gt48i8o5mto8s.apps.googleusercontent.com","rRcs2HF8UAWkdtnjcLTCrULd", scope: 'email'
 
   # config.omniauth :twitter, ENV["TWITTER_KEY"],ENV["TWITTER_SECRET"],scope: "email,r_fullprofile, r_emailaddress", image_size: 'original'
-  
+
   # config.omniauth :github, ENV['GITHUB_KEY'],  ENV['GITHUB_SECRET'], scope: "user,repo,gist, public_repo"
 
   # config.omniauth :linkedin,ENV["LINKEDIN_KEY"],ENV["LINKEDIN_SECRET"] ,scope: "r_basicprofile r_emailaddress", fields:['id', 'email-address', 'first-name', 'last-name','headline','picture-urls::(original)', 'image'], secure_image_url: true
 end
-
