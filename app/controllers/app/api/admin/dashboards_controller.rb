@@ -15,11 +15,9 @@ class App::Api::Admin::DashboardsController < AdminController
 
   def delete_user
 	if @user.destroy
-		flash[:notice] = "user deleted successfully."
-		redirect_to admin_listusers_path
+    render :json =>{:status=>true, :notice=> "User Deleted successfully", :data=>@user}
 	else
-		flash[:errors] = @user.errors.full_messages
-		redirect_to admin_listusers_path
+		render :json => {:status=> false, :messages=> @user.errors.full_messages}
 	end
   end
 
