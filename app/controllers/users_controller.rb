@@ -27,7 +27,7 @@ class UsersController < ApplicationController
 			# 	flash[:notice] =  "Profile updated successfully"
 			# 	redirect_to users_setting_path
 			@user_image =  @user.attachments.present? ? @user.attachments.first.attachment.url : '';
-			userDetails = {:auth_token=>@user.auth_token, :email=>@user.email, :user_name => @user.user_name, :first_name=> @user.first_name, :last_name=> @user.last_name, :is_admin => @user.is_admin, :user_image=> @user_image}
+			userDetails = {:auth_token=>@user.auth_token, :email=>@user.email, :user_name => @user.user_name, :first_name=> @user.first_name, :last_name=> @user.last_name, :is_admin => @user.is_admin, :image=> @user_image}
 					render :json=> {:status=> true, :message=>" Profile updated successfully", :userDetails=>userDetails}
 			 	else
 				 	render :json=> {:status=> true, :message=>@user.errors.full_messages}
