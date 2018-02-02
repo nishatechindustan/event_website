@@ -26,7 +26,9 @@ class UsersController < ApplicationController
 			# 	end
 			# 	flash[:notice] =  "Profile updated successfully"
 			# 	redirect_to users_setting_path
-					render :json=> {:status=> true, :message=>" Profile updated successfully", :data=>@user}
+			@user_image =  @user.attachments.present? ? @user.attachments.first.attachment.url : '';
+			userDetails = {:auth_token=>@user.auth_token, :email=>@user.email, :user_name => @user.user_name, :first_name=> @user.first_name, :last_name=> @user.last_name, :is_admin => @user.is_admin, :user_image=> @user_image}
+					render :json=> {:status=> true, :message=>" Profile updated successfully", :userDetails=>userDetails}
 			 	else
 				 	render :json=> {:status=> true, :message=>@user.errors.full_messages}
 				end
@@ -36,7 +38,6 @@ class UsersController < ApplicationController
 	end
 
 	def destroy
-		debugger
 		User.find_by(:auth_token=> params[:auth_token])
 		render :json=> {:status=> false, :message=>"Invalid token"}
 	end
