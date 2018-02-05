@@ -7,10 +7,18 @@ class App::Api::Admin::EventsController < AdminController
   
   def index
     @events =  Event.all
-    render :json=>{:status=>true, :events=>@events}
+    events= []
+      @events.each do |event|
+        @event_image = event.attachments.present? ? event.attachments.first.attachment.url : '';
+        events <<{:title=>event.title, :id=>event.id, :description=>event.description, :ticket_available => event.ticket_available, :cost=> event.cost, :currency=> event.currency, :contact_number => event.contact_number, :image=> @event_image,
+        :cost_offers=>event.cost_offers, :email=>event.email, :event_type => event.event_type, :status=> event.status, :event_categories=> event.categories.map(&:name), :event_added_by=>event.user.user_name,:event_location=>event.locations.first.address, :event_date=>event.event_adver_dates.map{|a| [a.start_date, a.end_date]}.flatten!}
+      end
+
+    render :json=>{:status=>true, :events=>events}
   end
 
   def create
+    debugger
     if params[:auth_token].present?
         user = User.find_by_auth_token(params[:auth_token])
         if user.present?
@@ -19,6 +27,7 @@ class App::Api::Admin::EventsController < AdminController
             @event.artist_ids = params[:artist_ids]
             @event.event_location = event_location
              @event.event_dates = event_dates
+             debugger
             if @event.save
               if event_image_param.present?
                @event.attachments.create(event_image_param)
