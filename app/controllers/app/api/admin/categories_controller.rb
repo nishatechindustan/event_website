@@ -1,10 +1,7 @@
 class App::Api::Admin::CategoriesController < AdminController
 
+	#callbacks
 	before_action :get_category, only: [:edit, :show, :update,:destroy]
-	#before_action :authenticate_user!, except: [ :index, :create, :update]
-	#skip_before_action :verify_authenticity_token#, :only => [:update]
-	#before_action :cors_preflight_check , only: :create
-
 
 	#show all category
 	def index
@@ -54,8 +51,5 @@ class App::Api::Admin::CategoriesController < AdminController
 	# callback use for get category  id before call edit, show, destroy, update
 	def get_category
 		@category = Category.find params[:id]
-
 	end
-
-
 end

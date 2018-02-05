@@ -1,15 +1,15 @@
 class App::Api::Admin::EventsController < AdminController
+
+  # callbacks
   before_action :get_category_and_artist ,only:[:create,:new, :edit, :update, :show]
   before_action :get_event_id ,only:[:edit, :destroy, :update ,:show]
   before_action :get_event_data ,only:[:edit, :update, :show]
+  
   def index
-  @events =  Event.all
-  render :json=>{:status=>true, :events=>@events}
+    @events =  Event.all
+    render :json=>{:status=>true, :events=>@events}
   end
 
-  # def new
-  #   @event = Event.new
-  # end
   def create
     if params[:auth_token].present?
         user = User.find_by_auth_token(params[:auth_token])
@@ -104,18 +104,11 @@ class App::Api::Admin::EventsController < AdminController
   def event_dates
     params.require(:event_date).permit!
   end
+
   def get_event_data
     @event_categories =  @event.categories
     @event_artists =  @event.artists
     @event_location = @event.locations.first
     @event_dates = @event.event_adver_dates.first
-  end
-
-  def check_param_valid
-    if event_location[:address].present? && event_location[:latitude].present? && event_location[:longitude].present? && event_location[:venue].present? && event_dates[:start_date].present? && event_dates[:end_date].present? && event_dates[:start_time].present?&& event_dates[:end_time].present?
-      return true
-    else
-      return false
-    end
   end
 end
