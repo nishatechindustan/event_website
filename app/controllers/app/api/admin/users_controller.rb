@@ -2,6 +2,19 @@ class App::Api::Admin::UsersController < AdminController
 	#before_action :authenticate_user!
 	#before_action :authenticate_request!
 	#skip_before_action :verify_authenticity_token
+	before_action :get_user, only: [:delete_user]
+
+	def all_users
+	  	current_user = User.find_by_auth_token(params[:auth_token])
+	    @users = User.all - [current_user]
+	    users= []
+	    @users.each do |user|
+	      @user_image =  user.attachments.present? ? user.attachments.first.attachment.url : '';
+	      users<<{:auth_token=>user.auth_token, :id=>user.id, :email=>user.email, :user_name => user.user_name, :first_name=> user.first_name, :last_name=> user.last_name, :is_admin => user.is_admin, :image=> @user_image}
+	    end
+	    render :json =>{result: users, status: 200}
+  	end
+
 	def edit
 		@user = current_user
 	end
@@ -21,7 +34,7 @@ class App::Api::Admin::UsersController < AdminController
 					if @user_image.present?
 						@user.attachments.update(avatar_image_params)
 					else
-					@user.attachments.create(avatar_image_params)
+						@user.attachments.create(avatar_image_params)
 					end
 				end
 			@user_image =  @user.attachments.present? ? @user.attachments.first.attachment.url : '';
@@ -35,10 +48,13 @@ class App::Api::Admin::UsersController < AdminController
 		end
 	end
 
-	def destroy
-		User.find_by(:auth_token=> params[:auth_token])
-		render :json=> {:status=> false, :message=>"Invalid token"}
-	end
+	def delete_user
+		if @user.destroy
+			render :json =>{:status=>true, :notice=> "User Deleted successfully", :data=>@user}
+		else
+			render :json => {:status=> false, :messages=> @user.errors.full_messages}
+		end
+  	end
 
 
 	# strong parameters for users prams
@@ -52,6 +68,11 @@ class App::Api::Admin::UsersController < AdminController
 		params.require(:user).require(:attachment).permit(:attachment)
 	end
 
+	private
+
+	def get_user
+	  @user = User.find params[:id]
+	end
 
 
 end

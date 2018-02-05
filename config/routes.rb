@@ -13,8 +13,8 @@ Rails.application.routes.draw do
     	get "/"	=> "dashboards#index"
 
       #users Api's
-    	get "listusers"	=> "dashboards#all_users"
-    	delete "listusers/:id" => "dashboards#delete_user" , as: "user_delete"
+    	get "listusers"	=> "users#all_users"
+    	delete "listusers/:id" => "users#delete_user" , as: "user_delete"
       patch "/users/update" => "users#update"
       get  "/profile/:id" => "users#show", as: "user_profile"
 
