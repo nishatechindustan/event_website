@@ -18,7 +18,6 @@ class App::Api::Admin::EventsController < AdminController
   end
 
   def create
-    debugger
     if params[:auth_token].present?
         user = User.find_by_auth_token(params[:auth_token])
         if user.present?

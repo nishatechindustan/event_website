@@ -7,7 +7,7 @@ class User < ApplicationRecord
   validates :user_name , presence: true,  length: { maximum: 50 }
   # after_initialize :check_email, :if => :new_record?
   has_many :locations,  as: :locatable , :dependent => :destroy
-  has_many :events
+  has_many :events,dependent: :destroy
   has_many :attachments, as: :attachable, dependent: :destroy
   validates_uniqueness_of    :email,     :case_sensitive => false, :allow_blank => true, :scope=>:provider, :if => :email_changed?
   validates_format_of    :email,    :with  => Devise.email_regexp, :allow_blank => true, :if => :email_changed?
