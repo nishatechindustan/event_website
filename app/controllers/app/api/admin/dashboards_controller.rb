@@ -8,7 +8,8 @@ class App::Api::Admin::DashboardsController < AdminController
   end
 
   def all_users
-  	@users = User.all
+  	current_user = User.find_by_auth_token(params[:auth_token])
+    @users = User.all - [current_user]
     users= []
     @users.each do |user|
       @user_image =  user.attachments.present? ? user.attachments.first.attachment.url : '';
