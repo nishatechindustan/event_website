@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class App::Api::Admin::UsersController < AdminController
 	#before_action :authenticate_user!
 	#before_action :authenticate_request!
 	#skip_before_action :verify_authenticity_token
