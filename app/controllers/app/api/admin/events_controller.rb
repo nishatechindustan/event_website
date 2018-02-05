@@ -26,7 +26,6 @@ class App::Api::Admin::EventsController < AdminController
             @event.artist_ids = params[:artist_ids]
             @event.event_location = event_location
              @event.event_dates = event_dates
-             debugger
             if @event.save
               if event_image_param.present?
                @event.attachments.create(event_image_param)
