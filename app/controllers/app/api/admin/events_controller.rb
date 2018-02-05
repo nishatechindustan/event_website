@@ -43,18 +43,19 @@ class App::Api::Admin::EventsController < AdminController
   end
 
   def edit
+    @event_image = @event.attachments.present? ? @event.attachments.first.attachment.url : '';
     @event_currency = @event.currency.present? ? @event.currency: ''
     event_date_time = {:start_date=>@event_dates.start_date,:end_date=>@event_dates.end_date ,:start_time=>@event_dates.start_time,:end_time=>@event_dates.end_time}
     event_location= {:address=>@event_location.address,:latitude=>@event_location.latitude,:longitude=>@event_location.longitude,:venue=>@event_location.venue}
     response = {:event_categories=>@event_categories.map(&:id), :event_location=>event_location,
-      :event_artists=>@event_artists.map(&:id),:event_date=>event_date_time,:event=>@event}
+      :event_artists=>@event_artists.map(&:id),:event_date=>event_date_time,:event=>@event, :event_image=>@event_image}
 
     render :json=>{:status=> true,:data=>response}
   end
 
   def update
-      @event.category_ids = params[:category_ids]
-      @event.artist_ids = params[:artist_ids]
+      @event.category_ids = params[:category_ids].values
+      @event.artist_ids = params[:artist_ids].values
       @event.event_location = event_location
       @event.event_dates = event_dates
         if @event.update(event_params)
