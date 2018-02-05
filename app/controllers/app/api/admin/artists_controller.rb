@@ -21,10 +21,8 @@ class App::Api::Admin::ArtistsController < AdminController
       if artist_image_param[:attachment].present?
         @artist.attachments.create(artist_image_param)
       end
-
       @artist_image =  @artist.attachments.present? ? @artist.attachments.first.attachment.url : '';
       artist = {:name=> @artist.name, :address=> @artist.address, :id=> @artist.id, :description=> @artist.description, :image=> @artist_image}
-      end
       render :json => {:status=> true, :messages=> "New artist was added successfully.", :data => artist}
     else
       render :json => {:status=> false, :message=>@artist.errors.full_messages}
