@@ -5,13 +5,24 @@ class App::Api::Admin::ArtistsController < AdminController
 
   #show all Artist
   def index
-    @artists = Artist.all
     artists= []
+    recordsTotal = Artist.all
+    search_value = params[:search][:value]
+    
+    if search_value.present?
+      @artists = Artist.where('name ILIKE ? OR address ILIKE ?', "%#{search_value}%", "%#{search_value}%").order(:created_at).limit(params[:length].to_i).offset(params[:start].to_i)
+      recordsFiltered = @artists.count
+    else
+      @artists = Artist.all.order(:created_at).limit(params[:length].to_i).offset(params[:start].to_i)
+      recordsFiltered = recordsTotal.count 
+    end
+
     @artists.each do |artist|
       @artist_image =  artist.attachments.present? ? artist.attachments.first.attachment.url : '';
       artists<<{:id=>artist.id, :name=>artist.name, :address=> artist.address, :description=>artist.description, :image=> @artist_image}
     end
-    render :json => {:data=>artists, :status=>true}
+
+    render :json => {:data=>artists, :status=>true ,:draw=>params[:draw], :recordsTotal=>recordsTotal.count, :recordsFiltered=>recordsFiltered}
   end
 
   #add new Artist
