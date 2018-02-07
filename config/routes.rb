@@ -26,7 +26,7 @@ Rails.application.routes.draw do
 
       # Artists Api's
       resources :artists , :only =>[:index, :create, :update, :destroy]
-
+      get '/artist_list' =>"artists#get_artist_list"
       # Events Api's
       resources :events , :only =>[:index, :create, :update, :show, :edit, :destroy]
       end

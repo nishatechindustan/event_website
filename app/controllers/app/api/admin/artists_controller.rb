@@ -21,8 +21,12 @@ class App::Api::Admin::ArtistsController < AdminController
       @artist_image =  artist.attachments.present? ? artist.attachments.first.attachment.url : '';
       artists<<{:id=>artist.id, :name=>artist.name, :address=> artist.address, :description=>artist.description, :image=> @artist_image}
     end
-
     render :json => {:data=>artists, :status=>true ,:draw=>params[:draw], :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
+  end
+
+  def get_artist_list
+    @artists = Artist.all
+    render :json => {:data=>@artists, :status=>true}
   end
 
   #add new Artist
