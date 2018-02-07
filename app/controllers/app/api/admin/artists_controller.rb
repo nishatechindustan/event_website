@@ -6,7 +6,7 @@ class App::Api::Admin::ArtistsController < AdminController
   #show all Artist
   def index
     artists= []
-    recordsTotal = Artist.all
+    recordsTotal = Artist.all.count
     search_value = params[:search][:value]
     
     if search_value.present?
@@ -14,7 +14,7 @@ class App::Api::Admin::ArtistsController < AdminController
       recordsFiltered = @artists.count
     else
       @artists = Artist.all.order(:created_at).limit(params[:length].to_i).offset(params[:start].to_i)
-      recordsFiltered = recordsTotal.count 
+      recordsFiltered = recordsTotal
     end
 
     @artists.each do |artist|
@@ -22,7 +22,7 @@ class App::Api::Admin::ArtistsController < AdminController
       artists<<{:id=>artist.id, :name=>artist.name, :address=> artist.address, :description=>artist.description, :image=> @artist_image}
     end
 
-    render :json => {:data=>artists, :status=>true ,:draw=>params[:draw], :recordsTotal=>recordsTotal.count, :recordsFiltered=>recordsFiltered}
+    render :json => {:data=>artists, :status=>true ,:draw=>params[:draw], :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
   end
 
   #add new Artist
