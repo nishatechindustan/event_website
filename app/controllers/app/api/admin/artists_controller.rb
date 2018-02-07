@@ -1,7 +1,7 @@
 class App::Api::Admin::ArtistsController < AdminController
     
     #callbacks
-  before_action :get_artist, only: [:show, :update,:destroy]
+  before_action :get_artist, only: [:show, :update,:destroy, :edit]
 
   #show all Artist
   def index
@@ -68,6 +68,19 @@ class App::Api::Admin::ArtistsController < AdminController
 
   #show only one artist using artist id
   def show
+  end
+
+  # edit get details for edit with 'id'
+
+  def edit
+    if @artist.present?
+      @artist_image = @artist.attachments.present? ? @artist.attachments.first.attachment.url : '';
+      artist = {:name=> @artist.name, :address=> @artist.address, :id=> @artist.id, :description=> @artist.description, :image=> @artist_image}
+     response = {:status=> true, :data=> artist}
+    else
+      response = {:status=> false, :messages=> "something went wrong"}
+    end
+    render :json=> response
   end
 
   # delete artist

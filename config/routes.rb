@@ -23,12 +23,15 @@ Rails.application.routes.draw do
       post 'categories' => "categories#create"
       patch 'categories/:id' => "categories#update"
       delete  'categories/:id' => "categories#destroy"
-
+      get '/category_list' =>"categories#get_category_list"
+      
       # Artists Api's
-      resources :artists , :only =>[:index, :create, :update, :destroy]
+      resources :artists , :only =>[:index, :create, :update, :destroy, :edit]
       get '/artist_list' =>"artists#get_artist_list"
+      
       # Events Api's
       resources :events , :only =>[:index, :create, :update, :show, :edit, :destroy]
+      get '/event_list' => "events#get_event_list"
       end
     end
   end
