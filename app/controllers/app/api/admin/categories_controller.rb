@@ -30,6 +30,17 @@ class App::Api::Admin::CategoriesController < AdminController
 		end
 	end
 
+
+	def edit
+		if @category.present?
+	      category = {:name=> @category.name,:id=> @category.id}
+	      response = {:status=> true, :data=> category}
+	    else
+	      response = {:status=> false, :messages=> "something went wrong"}
+	    end
+	    render :json=> response
+	end
+
 	# update category with according to id
 	def update
 		response = {}
@@ -43,6 +54,25 @@ class App::Api::Admin::CategoriesController < AdminController
 
 	#show only one category using category id
 	def show
+	end
+
+	def get_category_list
+	categories= []
+    recordsTotal = Category.all.count
+    search_value = params[:search][:value]
+    
+    if search_value.present?
+      @categories = Category.where('name ILIKE ?', "%#{search_value}%").order(:created_at).limit(params[:length].to_i).offset(params[:start].to_i)
+      recordsFiltered = @categories.count
+    else
+      @categories = Category.all.order(:created_at).limit(params[:length].to_i).offset(params[:start].to_i)
+      recordsFiltered = recordsTotal
+    end
+
+    @categories.each do |category|
+      categories<<{:id=>category.id, :name=>category.name}
+    end
+    render :json => {:data=>categories, :status=>true ,:draw=>params[:draw], :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
 	end
 
 
