@@ -9,7 +9,7 @@ class App::Api::Admin::EventsController < AdminController
     @events =  Event.all
     events= []
       @events.each do |event|
-        @event_image = event.attachments.present? ? event.attachments.first.attachment.url : '';
+        @event_image = event.attachments.present? ? event.attachments.first.attachment.url : '/default_image.jpg';
         events <<{:title=>event.title, :id=>event.id, :description=>event.description, :ticket_available => event.ticket_available, :cost=> event.cost, :currency=> event.currency, :contact_number => event.contact_number, :image=> @event_image,
         :cost_offers=>event.cost_offers, :email=>event.email, :event_type => event.event_type, :status=> event.status, :event_categories=> event.categories.map(&:name), :event_added_by=>event.user.user_name,:event_location=>event.locations.first.address, :event_date=>event.event_adver_dates.map{|a| [a.start_date, a.end_date]}.flatten!}
       end
@@ -43,7 +43,7 @@ class App::Api::Admin::EventsController < AdminController
   end
 
   def edit
-    @event_image = @event.attachments.present? ? @event.attachments.first.attachment.url : '';
+    @event_image = @event.attachments.present? ? @event.attachments.first.attachment.url : '/default_image.jpg';
     @event_currency = @event.currency.present? ? @event.currency: ''
     event_date_time = {:start_date=>@event_dates.start_date,:end_date=>@event_dates.end_date ,:start_time=>@event_dates.start_time,:end_time=>@event_dates.end_time}
     event_location= {:address=>@event_location.address,:latitude=>@event_location.latitude,:longitude=>@event_location.longitude,:venue=>@event_location.venue}
@@ -101,7 +101,7 @@ class App::Api::Admin::EventsController < AdminController
     end
 
     @events.each do |event|
-        @event_image = event.attachments.present? ? event.attachments.first.attachment.url : '';
+        @event_image = event.attachments.present? ? event.attachments.first.attachment.url : '/default_image.jpg';
         events <<{:title=>event.title, :id=>event.id, :description=>event.description, :ticket_available => event.ticket_available, :cost=> event.cost, :currency=> event.currency, :contact_number => event.contact_number, :image=> @event_image,
         :cost_offers=>event.cost_offers, :email=>event.email, :event_type => event.event_type, :status=> event.status, :event_categories=> event.categories.map(&:name), :event_added_by=>event.user.user_name,:event_location=>event.locations.first.address, :event_date=>event.event_adver_dates.map{|a| [a.start_date, a.end_date]}.flatten!}
     end

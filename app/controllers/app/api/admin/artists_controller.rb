@@ -18,7 +18,8 @@ class App::Api::Admin::ArtistsController < AdminController
     end
 
     @artists.each do |artist|
-      @artist_image =  artist.attachments.present? ? artist.attachments.first.attachment.url : '';
+      
+      @artist_image =  artist.attachments.present? ? artist.attachments.first.attachment.url : '/default_image.jpg';
       artists<<{:id=>artist.id, :name=>artist.name, :address=> artist.address, :description=>artist.description, :image=> @artist_image}
     end
     render :json => {:data=>artists, :status=>true ,:draw=>params[:draw], :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
@@ -36,7 +37,7 @@ class App::Api::Admin::ArtistsController < AdminController
       if artist_image_param[:attachment].present?
         @artist.attachments.create(artist_image_param)
       end
-      @artist_image =  @artist.attachments.present? ? @artist.attachments.first.attachment.url : '';
+      @artist_image =  @artist.attachments.present? ? @artist.attachments.first.attachment.url : '/default_image.jpg';
       artist = {:name=> @artist.name, :address=> @artist.address, :id=> @artist.id, :description=> @artist.description, :image=> @artist_image}
       render :json => {:status=> true, :messages=> "New artist was added successfully.", :data => artist}
     else
@@ -58,7 +59,7 @@ class App::Api::Admin::ArtistsController < AdminController
           @artist.attachments.create(artist_image_param)
         end
       end
-      @artist_image =  @artist.attachments.present? ? @artist.attachments.first.attachment.url : '';
+      @artist_image =  @artist.attachments.present? ? @artist.attachments.first.attachment.url : '/default_image.jpg';
       artist = {:name=> @artist.name, :address=> @artist.address, :id=> @artist.id, :description=> @artist.description, :image=> @artist_image}
       render :json => {:status=> true, :messages=> "Artist has been updated successfully.", :data => artist}
     else
@@ -74,7 +75,7 @@ class App::Api::Admin::ArtistsController < AdminController
 
   def edit
     if @artist.present?
-      @artist_image = @artist.attachments.present? ? @artist.attachments.first.attachment.url : '';
+      @artist_image = @artist.attachments.present? ? @artist.attachments.first.attachment.url : '/default_image.jpg';
       artist = {:name=> @artist.name, :address=> @artist.address, :id=> @artist.id, :description=> @artist.description, :image=> @artist_image}
      response = {:status=> true, :data=> artist}
     else
