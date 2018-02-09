@@ -32,7 +32,7 @@ Rails.application.routes.draw do
       
       # Events Api's
       resources :events , :only =>[:index, :create, :update, :show, :edit, :destroy]
-      get '/event_list' => "events#get_event_list"
+      post '/event_list' => "events#get_event_list"
       end
     end
   end

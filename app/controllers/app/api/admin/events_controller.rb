@@ -86,6 +86,28 @@ class App::Api::Admin::EventsController < AdminController
    @event_currency = @event.currency.present? ? @event.currency: ''
   end
 
+  # using this method show datatable records 
+  def get_event_list
+    events= []
+    recordsTotal = Event.all.count
+    search_value = params[:search][:value]
+    
+    if search_value.present?
+      @events = Event.where('name ILIKE ? OR address ILIKE ?', "%#{search_value}%", "%#{search_value}%").order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
+      recordsFiltered = @events.count
+    else
+      @events = Event.all.order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
+      recordsFiltered = recordsTotal
+    end
+
+    @events.each do |event|
+        @event_image = event.attachments.present? ? event.attachments.first.attachment.url : '';
+        events <<{:title=>event.title, :id=>event.id, :description=>event.description, :ticket_available => event.ticket_available, :cost=> event.cost, :currency=> event.currency, :contact_number => event.contact_number, :image=> @event_image,
+        :cost_offers=>event.cost_offers, :email=>event.email, :event_type => event.event_type, :status=> event.status, :event_categories=> event.categories.map(&:name), :event_added_by=>event.user.user_name,:event_location=>event.locations.first.address, :event_date=>event.event_adver_dates.map{|a| [a.start_date, a.end_date]}.flatten!}
+    end
+    render :json => {:data=>events, :status=>true ,:draw=>params[:draw], :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
+  end
+
   private
 
   def event_params
