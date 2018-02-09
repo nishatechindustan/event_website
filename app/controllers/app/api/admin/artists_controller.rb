@@ -10,10 +10,10 @@ class App::Api::Admin::ArtistsController < AdminController
     search_value = params[:search][:value]
     
     if search_value.present?
-      @artists = Artist.where('name ILIKE ? OR address ILIKE ?', "%#{search_value}%", "%#{search_value}%").order(:created_at).limit(params[:length].to_i).offset(params[:start].to_i)
+      @artists = Artist.where('name ILIKE ? OR address ILIKE ?', "%#{search_value}%", "%#{search_value}%").order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
       recordsFiltered = @artists.count
     else
-      @artists = Artist.all.order(:created_at).limit(params[:length].to_i).offset(params[:start].to_i)
+      @artists = Artist.all.order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
       recordsFiltered = recordsTotal
     end
 

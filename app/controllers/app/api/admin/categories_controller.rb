@@ -62,10 +62,10 @@ class App::Api::Admin::CategoriesController < AdminController
     search_value = params[:search][:value]
     
     if search_value.present?
-      @categories = Category.where('name ILIKE ?', "%#{search_value}%").order(:created_at).limit(params[:length].to_i).offset(params[:start].to_i)
+      @categories = Category.where('name ILIKE ?', "%#{search_value}%").order("created_at DESC").limit(params[:length].to_i).offset(params[:start].to_i)
       recordsFiltered = @categories.count
     else
-      @categories = Category.all.order(:created_at).limit(params[:length].to_i).offset(params[:start].to_i)
+      @categories = Category.all.order("created_at DESC").limit(params[:length].to_i).offset(params[:start].to_i)
       recordsFiltered = recordsTotal
     end
 
