@@ -55,6 +55,30 @@ class App::Api::Admin::UsersController < AdminController
 		end
   	end
 
+  	#get_users_list nethods for get all list of users for datatable
+
+  	def get_users_list
+  		current_user = User.find_by_auth_token(request.headers["Authorization"])
+  		recordsTotal = (User.all - [current_user]).count
+  		#recordsTotal =User.all.count
+  		users = []
+	    search_value = params[:search][:value]
+	    
+	    if search_value.present?
+	      @users = User.where('user_name ILIKE ? OR first_name ILIKE ?', "%#{search_value}%", "%#{search_value}%").order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i).where.not(id: current_user)
+	      recordsFiltered = @users.count
+	    else
+	      @users = User.where.not(id: current_user).order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
+	      recordsFiltered = recordsTotal
+	    end
+
+	   @users.each do |user|
+	      @user_image =  user.attachments.present? ? user.attachments.first.attachment.url : '/default_image.jpg';
+	      users<<{:auth_token=>user.auth_token, :id=>user.id, :email=>user.email, :user_name => user.user_name, :provider=>user.provider,:uid=>user.uid, :first_name=> user.first_name, :last_name=> user.last_name, :is_admin => user.is_admin, :image=> @user_image}
+	    end
+	    render :json => {:data=>users, :status=>true ,:draw=>params[:draw], :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
+  	end
+
 
 	# strong parameters for users prams
 	def users_params
