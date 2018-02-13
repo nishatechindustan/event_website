@@ -20,7 +20,31 @@ class App::Api::Admin::UsersController < AdminController
 
 	# users profile
 	def show
-		@user = User.find(params[:id])
+		# user = User.find_by_auth_token(params[:auth_token])
+		user = User.first
+		user_events = user.events
+		@user_image =  user.attachments.present? ? user.attachments.first.attachment.url : '';
+	    @user = {:auth_token=>user.auth_token, :id=>user.id, :email=>user.email, :user_name => user.user_name, :first_name=> user.first_name, :last_name=> user.last_name, :is_admin => user.is_admin, :image=> @user_image}
+	    if user_events.present?
+	    	events = []
+	    	user_events.each do|event|
+
+	    		@event_image = @event.attachments.present? ? @event.attachments.first.attachment.url : '/default_image.jpg';
+
+			    @event_currency = @event.currency.present? ? @event.currency: ''
+
+			    event_date_time = {:start_date=>@event_dates.start_date,:end_date=>@event_dates.end_date ,:start_time=>@event_dates.start_time,:end_time=>@event_dates.end_time}
+
+			    event_location= {:address=>@event_location.address,:latitude=>@event_location.latitude,:longitude=>@event_location.longitude,:venue=>@event_location.venue}
+
+			    events<< {:event_categories=>@event_categories.map(&:name), :event_location=>event_location,
+			      :event_artists=>@event_artists.map(&:name),:event_date=>event_date_time,:event=>@event, :event_image=>@event_image}
+			end
+			user_events = {:status=> true, :data=> events}
+	    else
+	    	user_events = {:status=> true, :data=>"No Event Are Present."}
+	    end
+	    render :json =>{data: @user, user_events: user_events, status: 200}
 	end
 
 	#update user

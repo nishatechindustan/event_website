@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     	get "listusers"	=> "users#all_users"
     	delete "listusers/:id" => "users#delete_user" , as: "user_delete"
       patch "/users/update" => "users#update"
-      get  "/profile/:id" => "users#show", as: "user_profile"
+      get  "/profile" => "users#show", as: "user_profile"
       post '/users_list' => "users#get_users_list"
 
       #categories Api's
