@@ -9,7 +9,7 @@ class App::Api::Admin::DashboardsController < AdminController
 		    response = {:status=>true, :user_count=>user_count,:event_count=>event_count }
 		else
 			user_events = current_user.events
-			response = {:status=>true, events=>user_events}
+			response = {:status=>true, :events=>user_events}
 		end
 
 		render :json=>response
