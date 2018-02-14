@@ -2,7 +2,7 @@ class App::Api::Admin::DashboardsController < AdminController
 
 	
 	def usr_event
-		current_user = User.second#User.find_by_auth_token(params[:auth_token])
+		current_user = User.find_by_auth_token(params[:auth_token])
 	    if current_user.is_admin
 		    user_count = (User.all - [current_user]).count
 		    event_count = Event.all.count
