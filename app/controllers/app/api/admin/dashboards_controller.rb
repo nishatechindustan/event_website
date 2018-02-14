@@ -8,7 +8,7 @@ class App::Api::Admin::DashboardsController < AdminController
 		    event_count = Event.all.count
 		    response = {:status=>true, :user_count=>user_count,:event_count=>event_count }
 		else
-			user_events = current_user.events
+			user_events = current_user.events.count
 			response = {:status=>true, :events=>user_events}
 		end
 
