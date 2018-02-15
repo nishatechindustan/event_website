@@ -99,7 +99,7 @@ class App::Api::Admin::EventsController < AdminController
     search_value = params[:search][:value]
     
     if search_value.present?
-      @events = Event.where('name ILIKE ? OR address ILIKE ?', "%#{search_value}%", "%#{search_value}%").order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
+      @events = Event.where('title ILIKE ?', "%#{search_value}%").order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
       recordsFiltered = @events.count
     else
       @events = Event.all.order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
