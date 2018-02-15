@@ -103,4 +103,9 @@ class Event < ApplicationRecord
 		end
 	end
 
+
+	def self.fetch_today_event
+		Event.find_by_sql("select * from events inner join event_adver_dates on events.id=event_adver_dates.event_adver_datable_id and '#{Time.zone.now.beginning_of_day}' BETWEEN event_adver_dates.start_date AND event_adver_dates.end_date").count
+	end
+
 end
