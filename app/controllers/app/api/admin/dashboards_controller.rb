@@ -6,7 +6,8 @@ class App::Api::Admin::DashboardsController < AdminController
 	    if current_user.is_admin
 		    user_count = (User.all - [current_user]).count
 		    event_count = Event.all.count
-		    response = {:status=>true, :user_count=>user_count,:event_count=>event_count }
+		    today_events = Event.where(:created_at => (Date.today.beginning_of_day..Date.today.end_of_day)).count
+		    response = {:status=>true, :user_count=>user_count,:event_count=>event_count, :today_event=>today_events }
 		else
 			user_events = current_user.events.count
 			response = {:status=>true, :events=>user_events}
