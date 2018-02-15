@@ -7,9 +7,7 @@ class App::Api::Admin::DashboardsController < AdminController
 		    user_count = (User.all - [current_user]).count
 		    event_count = Event.all.count
 		    today_events = Event.fetch_today_event
-		    
 		    response = {:status=>true, :user_count=>user_count,:event_count=>event_count, :today_event=>today_events }
-			debugger
 		else
 			user_events = current_user.events.count
 			response = {:status=>true, :events=>user_events}
