@@ -20,8 +20,8 @@ class App::Api::Admin::UsersController < AdminController
 
 	# users profile
 	def show
-		# user = User.find_by_auth_token(params[:auth_token])
-		user = User.first
+		 user = User.find_by_auth_token(params[:auth_token])
+		# user = User.first
 		user_events = user.events
 		@user_image =  user.attachments.present? ? user.attachments.first.attachment.url : '';
 	    @user = {:auth_token=>user.auth_token, :id=>user.id, :email=>user.email, :user_name => user.user_name, :first_name=> user.first_name, :last_name=> user.last_name, :is_admin => user.is_admin, :image=> @user_image}
