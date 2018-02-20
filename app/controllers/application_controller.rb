@@ -7,14 +7,6 @@ class ApplicationController < ActionController::API
    before_action :configure_permitted_parameters, if: :devise_controller?
    #before_action :cors_set_access_control_headers
 
-
-  # def cors_set_access_control_headers
-  #   headers['Access-Control-Allow-Origin'] = 'http://localhost'
-  #   headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE, OPTIONS'
-  #   headers['Access-Control-Allow-Headers'] = '*, X-Requested-With, X-Prototype-Version, X-CSRF-Token, Content-Type'
-  #   headers['Access-Control-Max-Age'] = "1728000"
-  # end
-
   def check_email
     if !current_user.is_admin? && current_user.uid.present?
       if params[:controller]!="users"

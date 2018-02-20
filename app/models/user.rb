@@ -1,19 +1,16 @@
 class User < ApplicationRecord
 
-	#attr_accessor :user_location
- #TOKEN_DELIMITER = ':'
- #acts_as_token_authenticatable
- #uniqueness: true, :validatable,:confirmable,
-  validates :user_name , presence: true,  length: { maximum: 50 }
-  # after_initialize :check_email, :if => :new_record?
-  has_many :locations,  as: :locatable , :dependent => :destroy
-  has_many :events,dependent: :destroy
-  has_many :attachments, as: :attachable, dependent: :destroy
-  validates_uniqueness_of    :email,     :case_sensitive => false, :allow_blank => true, :scope=>:provider, :if => :email_changed?
-  validates_format_of    :email,    :with  => Devise.email_regexp, :allow_blank => true, :if => :email_changed?
-  validates_presence_of    :password, :on=>:create
-  validates_confirmation_of    :password, :on=>:create
-  validates_length_of    :password, :within => Devise.password_length, :allow_blank => true
+	validates :user_name , presence: true,  length: { maximum: 50 }
+	# after_initialize :check_email, :if => :new_record?
+	has_many :locations,  as: :locatable , :dependent => :destroy
+	has_many :events,dependent: :destroy
+	has_many :attachments, as: :attachable, dependent: :destroy
+
+	validates_uniqueness_of :email, :case_sensitive => false, :allow_blank => true, :scope=>:provider, :if => :email_changed?
+	validates_format_of  :email, :with  => Devise.email_regexp, :allow_blank => true, :if => :email_changed?
+	validates_presence_of  :password, :on=>:create
+	validates_confirmation_of :password, :on=>:create
+	validates_length_of  :password, :within => Devise.password_length, :allow_blank => true
 
 	devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :omniauthable, :omniauth_providers => [:google_oauth2,:facebook]
@@ -47,8 +44,8 @@ class User < ApplicationRecord
 		end
 	end
 
-  def self.from_socialLogin(auth)
-    where(provider: auth[:provider], uid: auth[:uid]).first_or_create do |user|
+  	def self.from_socialLogin(auth)
+    	where(provider: auth[:provider], uid: auth[:uid]).first_or_create do |user|
 			if auth[:email].blank?
 				if auth[:provider].include?("facebook")
 					user.email = auth[:uid] + "@facebook.com"
@@ -62,10 +59,10 @@ class User < ApplicationRecord
 			user.user_name = auth[:user_name]
 			user.first_name = auth[:first_name]
 			user.last_name = auth[:last_name]
-      user.auth_token = auth[:auth_token]
-      #user.skip_confirmation!
+      		user.auth_token = auth[:auth_token]
+      		#user.skip_confirmation!
 		end
-  end
+  	end
 
 	# def self.from_omniauth(auth)
 	# 	find_by(provider: auth['provider'], uid: auth['uid']) || create_user_from_omniauth(auth)
@@ -79,10 +76,6 @@ class User < ApplicationRecord
 	# 		)
 	# end
 
-	def address_changed?
-    	!address.blank?
-	end
-
 	# def add_remove_locations
 	# 	debugger
 	# 	if self.locations.present?
@@ -94,21 +87,12 @@ class User < ApplicationRecord
 	# end
 
     def authentication_token
-      self.auth_token= SecureRandom.urlsafe_base64
-      self.save
+      	auth_token= SecureRandom.urlsafe_base64
+        self.update_columns(auth_token: auth_token)
     end
 
     def self.digest(token)
       Digest::SHA1.hexdigest(token.to_s)
     end
-
-    def check_email
-    #   debugger
-    #   user = User.find_by(:uid=> self.uid, :provider=> self.provider)
-    #   if user.present?
-    #       validates :email , presence: true, uniqueness: true
-    #   else
-    #     validates :email , presence: true
-    #   end
-    end
+    
 end

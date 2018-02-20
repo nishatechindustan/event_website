@@ -16,6 +16,4 @@ class ConfirmationsController < Devise::ConfirmationsController
       render :json=> {status: "false", message: "Envalid  conformation Token "}
     end
   end
-
-
 end

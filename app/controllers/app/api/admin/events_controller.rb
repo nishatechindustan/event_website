@@ -94,24 +94,24 @@ class App::Api::Admin::EventsController < AdminController
 
   # using this method show datatable records 
   def get_event_list
-    events= []
-    recordsTotal = Event.all.count
-    search_value = params[:search][:value]
-    
-    if search_value.present?
-      @events = Event.where('title ILIKE ?', "%#{search_value}%").order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
-      recordsFiltered = @events.count
-    else
-      @events = Event.all.order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
-      recordsFiltered = recordsTotal
-    end
+    events = Event.evnt_list(params)
 
-    @events.each do |event|
-        @event_image = event.attachments.present? ? event.attachments.first.attachment.url : '/default_image.jpg';
-        events <<{:title=>event.title, :id=>event.id, :description=>event.description, :ticket_available => event.ticket_available, :cost=> event.cost, :currency=> event.currency, :contact_number => event.contact_number, :image=> @event_image,
-        :cost_offers=>event.cost_offers, :email=>event.email, :event_type => event.event_type, :status=> event.status, :event_categories=> event.categories.map(&:name), :event_added_by=>event.user.user_name,:event_location=>event.locations.first.address, :event_date=>event.event_adver_dates.map{|a| [a.start_date, a.end_date]}.flatten!}
+    render :json => {:data=>events[:events], :status=>true ,:draw=>params[:draw], :recordsTotal=>events[:recordsTotal], :recordsFiltered=>events[:recordsFiltered]}
+  end
+
+  def event_list
+    param_type =params[:event_type] 
+
+    if param_type.present?
+      if param_type.include?("passed")
+        events = Event.passed_event(params)
+
+      else
+        events= Event.evnt_list(params)
+      end
     end
-    render :json => {:data=>events, :status=>true ,:draw=>params[:draw], :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
+    
+    render :json => {:data=>events[:events], :status=>true ,:draw=>params[:draw], :recordsTotal=>events[:recordsTotal], :recordsFiltered=>events[:recordsFiltered]}
   end
 
   private
