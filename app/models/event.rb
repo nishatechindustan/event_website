@@ -162,16 +162,16 @@ class Event < ApplicationRecord
 	    end
 
 	    return {:events=>events, :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
-		
 	end
 
 	def self.search_query(params)
 		if params[:search][:value].present?
-			query = "select * from events where events.title like '%#{params[:search][:value]}%' ORDER BY events.created_at DESC LIMIT '#{params[:length].to_i}' offset '#{params[:start].to_i}' "
+			Event.find_by_sql("select * from events where events.title like '%#{params[:search][:value]}%' ORDER BY events.created_at DESC LIMIT '#{params[:length].to_i}' offset '#{params[:start].to_i}'")
 
+		
 		else
 
-			query = "select * from events inner join event_adver_dates on events.id=event_adver_dates.event_adver_datable_id and '#{Time.zone.now.beginning_of_day}'>event_adver_dates.start_date ORDER BY events.created_at DESC LIMIT '#{params[:length].to_i}' offset '#{params[:start].to_i}' "
+			Event.find_by_sql("select * from events inner join event_adver_dates on events.id=event_adver_dates.event_adver_datable_id and '#{Time.zone.now.beginning_of_day}'>event_adver_dates.start_date ORDER BY events.created_at DESC LIMIT '#{params[:length].to_i}' offset '#{params[:start].to_i}'")
 		end
 	end
 	    
