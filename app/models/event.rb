@@ -152,7 +152,7 @@ class Event < ApplicationRecord
 
 	def self.passed_event(params)
 		recordsTotal = Event.all.count
-		@events = search_query(params))
+		@events = search_query(params)
 		recordsFiltered = @events.count
 		events = []
 		@events.each do |event|
