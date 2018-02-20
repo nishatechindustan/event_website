@@ -105,7 +105,6 @@ class App::Api::Admin::EventsController < AdminController
     if param_type.present?
       if param_type.include?("passed")
         events = Event.passed_event(params)
-
       else
         events= Event.evnt_list(params)
       end

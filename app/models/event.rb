@@ -161,7 +161,6 @@ class Event < ApplicationRecord
 	    end
 
 	    return {:events=>events, :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
-
 		
 	end
 

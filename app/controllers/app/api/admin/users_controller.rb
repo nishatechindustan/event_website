@@ -1,7 +1,7 @@
 class App::Api::Admin::UsersController < AdminController
 
 	# callbacks
-	before_action :get_user, only: [:delete_user]
+	before_action :get_user, only: [:delete_user, :edit]
 
 	def all_users
 	  	current_user = User.find_by_auth_token(params[:auth_token])

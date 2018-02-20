@@ -85,6 +85,9 @@ class User < ApplicationRecord
 	# 	self.locations.create(user_location)
 	# 	end
 	# end
+	def address_changed?
+    	!address.blank?
+	end
 
     def authentication_token
       	auth_token= SecureRandom.urlsafe_base64
