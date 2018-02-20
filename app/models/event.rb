@@ -151,8 +151,9 @@ class Event < ApplicationRecord
 
 
 	def self.passed_event(params)
-		
-		@events = Event.find_by_sql(search_query(params))
+		recordsTotal = Event.all.count
+		@events = search_query(params))
+		recordsFiltered = @events.count
 		events = []
 		@events.each do |event|
 	        @event_image = event.attachments.present? ? event.attachments.first.attachment.url : '/default_image.jpg';
