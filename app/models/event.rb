@@ -113,11 +113,14 @@ class Event < ApplicationRecord
     	recordsTotal = Event.all.count
     	search_value = params[:search][:value]
     	event_type = params[:event_type]
+    	
     	if event_type.present?
 			if event_type.include?("free")
 				event_type = 0
+				recordsTotal = Event.where(:event_type=>0).count
 			elsif event_type.include?("paid")
 				event_type= 1
+				recordsTotal = Event.where(:event_type=>0).count
 			end
 		end
 
@@ -151,6 +154,7 @@ class Event < ApplicationRecord
 
 
 	def self.passed_event(params)
+		
 		recordsTotal = searchQuery
 
 		if params[:search][:value].present?
@@ -162,9 +166,6 @@ class Event < ApplicationRecord
 			@events = Event.find_by_sql("select * from events inner join event_adver_dates on events.id=event_adver_dates.event_adver_datable_id and '#{Time.zone.now.beginning_of_day}'>event_adver_dates.start_date and '#{Time.zone.now.beginning_of_day}'>event_adver_dates.end_date ORDER BY events.created_at DESC LIMIT '#{params[:length].to_i}' offset '#{params[:start].to_i}'")
 			recordsFiltered =recordsTotal
 		end
-
-		#@events = search_query(params)
-		# recordsFiltered = @events.count
 		events = []
 		@events.each do |event|
 	        @event_image = event.attachments.present? ? event.attachments.first.attachment.url : '/default_image.jpg';
