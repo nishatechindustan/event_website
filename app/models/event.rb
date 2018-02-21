@@ -105,7 +105,31 @@ class Event < ApplicationRecord
 
 
 	def self.fetch_today_event
+
 		Event.find_by_sql("select * from events inner join event_adver_dates on events.id=event_adver_dates.event_adver_datable_id and '#{Time.zone.now.beginning_of_day}' BETWEEN event_adver_dates.start_date AND event_adver_dates.end_date").count
+	end
+
+	def self.fetch_today_event_list(params)
+		recordsTotal = searchQuery("latest")
+
+		if params[:search][:value].present?
+			@events = Event.find_by_sql("select * from events where events.title like '%#{params[:search][:value]}%' ORDER BY events.created_at DESC LIMIT '#{params[:length].to_i}' offset '#{params[:start].to_i}'")
+			
+			recordsFiltered = @events.count
+		else
+
+			@events = Event.find_by_sql("select * from events inner join event_adver_dates on events.id=event_adver_dates.event_adver_datable_id and '#{Time.zone.now.beginning_of_day}' BETWEEN event_adver_dates.start_date AND event_adver_dates.end_date ORDER BY events.created_at DESC LIMIT '#{params[:length].to_i}' offset '#{params[:start].to_i}'")
+			recordsFiltered =recordsTotal
+		end
+		
+		@events.each do |event|
+	        @event_image = event.attachments.present? ? event.attachments.first.attachment.url : '/default_image.jpg';
+	        events <<{:title=>event.title, :id=>event.id, :description=>event.description, :ticket_available => event.ticket_available, :cost=> event.cost, :currency=> event.currency, :contact_number => event.contact_number, :image=> @event_image,
+	        :cost_offers=>event.cost_offers, :email=>event.email, :event_type => event.event_type, :status=> event.status, :event_categories=> event.categories.map(&:name), :event_added_by=>event.user.user_name,:event_location=>event.locations.first.address, :event_date=>event.event_adver_dates.map{|a| [a.start_date, a.end_date]}.flatten!}
+	    end
+
+	    return {:events=>events, :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
+		
 	end
 
 	def self.evnt_list(params)
@@ -155,7 +179,7 @@ class Event < ApplicationRecord
 
 	def self.passed_event(params)
 		
-		recordsTotal = searchQuery
+		recordsTotal = searchQuery("passed")
 
 		if params[:search][:value].present?
 			@events = Event.find_by_sql("select * from events where events.title like '%#{params[:search][:value]}%' ORDER BY events.created_at DESC LIMIT '#{params[:length].to_i}' offset '#{params[:start].to_i}'")
@@ -176,8 +200,15 @@ class Event < ApplicationRecord
 	    return {:events=>events, :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
 	end
 
-	def self.searchQuery
-		Event.find_by_sql("select * from events inner join event_adver_dates on events.id=event_adver_dates.event_adver_datable_id and '#{Time.zone.now.beginning_of_day}'>event_adver_dates.start_date and '#{Time.zone.now.beginning_of_day}'>event_adver_dates.end_date").count
+	def self.searchQuery(value)
+
+		if value.include?("latest")
+
+			
+		elsif value.include?("passed")
+			Event.find_by_sql("select * from events inner join event_adver_dates on events.id=event_adver_dates.event_adver_datable_id and '#{Time.zone.now.beginning_of_day}'>event_adver_dates.start_date and '#{Time.zone.now.beginning_of_day}'>event_adver_dates.end_date").count
+		end
+
 
 	end
 

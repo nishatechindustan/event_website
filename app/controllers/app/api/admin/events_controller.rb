@@ -99,6 +99,13 @@ class App::Api::Admin::EventsController < AdminController
     render :json => {:data=>events[:events], :status=>true ,:draw=>params[:draw], :recordsTotal=>events[:recordsTotal], :recordsFiltered=>events[:recordsFiltered]}
   end
 
+  def latest_event
+    events = Event.fetch_today_event_list(params)
+
+    render :json => {:data=>events[:events], :status=>true ,:draw=>params[:draw], :recordsTotal=>events[:recordsTotal], :recordsFiltered=>events[:recordsFiltered]}
+    
+  end
+
   def event_list
     param_type =params[:event_type] 
 

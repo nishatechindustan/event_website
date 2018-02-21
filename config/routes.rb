@@ -34,6 +34,7 @@ Rails.application.routes.draw do
         # Events Api's
         resources :events , :only =>[:index, :create, :update, :show, :edit, :destroy]
         post '/all_event_list' => "events#get_event_list"
+        post '/latestEvent' => "events#latest_event"
         post '/event_list/:event_type' => "events#event_list"
 
         # user and events count api's
