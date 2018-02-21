@@ -159,7 +159,7 @@ class Event < ApplicationRecord
 		else
 
 			@events = Event.find_by_sql("select * from events inner join event_adver_dates on events.id=event_adver_dates.event_adver_datable_id and '#{Time.zone.now.beginning_of_day}'>event_adver_dates.start_date and '#{Time.zone.now.beginning_of_day}'>event_adver_dates.end_date ORDER BY events.created_at DESC LIMIT '#{params[:length].to_i}' offset '#{params[:start].to_i}'")
-			recordsFiltered = recordsTotal
+			recordsFiltered = @events.count
 		end
 
 		#@events = search_query(params)
