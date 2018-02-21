@@ -120,7 +120,7 @@ class Event < ApplicationRecord
 				recordsTotal = Event.where(:event_type=>0).count
 			elsif event_type.include?("paid")
 				event_type= 1
-				recordsTotal = Event.where(:event_type=>0).count
+				recordsTotal = Event.where(:event_type=>1).count
 			end
 		end
 
