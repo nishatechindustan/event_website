@@ -151,14 +151,16 @@ class Event < ApplicationRecord
 
 
 	def self.passed_event(params)
-		recordsTotal = Event.all.count
+		# recordsTotal = Event.all.count
 
 		if params[:search][:value].present?
 			@events = Event.find_by_sql("select * from events where events.title like '%#{params[:search][:value]}%' ORDER BY events.created_at DESC LIMIT '#{params[:length].to_i}' offset '#{params[:start].to_i}'")
+			
 			recordsFiltered = @events.count
 		else
 
 			@events = Event.find_by_sql("select * from events inner join event_adver_dates on events.id=event_adver_dates.event_adver_datable_id and '#{Time.zone.now.beginning_of_day}'>event_adver_dates.start_date and '#{Time.zone.now.beginning_of_day}'>event_adver_dates.end_date ORDER BY events.created_at DESC LIMIT '#{params[:length].to_i}' offset '#{params[:start].to_i}'")
+			recordsTotal = @events.count
 			recordsFiltered = @events.count
 		end
 
