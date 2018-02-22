@@ -87,7 +87,6 @@ class App::Api::Admin::UsersController < AdminController
   	def get_users_list
   		current_user = User.find_by_auth_token(request.headers["Authorization"])
   		recordsTotal = (User.all - [current_user]).count
-  		#recordsTotal =User.all.count
   		users = []
 	    search_value = params[:search][:value]
 	    
@@ -123,6 +122,4 @@ class App::Api::Admin::UsersController < AdminController
 	def get_user
 	  @user = User.find params[:id]
 	end
-
-
 end
