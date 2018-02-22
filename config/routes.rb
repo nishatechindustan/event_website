@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   namespace :app do
     namespace :api do
       namespace :admin do
+        
         get "/" => "dashboards#index"
 
         #users Api's
@@ -29,10 +30,12 @@ Rails.application.routes.draw do
         
         # Artists Api's
         resources :artists , :only =>[:index, :create, :update, :destroy, :edit]
+        
         get '/artist_list' =>"artists#get_artist_list"
         
         # Events Api's
         resources :events , :only =>[:index, :create, :update, :show, :edit, :destroy]
+
         post '/all_event_list' => "events#get_event_list"
         post '/latestEvent' => "events#latest_event"
         post '/event_list/:event_type' => "events#event_list"
@@ -40,6 +43,7 @@ Rails.application.routes.draw do
         # user and events count api's
 
         get '/usr_evnt_count'  => "dashboards#usr_event"
+
       end
     end
   end
