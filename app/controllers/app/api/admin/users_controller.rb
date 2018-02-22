@@ -46,7 +46,7 @@ class App::Api::Admin::UsersController < AdminController
 				    event_location= {:address=>@event_location.address,:latitude=>@event_location.latitude,:longitude=>@event_location.longitude,:venue=>@event_location.venue}
 
 				    events<< {:event_categories=>@event_categories.map(&:name), :event_location=>event_location,
-				      :event_artists=>@event_artists.map(&:name),:event_date=>event_date_time,:event=>@event, :event_image=>@event_image}
+				      :event_artists=>@event_artists.map(&:name),:event_date=>event_date_time,:event=>event, :event_image=>@event_image}
 				end
 				user_events = {:status=> true, :data=> events}
 		    else
