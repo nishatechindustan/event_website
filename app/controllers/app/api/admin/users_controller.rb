@@ -63,7 +63,7 @@ class App::Api::Admin::UsersController < AdminController
 						@user.attachments.create(avatar_image_params)
 					end
 				end
-			@user_image =  @user.attachments.present? ? @user.attachments.first.attachment.url : '';
+			@user_image =  @user.attachments.present? ? @user.attachments.first.attachment.url : '/default_image.jpg';
 			userDetails = {:auth_token=>@user.auth_token, :email=>@user.email, :user_name => @user.user_name, :first_name=> @user.first_name, :last_name=> @user.last_name, :is_admin => @user.is_admin, :image=> @user_image}
 			render :json=> {:status=> true, :message=>" Profile updated successfully", :userDetails=>userDetails}
 		 	else
@@ -85,7 +85,7 @@ class App::Api::Admin::UsersController < AdminController
   	#get_users_list nethods for get all list of users for datatable
 
   	def get_users_list
-  		current_user = User.find_by_auth_token(request.headers["Authorization"])
+  		#current_user = User.find_by_auth_token(request.headers["Authorization"])
   		recordsTotal = (User.all - [current_user]).count
   		#recordsTotal =User.all.count
   		users = []
