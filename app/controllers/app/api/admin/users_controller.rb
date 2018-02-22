@@ -32,6 +32,8 @@ class App::Api::Admin::UsersController < AdminController
 		    if user_events.present?
 		    	events = []
 		    	user_events.each do|event|
+		    		@event_categories =  event.categories
+    				@event_artists =  event.artists
 		    		@event_location = event.locations.first
     				@event_dates =    event.event_adver_dates.first
 
