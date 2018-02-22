@@ -38,7 +38,7 @@ Rails.application.routes.draw do
 
         post '/all_event_list' => "events#get_event_list"
         post '/latestEvent' => "events#latest_event"
-        #post '/event_list/:event_type' => "events#event_list"
+        post '/event_list/:event_type' => "events#event_list"
 
         # user and events count api's
 
