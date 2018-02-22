@@ -32,10 +32,12 @@ class App::Api::Admin::UsersController < AdminController
 		    if user_events.present?
 		    	events = []
 		    	user_events.each do|event|
+		    		@event_location = event.locations.first
+    				@event_dates =    event.event_adver_dates.first
 
-		    		@event_image = @event.attachments.present? ? @event.attachments.first.attachment.url : '/default_image.jpg';
+		    		@event_image = event.attachments.present? ? event.attachments.first.attachment.url : '/default_image.jpg';
 
-				    @event_currency = @event.currency.present? ? @event.currency: ''
+				    @event_currency = event.currency.present? ? event.currency: ''
 
 				    event_date_time = {:start_date=>@event_dates.start_date,:end_date=>@event_dates.end_date ,:start_time=>@event_dates.start_time,:end_time=>@event_dates.end_time}
 
