@@ -85,7 +85,7 @@ class App::Api::Admin::UsersController < AdminController
   	#get_users_list nethods for get all list of users for datatable
 
   	def get_users_list
-  		#current_user = User.find_by_auth_token(request.headers["Authorization"])
+  		current_user = User.find_by_auth_token(request.headers["Authorization"])
   		recordsTotal = (User.all - [current_user]).count
   		#recordsTotal =User.all.count
   		users = []
