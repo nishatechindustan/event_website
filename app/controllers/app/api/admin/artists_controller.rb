@@ -50,7 +50,6 @@ class App::Api::Admin::ArtistsController < AdminController
   # update artist with according to id
   def update
     if @artist.update(artist_params)
-      @artists = Artist.all
       if artist_image_param[:attachment].present?
        @artict_image =  @artist.attachments.find_by(:attachable_id => @artist.id, :attachable_type => "Artist")
         if @artict_image.present?

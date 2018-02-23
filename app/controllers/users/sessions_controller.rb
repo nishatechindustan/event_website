@@ -32,6 +32,6 @@ class Users::SessionsController < Devise::SessionsController
 
   def invalid_login_attempt
     warden.custom_failure!
-    render :json=> {:success=>false, :message=>"Error with your login or password"}, :status=>false
+    render :json=> {:status=>false, :message=>"Error with your login or password"}, :status=>false
   end
 end

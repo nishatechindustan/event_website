@@ -12,7 +12,7 @@ class User < ApplicationRecord
 	validates_confirmation_of :password, :on=>:create
 	validates_length_of  :password, :within => Devise.password_length, :allow_blank => true
 
-	devise :database_authenticatable, :registerable,
+	devise :database_authenticatable, :registerable,:confirmable,
          :recoverable, :rememberable, :trackable, :omniauthable, :omniauth_providers => [:google_oauth2,:facebook]
      #after_save :add_remove_locations
 

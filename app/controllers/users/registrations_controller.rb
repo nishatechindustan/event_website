@@ -45,7 +45,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         # sign_in(resource)
         resource.authentication_token
         user_details = {:first_name=>resource.first_name,:last_name=>resource.last_name, :user_name=>resource.user_name,:auth_token=>resource.auth_token,:uid=>resource.uid,:is_admin=>resource.is_admin, :provider=> resource.provider, :email=> resource.email}
-        render :json=> {:status=>true, :userDetails=> user_details}
+        render :json=> {:status=>true, :userDetails=> user_details, :message=>"Your Registration is successful. A verification code has been sent to your email. Please login and provide verification code."}
       else
         render :json=> {:status=>false, :errors=> resource.errors.full_messages}
       #resource.locations.create(user_location_params)
