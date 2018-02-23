@@ -31,9 +31,9 @@ class App::Api::Admin::EventsController < AdminController
               if event_image_param.present?
                @event.attachments.create(event_image_param)
               end
-              render :json=>{:notice=> "Event successfuly added", :status=> true}
+              render :json=>{:message=> "Event successfuly added", :status=> true}
             else
-              render :json=>{:message=>@event.errors.full_messages, :status=> false}
+              render :json=>{:errors=>@event.errors.full_messages, :status=> false}
             end
         else
           render :json=>{:notice=> "Plase provide valid token", :status=> false}
@@ -67,15 +67,15 @@ class App::Api::Admin::EventsController < AdminController
               @event.attachments.create(event_image_param)
             end
           end
-          render :json=>{:notice=> "Event Update successfuly.", :status=> true}
+          render :json=>{:message=> "Event Update successfuly.", :status=> true}
         else
-          render :json=>{:notice=> "something went wrong.", :status=> false, :errors=>@event.errors.full_messages}
+          render :json=>{:status=> false, :errors=>@event.errors.full_messages}
         end
   end
 
   def destroy
     if @event.destroy
-      render :json => {:status=> true, :messages=> "Event has been Deleted successfully.", :data => @event}
+      render :json => {:status=> true, :message=> "Event has been Deleted successfully.", :data => @event}
     else
       render :json => {:status=> false, :messages=> @event.errors.full_messages}
     end
