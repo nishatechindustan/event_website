@@ -61,9 +61,9 @@ class App::Api::Admin::ArtistsController < AdminController
       end
       @artist_image =  @artist.attachments.present? ? @artist.attachments.first.attachment.url : '/default_image.jpg';
       artist = {:name=> @artist.name, :address=> @artist.address, :id=> @artist.id, :description=> @artist.description, :image=> @artist_image}
-      render :json => {:status=> true, :messages=> "Artist has been updated successfully.", :data => artist}
+      render :json => {:status=> true, :message=> "Artist has been updated successfully.", :data => artist}
     else
-      render :json => {:status=> false, :message=>@artist.errors.full_messages}
+      render :json => {:status=> false, :errors=>@artist.errors.full_messages}
     end
   end
 
@@ -79,7 +79,7 @@ class App::Api::Admin::ArtistsController < AdminController
       artist = {:name=> @artist.name, :address=> @artist.address, :id=> @artist.id, :description=> @artist.description, :image=> @artist_image}
      response = {:status=> true, :data=> artist}
     else
-      response = {:status=> false, :messages=> "something went wrong"}
+      response = {:status=> false, :message=> "something went wrong"}
     end
     render :json=> response
   end
@@ -88,9 +88,9 @@ class App::Api::Admin::ArtistsController < AdminController
   def destroy
 
     if @artist.destroy
-      render :json => {:status=> true, :messages=> "Artist has been Deleted successfully.", :data => @artist}
+      render :json => {:status=> true, :message=> "Artist has been Deleted successfully.", :data => @artist}
     else
-      render :json => {:status=> false, :messages=> @artist.errors.full_messages}
+      render :json => {:status=> false, :errors=> @artist.errors.full_messages}
     end
   end
 
