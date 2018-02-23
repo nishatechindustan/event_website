@@ -17,16 +17,16 @@ class App::Api::Admin::CategoriesController < AdminController
 		 if @category.save
 			 render :json => {:status=>true, :message=> "category has been created successfully", :data => @category}
 		 else
-			 render :json => {:status=>false, :data=> @category.errors.full_messages}
+			 render :json => {:status=>false, :errors=> @category.errors.full_messages}
 		 end
 	end
 
 	# delete category
 	def destroy
 		if @category.destroy
-			render :json => {:status=> true, :messages=> "Category has been Deleted successfully.", :data => @category}
+			render :json => {:status=> true, :message=> "Category has been Deleted successfully.", :data => @category}
 		else
-			render :json => {:status=> false, :messages=> @category.errors.full_messages}
+			render :json => {:status=> false, :errors=> @category.errors.full_messages}
 		end
 	end
 
@@ -36,7 +36,7 @@ class App::Api::Admin::CategoriesController < AdminController
 	      category = {:name=> @category.name,:id=> @category.id}
 	      response = {:status=> true, :data=> category}
 	    else
-	      response = {:status=> false, :messages=> "something went wrong"}
+	      response = {:status=> false, :message=> "something went wrong"}
 	    end
 	    render :json=> response
 	end
@@ -47,7 +47,7 @@ class App::Api::Admin::CategoriesController < AdminController
 		if @category.update(:name => params[:name])
 			response =  {:message =>"category update successfully", :status=> true}
 		else
-			response = {:message=> @category.errors.full_messages,  :status=> false}
+			response = {:errors=> @category.errors.full_messages,  :status=> false}
 		end
 		render :json =>response
 	end
