@@ -98,7 +98,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { :host => 'eventwebsite.herokuapp.com', port: 80}
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    user_name:      'ashish.techindustan@gmail.com',
+    user_name:      'Ashish.techindustan@gmail.com',
     password:       'Ashish@123',
     domain:         'techindustan.com',
     address:       'smtp.gmail.com',

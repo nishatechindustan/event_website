@@ -10,7 +10,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource/sign_in
   def create
-
     if params[:registration][:uid].present? && params[:registration][:provider].present?
       @user = User.find_by(:uid => params[:registration][:uid])
       if @user.present?

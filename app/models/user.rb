@@ -97,5 +97,13 @@ class User < ApplicationRecord
     def self.digest(token)
       Digest::SHA1.hexdigest(token.to_s)
     end
+
+    def self.send_reset_password_instructions
+      raw, enc = Devise.token_generator.generate(self.class, :reset_password_token)
+	  self.reset_password_token   = enc
+	  self.reset_password_sent_at = Time.now.utc
+	  self.save(validate: false)
+	    	
+    end
     
 end

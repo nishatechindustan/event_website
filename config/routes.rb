@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 	
 	
   # delete "/users/sign_out" => "users#destroy"
-  devise_for :users, :controllers => {confirmations: 'confirmations',registrations: "users/registrations", sessions: "users/sessions", omniauth_callbacks: 'callbacks' }
+  devise_for :users, :controllers => {confirmations: 'confirmations',registrations: "users/registrations", sessions: "users/sessions", omniauth_callbacks: 'callbacks',passwords: 'users/passwords' }
   #namespace "api/v1", :as=>:api do
   
   namespace :app do
