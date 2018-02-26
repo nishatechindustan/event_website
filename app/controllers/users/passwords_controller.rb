@@ -1,6 +1,6 @@
 class Users::PasswordsController < Devise::PasswordsController
 	prepend_before_action :require_no_authentication
-	append_before_action :assert_reset_token_passed, only: :edit
+	# append_before_action :assert_reset_token_passed, only: :edit
 
 
 	def create
@@ -13,10 +13,17 @@ class Users::PasswordsController < Devise::PasswordsController
 		end
 	end
 
-	
+	def update
+
+	end
 
 	def user_params
 	  	params.require(:email)
+	end
+
+	def password_params
+		params.require(:users).permit!
+		
 	end
  
 end
