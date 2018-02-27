@@ -10,7 +10,7 @@ class App::Api::Admin::ArtistsController < AdminController
     search_value = params[:search][:value]
     
     if search_value.present?
-      @artists = Artist.where('name ILIKE ? OR address ILIKE ?', "%#{search_value}%", "%#{search_value}%").order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
+      @artists = Artist.where('name ILIKE ? OR address ILIKE ? OR artist_type ILIKE ?', "%#{search_value}%", "%#{search_value}%","%#{search_value}%").order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
       recordsFiltered = @artists.count
     else
       @artists = Artist.all.order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
@@ -20,7 +20,7 @@ class App::Api::Admin::ArtistsController < AdminController
     @artists.each do |artist|
       
       @artist_image =  artist.attachments.present? ? artist.attachments.first.attachment.url : '/default_image.jpg';
-      artists<<{:id=>artist.id, :name=>artist.name, :address=> artist.address, :description=>artist.description, :image=> @artist_image}
+      artists<<{:id=>artist.id, :name=>artist.name, :address=> artist.address, :description=>artist.description, :artist_type=> artist.artist_type, :image=> @artist_image}
     end
     render :json => {:data=>artists, :status=>true ,:draw=>params[:draw], :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
   end
@@ -38,7 +38,7 @@ class App::Api::Admin::ArtistsController < AdminController
         @artist.attachments.create(artist_image_param)
       end
       @artist_image =  @artist.attachments.present? ? @artist.attachments.first.attachment.url : '/default_image.jpg';
-      artist = {:name=> @artist.name, :address=> @artist.address, :id=> @artist.id, :description=> @artist.description, :image=> @artist_image}
+      artist = {:name=> @artist.name, :address=> @artist.address, :id=> @artist.id, :description=> @artist.description,:artist_type=> @artist.artist_type, :image=> @artist_image}
       render :json => {:status=> true, :message=> "New artist was added successfully.", :data => artist}
     else
       render :json => {:status=> false, :errors=>@artist.errors.full_messages}
@@ -59,7 +59,7 @@ class App::Api::Admin::ArtistsController < AdminController
         end
       end
       @artist_image =  @artist.attachments.present? ? @artist.attachments.first.attachment.url : '/default_image.jpg';
-      artist = {:name=> @artist.name, :address=> @artist.address, :id=> @artist.id, :description=> @artist.description, :image=> @artist_image}
+      artist = {:name=> @artist.name, :address=> @artist.address, :id=> @artist.id, :description=> @artist.description,:artist_type=> @artist.artist_type, :image=> @artist_image}
       render :json => {:status=> true, :message=> "Artist has been updated successfully.", :data => artist}
     else
       render :json => {:status=> false, :errors=>@artist.errors.full_messages}
@@ -75,7 +75,7 @@ class App::Api::Admin::ArtistsController < AdminController
   def edit
     if @artist.present?
       @artist_image = @artist.attachments.present? ? @artist.attachments.first.attachment.url : '/default_image.jpg';
-      artist = {:name=> @artist.name, :address=> @artist.address, :id=> @artist.id, :description=> @artist.description, :image=> @artist_image}
+      artist = {:name=> @artist.name, :address=> @artist.address, :id=> @artist.id, :description=> @artist.description, :artist_type=> @artist.artist_type, :image=> @artist_image}
      response = {:status=> true, :data=> artist}
     else
       response = {:status=> false, :message=> "something went wrong"}
