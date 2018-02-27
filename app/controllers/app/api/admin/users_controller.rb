@@ -18,7 +18,7 @@ class App::Api::Admin::UsersController < AdminController
 		@user_image =  @user.attachments.present? ? @user.attachments.first.attachment.url : '/default_image.jpg';
 		user = {:auth_token=>@user.auth_token, :id=>@user.id, :email=>@user.email, :user_name => @user.user_name, :first_name=> @user.first_name, :last_name=> @user.last_name, :is_admin => @user.is_admin, :image=> @user_image}
 
-		render :json =>{result: user, status: 200}
+		render :json =>{data: user, status: true}
 	end
 
 	# users profile
