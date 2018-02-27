@@ -102,7 +102,7 @@ class App::Api::Admin::ArtistsController < AdminController
 
   # using strong paramter for saved records
   def artist_params
-    params.require(:artists).permit(:name, :address, :description)
+    params.require(:artists).permit(:name, :address, :description, :artist_type)
   end
 
   def artist_image_param
