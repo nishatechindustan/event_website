@@ -13,7 +13,7 @@ class ConfirmationsController < Devise::ConfirmationsController
       render :json => {:status=> true, :message=> "Email has been already confirmed"}
 
     else
-      render :json=> {:status=> false,:message=> "Envalid  conformation Token "}
+      render :json=> {:status=> false,:message=> "Envalid  confirmation Token "}
     end
   end
 end
