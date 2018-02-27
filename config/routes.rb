@@ -18,7 +18,7 @@ Rails.application.routes.draw do
         patch "/users/update" => "users#update"
         get  "/profile" => "users#show", as: "user_profile"
         post '/users_list' => "users#get_users_list"
-  	    get  "/users/setting" => "users#edit"
+  	    post  "/users/setting" => "users#edit"
 
         #categories Api's
         get 'categorylist' => "categories#index"
