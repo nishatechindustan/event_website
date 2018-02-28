@@ -70,7 +70,7 @@ class App::Api::Admin::CategoriesController < AdminController
 	    end
 
 	    @categories.each do |category|
-	      categories<<{:id=>category.id, :name=>category.name}
+	      categories<<{:id=>category.id, :name=>category.name, :status=>category.status}
 	    end
 	    render :json => {:data=>categories, :status=>true ,:draw=>params[:draw], :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
 	end

@@ -20,7 +20,7 @@ class App::Api::Admin::ArtistsController < AdminController
     @artists.each do |artist|
       
       @artist_image =  artist.attachments.present? ? artist.attachments.first.attachment.url : '/default_image.jpg';
-      artists<<{:id=>artist.id, :name=>artist.name, :address=> artist.address, :description=>artist.description, :type=> artist.artist_type, :image=> @artist_image}
+      artists<<{:id=>artist.id, :name=>artist.name, :address=> artist.address, :description=>artist.description, :type=> artist.artist_type, :image=> @artist_image, :status=>artist.status}
     end
     render :json => {:data=>artists, :status=>true ,:draw=>params[:draw], :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
   end
