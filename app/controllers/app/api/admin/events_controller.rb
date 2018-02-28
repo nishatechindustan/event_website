@@ -2,7 +2,7 @@ class App::Api::Admin::EventsController < AdminController
 
   # callbacks
   before_action :get_category_and_artist ,only:[:create,:new, :edit, :update, :show]
-  before_action :get_event_id ,only:[:edit, :destroy, :update ,:show]
+  before_action :get_event_id ,only:[:edit, :destroy, :update ,:show, :change_status]
   before_action :get_event_data ,only:[:edit, :update, :show]
   
   def index
@@ -118,6 +118,11 @@ class App::Api::Admin::EventsController < AdminController
     end
     
     render :json => {:data=>events[:events], :status=>true ,:draw=>params[:draw], :recordsTotal=>events[:recordsTotal], :recordsFiltered=>events[:recordsFiltered]}
+  end
+
+  def change_status
+    response = Event.changeStatus(@event)
+    render :json=>response
   end
 
   private

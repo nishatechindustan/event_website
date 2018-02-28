@@ -1,7 +1,7 @@
 class App::Api::Admin::ArtistsController < AdminController
     
     #callbacks
-  before_action :get_artist, only: [:show, :update,:destroy, :edit]
+  before_action :get_artist, only: [:show, :update,:destroy, :edit, :change_status]
 
   #show all Artist
   def index
@@ -91,6 +91,11 @@ class App::Api::Admin::ArtistsController < AdminController
     else
       render :json => {:status=> false, :errors=> @artist.errors.full_messages}
     end
+  end
+
+  def change_status
+    response = Artist.changeStatus(@artist)
+    render :json=>response
   end
 
   private

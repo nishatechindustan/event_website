@@ -100,13 +100,13 @@ class User < ApplicationRecord
     def self.changeStatus(user)
     	if user.status==true
     		user.update(:status=>false)
+    		message = "User has been Deactivate successfully"
     	else
     		user.update(:status=>true)
+    		message = "User has been Activate successfully"
     	end
 
-    	return {:status=>true, :message=>"User Status has been updated successfully"}
-    		
-    	
+    	return {:status=>true, :message=>message}
     end
 
    #  def self.send_reset_password_instructions

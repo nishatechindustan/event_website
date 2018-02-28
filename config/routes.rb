@@ -28,11 +28,13 @@ Rails.application.routes.draw do
         delete  'categories/:id' => "categories#destroy"
         post '/category_list' =>"categories#get_category_list"
         get '/categories/:id/edit' => "categories#edit"
+        post  "/categories/activeDeactve" => "categories#change_status"
         
         # Artists Api's
         resources :artists , :only =>[:index, :create, :update, :destroy, :edit]
         
         get '/artist_list' =>"artists#get_artist_list"
+        post  "/artists/activeDeactve" => "artists#change_status"
         
         # Events Api's
         resources :events , :only =>[:index, :create, :update, :show, :edit, :destroy]
@@ -40,6 +42,7 @@ Rails.application.routes.draw do
         post '/all_event_list' => "events#get_event_list"
         post '/latestEvent' => "events#latest_event"
         post '/event_list/:event_type' => "events#event_list"
+        post  "/events/activeDeactve" => "events#change_status"
 
         # user and events count api's
 

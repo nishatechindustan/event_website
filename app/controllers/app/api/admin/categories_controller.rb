@@ -1,7 +1,7 @@
 class App::Api::Admin::CategoriesController < AdminController
 
 	#callbacks
-	before_action :get_category, only: [:edit, :show, :update,:destroy]
+	before_action :get_category, only: [:edit, :show, :update,:destroy,:change_status]
 
 	#show all category
 	def index
@@ -13,12 +13,12 @@ class App::Api::Admin::CategoriesController < AdminController
 
 	#add new catagory
 	def create
-		 @category = Category.new(name: params[:name])
-		 if @category.save
-			 render :json => {:status=>true, :message=> "category has been created successfully", :data => @category}
-		 else
-			 render :json => {:status=>false, :errors=> @category.errors.full_messages}
-		 end
+		@category = Category.new(name: params[:name])
+		if @category.save
+			render :json => {:status=>true, :message=> "category has been created successfully", :data => @category}
+		else
+			render :json => {:status=>false, :errors=> @category.errors.full_messages}
+		end
 	end
 
 	# delete category
@@ -57,22 +57,27 @@ class App::Api::Admin::CategoriesController < AdminController
 	end
 
 	def get_category_list
-	categories= []
-    recordsTotal = Category.all.count
-    search_value = params[:search][:value]
-    
-    if search_value.present?
-      @categories = Category.where('name ILIKE ?', "%#{search_value}%").order("created_at DESC").limit(params[:length].to_i).offset(params[:start].to_i)
-      recordsFiltered = @categories.count
-    else
-      @categories = Category.all.order("created_at DESC").limit(params[:length].to_i).offset(params[:start].to_i)
-      recordsFiltered = recordsTotal
-    end
+		categories= []
+	    recordsTotal = Category.all.count
+	    search_value = params[:search][:value]
+	    
+	    if search_value.present?
+	      @categories = Category.where('name ILIKE ?', "%#{search_value}%").order("created_at DESC").limit(params[:length].to_i).offset(params[:start].to_i)
+	      recordsFiltered = @categories.count
+	    else
+	      @categories = Category.all.order("created_at DESC").limit(params[:length].to_i).offset(params[:start].to_i)
+	      recordsFiltered = recordsTotal
+	    end
 
-    @categories.each do |category|
-      categories<<{:id=>category.id, :name=>category.name}
-    end
-    render :json => {:data=>categories, :status=>true ,:draw=>params[:draw], :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
+	    @categories.each do |category|
+	      categories<<{:id=>category.id, :name=>category.name}
+	    end
+	    render :json => {:data=>categories, :status=>true ,:draw=>params[:draw], :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
+	end
+
+	def change_status
+		response = Category.changeStatus(@category)
+		render :json=>response
 	end
 
 

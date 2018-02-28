@@ -211,4 +211,16 @@ class Event < ApplicationRecord
 		Event.find_by_sql(query).count
 	end
 
+	def self.changeStatus(event)
+    	if event.status==true
+    		event.update(:status=>false)
+    		message = "Event has been Deactivate successfully"
+    	else
+    		event.update(:status=>true)
+    		message = "Event has been Activate successfully"
+    	end
+
+    	return {:status=>true, :message=>message}
+    end
+
 end
