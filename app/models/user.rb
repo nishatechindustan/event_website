@@ -97,6 +97,18 @@ class User < ApplicationRecord
       Digest::SHA1.hexdigest(token.to_s)
     end
 
+    def self.changeStatus(user)
+    	if user.status==true
+    		user.update(:status=>false)
+    	else
+    		user.update(:status=>true)
+    	end
+
+    	return {:status=>true, :message=>"User Status has been updated successfully"}
+    		
+    	
+    end
+
    #  def self.send_reset_password_instructions
    #    raw, enc = Devise.token_generator.generate(self.class, :reset_password_token)
 	  # self.reset_password_token   = enc

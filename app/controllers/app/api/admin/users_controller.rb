@@ -1,7 +1,7 @@
 class App::Api::Admin::UsersController < AdminController
 
 	# callbacks
-	before_action :get_user, only: [:delete_user, :edit]
+	before_action :get_user, only: [:delete_user, :edit, :change_status]
 
 	def all_users
 	  	current_user = User.find_by_auth_token(params[:auth_token])
@@ -111,6 +111,11 @@ class App::Api::Admin::UsersController < AdminController
 	      users<<{:auth_token=>user.auth_token, :id=>user.id, :email=>user.email, :user_name => user.user_name, :provider=>user.provider,:uid=>user.uid, :first_name=> user.first_name, :last_name=> user.last_name, :is_admin => user.is_admin, :image=> @user_image, :status=>user.status}
 	    end
 	    render :json => {:data=>users, :status=>true ,:draw=>params[:draw], :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
+  	end
+
+  	def change_status
+		response = User.changeStatus(@user) 
+		render :json=>response 		
   	end
 
 
