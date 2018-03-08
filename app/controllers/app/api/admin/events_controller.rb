@@ -23,8 +23,8 @@ class App::Api::Admin::EventsController < AdminController
         user = User.find_by_auth_token(params[:auth_token])
         if user.present?
           @event = user.events.new(event_params)
-            @event.category_ids = params[:category_ids].present? ? params[:category_ids].values || ''
-            @event.artist_ids = params[:artist_ids].present? ? params[:artist_ids].values || ''
+            @event.category_ids = params[:category_ids]
+            @event.artist_ids = params[:artist_ids]
             @event.event_location = event_location
             @event.event_dates = event_dates
             if @event.save
