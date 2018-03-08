@@ -213,10 +213,10 @@ class Event < ApplicationRecord
 
 	def self.changeStatus(event)
     	if event.status==true
-    		event.update(:status=>false)
+    		event.update_columns(:status=>false)
     		message = "Event has been Deactivate successfully"
     	else
-    		event.update(:status=>true)
+    		event.update_columns(:status=>true)
     		message = "Event has been Activate successfully"
     	end
 
