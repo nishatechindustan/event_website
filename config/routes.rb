@@ -10,7 +10,9 @@ Rails.application.routes.draw do
     namespace :api do
       namespace :admin do
         
+        # Dashboards Api
         get "/" => "dashboards#index"
+        get '/get_chart_data' => "dashboards#get_chart_data"
 
         #users Api's
         get "listusers" => "users#all_users"
