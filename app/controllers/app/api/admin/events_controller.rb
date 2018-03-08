@@ -36,10 +36,10 @@ class App::Api::Admin::EventsController < AdminController
               render :json=>{:errors=>@event.errors.full_messages, :status=> false}
             end
         else
-          render :json=>{:notice=> "Plase provide valid token", :status=> false}
+          render :json=>{:message=> "Plase provide valid token", :status=> false}
         end
       else
-        render :json =>{:notice=>"Invalid toekn", :status=>false }
+        render :json =>{:message=>"Invalid toekn", :status=>false }
       end
   end
 

@@ -59,7 +59,7 @@ class Event < ApplicationRecord
 	#check category are present or not in the params value or the database.
 	def category_ids_present?
 		if self.category_ids.present?
-			db_categories = Category.where(id: self.category_ids)
+			db_categories = Category.where(id: self.category_ids.values)
 			if db_categories.present?
 				true
 			else
@@ -72,7 +72,7 @@ class Event < ApplicationRecord
 	#check artist are present or not in the params value or database.
 	def artist_ids_present?
 		if self.artist_ids.present?
-			db_artist = Artist.where(id: self.artist_ids)
+			db_artist = Artist.where(id: self.artist_ids.values)
 			if db_artist.present?
 				true
 			else
