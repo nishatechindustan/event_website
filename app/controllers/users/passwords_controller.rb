@@ -9,7 +9,7 @@ class Users::PasswordsController < Devise::PasswordsController
 		    resource = resource.send_reset_password_instructions
 		    render :json=>{:status=>true, :message=> "Reset password send your email address.", :reset_password_token=>resource}
 		else
-			render :json=>{:status=>false, :message=> "Email does not exit Plase provide valid email address."}
+			render :json=>{:status=>false, :message=> "Email does not exit Please provide valid email address."}
 		end
 	end
 
