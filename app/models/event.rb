@@ -76,7 +76,7 @@ class Event < ApplicationRecord
 			if db_artist.present?
 				true
 			else
-				self.errors.add(:category,"not present")
+				self.errors.add(:artist,"not present")
 			end
 		else
 			self.errors.add(:event," Artist Can't be blank, please select at least one")
