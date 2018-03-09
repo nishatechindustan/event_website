@@ -2,7 +2,6 @@ class AdminController < ApplicationController
 #layout 'admin'
  # before_action :authorized?
 
-
   private
   def authorized?
   	if user_signed_in?
