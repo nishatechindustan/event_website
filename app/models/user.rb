@@ -59,6 +59,7 @@ class User < ApplicationRecord
 			user.first_name = auth[:first_name]
 			user.last_name = auth[:last_name]
       		user.auth_token = auth[:auth_token]
+      		user.status = true
       		#user.skip_confirmation!
 		end
   	end

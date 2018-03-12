@@ -14,7 +14,7 @@ class Users::SessionsController < Devise::SessionsController
     if resource.valid_password?(params[:password])
       @user_image =  resource.attachments.present? ? resource.attachments.first.attachment.url : '';
       resource.authentication_token
-      userDetails = {:auth_token=>resource.auth_token, :email=>resource.email, :user_name => resource.user_name, :first_name=> resource.first_name, :last_name=> resource.last_name, :is_admin => resource.is_admin, :image=> @user_image}
+      userDetails = {:auth_token=>resource.auth_token, :email=>resource.email, :user_name => resource.user_name, :first_name=> resource.first_name, :last_name=> resource.last_name, :is_admin => resource.is_admin,:status=>resource.status, :image=> @user_image}
       render :json=> {:status=>true, :userDetails=>userDetails, :message=> "Successfully Login"}
       return
     end
