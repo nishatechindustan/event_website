@@ -26,7 +26,6 @@ class Users::PasswordsController < Devise::PasswordsController
 						response = {:status=>false, :errors=>user.errors.full_messages}	
 					end
 				else
-
 				end
 			else
 				response = {:status=>false, :message => "password and confirm password does not matches."}

@@ -1,6 +1,6 @@
 class App::Api::Admin::ArtistsController < AdminController
     
-    #callbacks
+  #callbacks
   before_action :get_artist, only: [:show, :update,:destroy, :edit, :change_status]
 
   #show all Artist
@@ -10,10 +10,10 @@ class App::Api::Admin::ArtistsController < AdminController
     search_value = params[:search][:value]
     
     if search_value.present?
-      @artists = Artist.where('name ILIKE ? OR address ILIKE ? OR artist_type ILIKE ?', "%#{search_value}%", "%#{search_value}%","%#{search_value}%").order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
+      @artists = Artist.where('name ILIKE ? OR address ILIKE ? OR artist_type ILIKE ?', "%#{search_value}%", "%#{search_value}%","%#{search_value}%").order(sort_column + " " + sort_direction).limit(params[:length].to_i).offset(params[:start].to_i)
       recordsFiltered = @artists.count
     else
-      @artists = Artist.all.order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
+      @artists = Artist.all.order(sort_column + " " + sort_direction).limit(params[:length].to_i).offset(params[:start].to_i)
       recordsFiltered = recordsTotal
     end
 
@@ -112,5 +112,39 @@ class App::Api::Admin::ArtistsController < AdminController
 
   def artist_image_param
     params.require(:artists).permit(:attachment)
+  end
+
+  # def setorder(params)
+  #   column_value  = params[:column]
+  #   case column_value
+  #   when "0"
+  #   {:name, :params[:dir]}
+  #   when "1"
+  #   when "2"
+  #   when "3"
+  #   when "4"
+  #  end   
+    
+  # end
+
+  def sort_column
+    column_value  = params[:order]["0"][:column]
+    case column_value
+    when "0"
+    "name"
+    when "1"
+      "address"
+    when "2"
+      "description"
+    when "3"
+      "artist_type"
+    when "4"
+      "status"
+   end   
+    
+  end
+
+  def sort_direction
+    params[:order]["0"][:dir]
   end
 end

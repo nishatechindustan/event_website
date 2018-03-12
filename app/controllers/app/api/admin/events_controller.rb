@@ -10,11 +10,9 @@ class App::Api::Admin::EventsController < AdminController
     events= []
       @events.each do |event|
         @event_image = event.attachments.present? ? event.attachments.first.attachment.url : '/default_image.jpg';
-
         events <<{:title=>event.title, :id=>event.id, :description=>event.description, :ticket_available => event.ticket_available, :cost=> event.cost, :currency=> event.currency, :contact_number => event.contact_number, :image=> @event_image,
         :cost_offers=>event.cost_offers, :email=>event.email, :event_type => event.event_type, :status=> event.status, :event_categories=> event.categories.map(&:name), :event_added_by=>event.user.user_name,:event_location=>event.locations.first.address,:latitude=>event.locations.first.latitude,:longitude=>event.locations.first.longitude, :event_date=>event.event_adver_dates.map{|a| [a.start_date, a.end_date]}.flatten!}
       end
-
     render :json=>{:status=>true, :events=>events}
   end
 
@@ -23,24 +21,24 @@ class App::Api::Admin::EventsController < AdminController
         user = User.find_by_auth_token(params[:auth_token])
         if user.present?
           @event = user.events.new(event_params)
-            @event.category_ids = params[:category_ids]
-            @event.artist_ids = params[:artist_ids]
-            @event.event_location = event_location
-            @event.event_dates = event_dates
-            if @event.save
-              if event_image_param.present?
-               @event.attachments.create(event_image_param)
-              end
-              render :json=>{:message=> "Event successfuly added", :status=> true}
-            else
-              render :json=>{:errors=>@event.errors.full_messages, :status=> false}
+          @event.category_ids = params[:category_ids]
+          @event.artist_ids = params[:artist_ids]
+          @event.event_location = event_location
+          @event.event_dates = event_dates
+          if @event.save
+            if event_image_param.present?
+             @event.attachments.create(event_image_param)
             end
+            render :json=>{:message=> "Event successfuly added", :status=> true}
+          else
+            render :json=>{:errors=>@event.errors.full_messages, :status=> false}
+          end
         else
           render :json=>{:message=> "Plase provide valid token", :status=> false}
         end
-      else
-        render :json =>{:message=>"Invalid toekn", :status=>false }
-      end
+    else
+      render :json =>{:message=>"Invalid toekn", :status=>false }
+    end
   end
 
   def edit
@@ -50,27 +48,26 @@ class App::Api::Admin::EventsController < AdminController
     event_location= {:address=>@event_location.address,:latitude=>@event_location.latitude,:longitude=>@event_location.longitude,:venue=>@event_location.venue}
     response = {:event_categories=>@event_categories.map(&:id), :event_location=>event_location,
       :event_artists=>@event_artists.map(&:id),:event_date=>event_date_time,:event=>@event, :event_image=>@event_image}
-
     render :json=>{:status=> true,:data=>response}
   end
 
   def update
-      @event.category_ids = params[:category_ids]
-      @event.artist_ids = params[:artist_ids]
-      @event.event_location = event_location
-      @event.event_dates = event_dates
-        if @event.update(event_params)
-          if event_image_param.present?
-            if @event.attachments.present?
-              @event.attachments.update(event_image_param)
-            else
-              @event.attachments.create(event_image_param)
-            end
-          end
-          render :json=>{:message=> "Event Update successfuly.", :status=> true}
+    @event.category_ids = params[:category_ids]
+    @event.artist_ids = params[:artist_ids]
+    @event.event_location = event_location
+    @event.event_dates = event_dates
+    if @event.update(event_params)
+      if event_image_param.present?
+        if @event.attachments.present?
+          @event.attachments.update(event_image_param)
         else
-          render :json=>{:status=> false, :errors=>@event.errors.full_messages}
+          @event.attachments.create(event_image_param)
         end
+      end
+      render :json=>{:message=> "Event Update successfuly.", :status=> true}
+    else
+      render :json=>{:status=> false, :errors=>@event.errors.full_messages}
+    end
   end
 
   def destroy
@@ -88,27 +85,22 @@ class App::Api::Admin::EventsController < AdminController
     event_location= {:address=>@event_location.address,:latitude=>@event_location.latitude,:longitude=>@event_location.longitude,:venue=>@event_location.venue}
     response = {:event_categories=>@event_categories.map(&:name), :event_location=>event_location,
       :event_artists=>@event_artists.map(&:name),:event_date=>event_date_time,:event=>@event, :event_image=>@event_image}
-
     render :json=>{:status=> true,:data=>response}
   end
 
   # using this method show datatable records 
   def get_event_list
     events = Event.evnt_list(params)
-
     render :json => {:data=>events[:events], :status=>true ,:draw=>params[:draw], :recordsTotal=>events[:recordsTotal], :recordsFiltered=>events[:recordsFiltered]}
   end
 
   def latest_event
     events = Event.fetch_today_event_list(params)
-
     render :json => {:data=>events[:events], :status=>true ,:draw=>params[:draw], :recordsTotal=>events[:recordsTotal], :recordsFiltered=>events[:recordsFiltered]}
-    
   end
 
   def event_list
     param_type =params[:event_type] 
-
     if param_type.present?
       if param_type.include?("passed")
         events = Event.passed_event(params)
@@ -116,7 +108,6 @@ class App::Api::Admin::EventsController < AdminController
         events= Event.evnt_list(params)
       end
     end
-    
     render :json => {:data=>events[:events], :status=>true ,:draw=>params[:draw], :recordsTotal=>events[:recordsTotal], :recordsFiltered=>events[:recordsFiltered]}
   end
 
