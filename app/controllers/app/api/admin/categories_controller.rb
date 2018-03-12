@@ -66,6 +66,7 @@ class App::Api::Admin::CategoriesController < AdminController
 	      recordsFiltered = @categories.count
 	    else
 	      @categories = Category.all.order(sort_column + " " + sort_direction).limit(params[:length].to_i).offset(params[:start].to_i)
+	      
 	      recordsFiltered = recordsTotal
 	    end
 
@@ -95,6 +96,8 @@ class App::Api::Admin::CategoriesController < AdminController
     		"name"
     	when 2
       		"status"
+      	else
+      		"created_at"
    		end   
 	end
 

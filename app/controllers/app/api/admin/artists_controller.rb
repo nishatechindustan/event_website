@@ -140,7 +140,9 @@ class App::Api::Admin::ArtistsController < AdminController
       "artist_type"
     when "4"
       "status"
-   end   
+    else
+      "created_at"
+    end   
   end
 
   def sort_direction
