@@ -131,7 +131,7 @@ class App::Api::Admin::ArtistsController < AdminController
     column_value  = params[:order]["0"][:column]
     case column_value
     when "0"
-    "name"
+      "name"
     when "1"
       "address"
     when "2"
@@ -141,7 +141,6 @@ class App::Api::Admin::ArtistsController < AdminController
     when "4"
       "status"
    end   
-    
   end
 
   def sort_direction

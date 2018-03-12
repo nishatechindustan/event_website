@@ -98,7 +98,7 @@ class App::Api::Admin::CategoriesController < AdminController
    		end   
 	end
 
- 	 def sort_direction
+ 	def sort_direction
     	params[:order].first[:dir]
   	end
 end
