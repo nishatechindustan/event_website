@@ -13,7 +13,7 @@ class User < ApplicationRecord
 	validates_length_of  :password, :within => Devise.password_length, :allow_blank => true
 	devise :database_authenticatable, :registerable,:confirmable,
          :recoverable, :rememberable, :trackable, :omniauthable, :omniauth_providers => [:google_oauth2,:facebook]
-     #after_save :add_remove_locations
+     after_save :set_status
 
 	def self.from_omniauth(auth)
 		where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
@@ -44,7 +44,7 @@ class User < ApplicationRecord
 	end
 
   	def self.from_socialLogin(auth)
-    	where(provider: auth[:provider], uid: auth[:uid]).first_or_create do |user|
+    	where(provider: auset_statusth[:provider], uid: auth[:uid]).first_or_create do |user|
 			if auth[:email].blank?
 				if auth[:provider].include?("facebook")
 					user.email = auth[:uid] + "@facebook.com"
@@ -91,7 +91,7 @@ class User < ApplicationRecord
 
     def authentication_token
       	auth_token= SecureRandom.urlsafe_base64
-        self.update_columns(auth_token: auth_token, status:true)
+        self.update_columns(auth_token: auth_token)
     end
 
     def self.digest(token)
@@ -108,6 +108,11 @@ class User < ApplicationRecord
     	end
 
     	return {:status=>true, :message=>message}
+    end
+
+    def set_status
+    	self.update_columns(status: true)
+    	
     end
 
    #  def self.send_reset_password_instructions
