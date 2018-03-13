@@ -91,7 +91,7 @@ class User < ApplicationRecord
 
     def authentication_token
       	auth_token= SecureRandom.urlsafe_base64
-        self.update_columns(auth_token: auth_token)
+        self.update_columns(auth_token: auth_token, status:true)
     end
 
     def self.digest(token)
