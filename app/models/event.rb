@@ -196,7 +196,6 @@ class Event < ApplicationRecord
     end
 
     def self.get_total_record(current_user,params)
-    	search_value = params[:search][:value]
     	event_type = params[:event_type]
     	if current_user.is_admin
 	    	if event_type.present? 
@@ -211,17 +210,7 @@ class Event < ApplicationRecord
 				 recordsTotal = Event.all.count
 			end
 		else
-			if event_type.present? 
-				if event_type.include?("free")
-					event_type = 0
-					recordsTotal = Event.joins(:user).where("users.is_admin=false AND events.event_type='0'").count
-				elsif event_type.include?("paid")
-					event_type= 1
-					recordsTotal = Event.joins(:user).where("users.is_admin=false AND events.event_type='1'").count
-				end
-			else
-				recordsTotal = current_user.events.count
-			end
+			recordsTotal = current_user.events.count
 		end
     end
 
@@ -238,7 +227,7 @@ class Event < ApplicationRecord
 		      recordsFiltered = @events.count
 
 		    elsif event_type.present?
-
+		    		event_type = event_type.include?("free") ? '0' :'1'
 		    	@events = Event.where(:event_type=>event_type).order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
 		      recordsFiltered = @events.count
 		    
@@ -248,25 +237,14 @@ class Event < ApplicationRecord
 		      recordsFiltered = recordsTotal
 		    end
 		else
-		if search_value.present? && event_type.present?
-		      @events = current_user.events.where('title ILIKE ?', "%#{search_value}%").where(:event_type=>event_type).order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
-		      recordsFiltered = @events.count
+			if search_value.present?
+		      	@events = current_user.events.where('title ILIKE ?', "%#{search_value}%").where(:event_type=>event_type).order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
+		      	recordsFiltered = @events.count
+			else
+		      	@events = current_user.events.order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
+			    recordsFiltered = recordsTotal
 
-		    elsif search_value.present?
-		    	 @events = current_user.events.where('title ILIKE ?', "%#{search_value}%").order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
-		      recordsFiltered = @events.count
-
-		    elsif event_type.present?
-
-		    	@events = current_user.events.where(:event_type=>event_type).order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
-		      recordsFiltered = @events.count
-		    
-		    else
-
-		      @events = current_user.events.order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
-		      recordsFiltered = recordsTotal
-		    end
-
+			end
 		end
 	    return @events,recordsFiltered
     end
