@@ -132,46 +132,18 @@ class Event < ApplicationRecord
 		
 	end
 
-	def self.evnt_list(params)
+	def self.evnt_list(params,token)
 		events= []
-    	recordsTotal = Event.all.count
-    	search_value = params[:search][:value]
-    	event_type = params[:event_type]
-    	
-    	if event_type.present?
-			if event_type.include?("free")
-				event_type = 0
-				recordsTotal = Event.where(:event_type=>0).count
-			elsif event_type.include?("paid")
-				event_type= 1
-				recordsTotal = Event.where(:event_type=>1).count
-			end
+    	current_user = User.find_by(:auth_token=>token)
+		recordsTotal = get_total_record(current_user,params)
+	    @events,recordsFiltered = get_event_list(params,recordsTotal,current_user)
+	    if @events.present?
+		    @events.each do |event|
+		        @event_image = event.attachments.present? ? event.attachments.first.attachment.url : '/default_image.jpg';
+		        events <<{:title=>event.title, :id=>event.id, :description=>event.description, :ticket_available => event.ticket_available, :cost=> event.cost, :currency=> event.currency, :contact_number => event.contact_number, :image=> @event_image,
+		        :cost_offers=>event.cost_offers, :email=>event.email, :event_type => event.event_type, :status=> event.status, :event_categories=> event.categories.map(&:name), :event_added_by=>event.user.user_name,:event_location=>event.locations.first.address,:latitude=>event.locations.first.latitude,:longitude=>event.locations.first.longitude,:event_date=>event.event_adver_dates.map{|a| [a.start_date, a.end_date]}.flatten!}
+		    end
 		end
-
-	    if search_value.present? && event_type.present?
-	      @events = Event.where('title ILIKE ?', "%#{search_value}%").where(:event_type=>event_type).order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
-	      recordsFiltered = @events.count
-
-	    elsif search_value.present?
-	    	 @events = Event.where('title ILIKE ?', "%#{search_value}%").order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
-	      recordsFiltered = @events.count
-
-	    elsif event_type.present?
-
-	    	@events = Event.where(:event_type=>event_type).order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
-	      recordsFiltered = @events.count
-	    
-	    else
-
-	      @events = Event.all.order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
-	      recordsFiltered = recordsTotal
-	    end
-
-	    @events.each do |event|
-	        @event_image = event.attachments.present? ? event.attachments.first.attachment.url : '/default_image.jpg';
-	        events <<{:title=>event.title, :id=>event.id, :description=>event.description, :ticket_available => event.ticket_available, :cost=> event.cost, :currency=> event.currency, :contact_number => event.contact_number, :image=> @event_image,
-	        :cost_offers=>event.cost_offers, :email=>event.email, :event_type => event.event_type, :status=> event.status, :event_categories=> event.categories.map(&:name), :event_added_by=>event.user.user_name,:event_location=>event.locations.first.address,:latitude=>event.locations.first.latitude,:longitude=>event.locations.first.longitude,:event_date=>event.event_adver_dates.map{|a| [a.start_date, a.end_date]}.flatten!}
-	    end
 
 	    return {:events=>events, :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
 	end
@@ -223,4 +195,79 @@ class Event < ApplicationRecord
     	return {:status=>true, :message=>message}
     end
 
+    def self.get_total_record(current_user,params)
+    	search_value = params[:search][:value]
+    	event_type = params[:event_type]
+    	if current_user.is_admin
+	    	if event_type.present? 
+				if event_type.include?("free")
+					event_type = 0
+					recordsTotal = Event.where(:event_type=>0).count
+				elsif event_type.include?("paid")
+					event_type= 1
+					recordsTotal = Event.where(:event_type=>1).count
+				end
+			else
+				 recordsTotal = Event.all.count
+			end
+		else
+			if event_type.present? 
+				if event_type.include?("free")
+					event_type = 0
+					recordsTotal = Event.joins(:user).where("users.is_admin=false AND events.event_type='0'").count
+				elsif event_type.include?("paid")
+					event_type= 1
+					recordsTotal = Event.joins(:user).where("users.is_admin=false AND events.event_type='1'").count
+				end
+			else
+				recordsTotal = current_user.events.count
+			end
+		end
+    end
+
+    def self.get_event_list(params,recordsTotal,current_user)
+    	search_value = params[:search][:value]
+    	event_type = params[:event_type]
+    	if current_user.is_admin
+	    	if search_value.present? && event_type.present?
+		      @events = Event.where('title ILIKE ?', "%#{search_value}%").where(:event_type=>event_type).order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
+		      recordsFiltered = @events.count
+
+		    elsif search_value.present?
+		    	 @events = Event.where('title ILIKE ?', "%#{search_value}%").order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
+		      recordsFiltered = @events.count
+
+		    elsif event_type.present?
+
+		    	@events = Event.where(:event_type=>event_type).order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
+		      recordsFiltered = @events.count
+		    
+		    else
+
+		      @events = Event.all.order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
+		      recordsFiltered = recordsTotal
+		    end
+		else
+		if search_value.present? && event_type.present?
+		      @events = current_user.events.where('title ILIKE ?', "%#{search_value}%").where(:event_type=>event_type).order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
+		      recordsFiltered = @events.count
+
+		    elsif search_value.present?
+		    	 @events = current_user.events.where('title ILIKE ?', "%#{search_value}%").order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
+		      recordsFiltered = @events.count
+
+		    elsif event_type.present?
+
+		    	@events = current_user.events.where(:event_type=>event_type).order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
+		      recordsFiltered = @events.count
+		    
+		    else
+
+		      @events = current_user.events.order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
+		      recordsFiltered = recordsTotal
+		    end
+
+		end
+	    return @events,recordsFiltered
+    end
 end

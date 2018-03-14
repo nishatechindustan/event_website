@@ -90,7 +90,8 @@ class App::Api::Admin::EventsController < AdminController
 
   # using this method show datatable records 
   def get_event_list
-    events = Event.evnt_list(params)
+    token = request.headers['token']
+    events = Event.evnt_list(params, token)
     render :json => {:data=>events[:events], :status=>true ,:draw=>params[:draw], :recordsTotal=>events[:recordsTotal], :recordsFiltered=>events[:recordsFiltered]}
   end
 
