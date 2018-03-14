@@ -101,12 +101,13 @@ class App::Api::Admin::EventsController < AdminController
   end
 
   def event_list
+    token = request.headers['token']
     param_type =params[:event_type] 
     if param_type.present?
       if param_type.include?("passed")
         events = Event.passed_event(params)
       else
-        events= Event.evnt_list(params)
+        events= Event.evnt_list(params,token)
       end
     end
     render :json => {:data=>events[:events], :status=>true ,:draw=>params[:draw], :recordsTotal=>events[:recordsTotal], :recordsFiltered=>events[:recordsFiltered]}
