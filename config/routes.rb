@@ -31,6 +31,7 @@ Rails.application.routes.draw do
         post '/category_list' =>"categories#get_category_list"
         get '/categories/:id/edit' => "categories#edit"
         post  "/categories/activeDeactve" => "categories#change_status"
+        get 'delete_categories' => 'categories#delete_categories'
         
         # Artists Api's
         resources :artists , :only =>[:index, :create, :update, :destroy, :edit]
