@@ -107,5 +107,5 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
 
-end
 Paperclip::Attachment.default_options[:path] = ":rails_root/public/system/:class/:attachment/:id_partition/:filename"
+end
