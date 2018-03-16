@@ -3,14 +3,20 @@ class Attachment < ApplicationRecord
 	#attr_accessor :image_base
 	#before_validation :parse_image
 
-	has_attached_file :attachment, path: ':rails_root/public/assets/:class/:attachment/:id_partition/:style/:filename',
- 		styles: {thumb: "100x100"}
-	validates_attachment_content_type :attachment, content_type: ["image/jpeg", "image/jpg", "image/png", "image/gif"]
-	# ":rails_root/public/system/:rails_env/:class/:attachment/:id_partition/:filename"
+	# has_attached_file :attachment, styles: {thumb: "100x100"}
+	 has_attached_file :attachment, :styles => { :medium => "300x300>", :thumb => "100x100>", :small=>"60x60>" },
+                         :path => ':rails_root/public/system/:class/:id/:style/:filename',
+                         :url => '/system/:class/:id/:style/:filename'
+
+  # has_attached_file :attachment, :path => ":rails_root/storage/#{Rails.env}/attachments/:id/:style/:basename.:extension"
+
+	validates_attachment_content_type :attachment, content_type: ["image/jpeg", "image/jpg", "image/png", "image/gif","application/pdf"]
+
 	# private
 	#  def parse_image
 	# 	 image = Paperclip.io_adapters.for(image_base) image.original_filename = "file.jpg"
 	# 	  self.picture = image
 	#  end
+	# has_attached_file :attachment, path: ':rails_root/image/:class/:attachment/:id_partition/:style/:filename',
+ 		# styles: {thumb: "100x100"}
 end
-#'my/secret/folder/:class/:attachment/:id_partition/:style/:filename'
