@@ -29,6 +29,5 @@ production:
  username: yabydnixmxhvho
  password: 636ba331e22274f5565a0075e0a84c62ff030cc7027a3694f80e9dd45dba7bba
  database: d8akhc79fbnfa6
- # For details on connection pooling, see rails configuration guide
  # http://guides.rubyonrails.org/configuring.html#database-pooling
  pool: 5
