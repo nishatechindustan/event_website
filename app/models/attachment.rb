@@ -11,12 +11,6 @@ class Attachment < ApplicationRecord
   # has_attached_file :attachment, :path => ":rails_root/storage/#{Rails.env}/attachments/:id/:style/:basename.:extension"
 
 	validates_attachment_content_type :attachment, content_type: ["image/jpeg", "image/jpg", "image/png", "image/gif","application/pdf"]
-
-	# private
-	#  def parse_image
-	# 	 image = Paperclip.io_adapters.for(image_base) image.original_filename = "file.jpg"
-	# 	  self.picture = image
-	#  end
 	# has_attached_file :attachment, path: ':rails_root/image/:class/:attachment/:id_partition/:style/:filename',
  		# styles: {thumb: "100x100"}
 end
