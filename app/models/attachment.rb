@@ -14,6 +14,5 @@ class Attachment < ApplicationRecord
   # :url => '/attachments/:class/:id/:style/:filename'
 
 	validates_attachment_content_type :attachment, content_type: ["image/jpeg", "image/jpg", "image/png", "image/gif","application/pdf"]
-	# has_attached_file :attachment, path: ':rails_root/image/:class/:attachment/:id_partition/:style/:filename',
- 		# styles: {thumb: "100x100"}
+	
 end
