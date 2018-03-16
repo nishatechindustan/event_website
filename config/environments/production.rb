@@ -108,3 +108,4 @@ Rails.application.configure do
   }
 
 end
+Paperclip::Attachment.default_options[:path] = ":rails_root/public/system/:class/:attachment/:id_partition/:filename"

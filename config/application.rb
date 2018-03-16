@@ -9,7 +9,6 @@ Bundler.require(*Rails.groups)
 module Myappfgfg
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.assets.enabled = false
     config.load_defaults 5.1
     config.action_dispatch.default_headers = {
       "Access-Control-Allow-Origin" => "*",
