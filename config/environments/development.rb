@@ -118,4 +118,9 @@ Rails.application.configure do
     authentication: :plain,
     enable_starttls_auto: true
   }
+  # config.paperclip_defaults = {
+  #   :url => "/system/:rails_env/:class/:attachment/:id_partition/:style/:filename",
+  #   :path => ":rails_root/public:url"
+  #   }
 end
+
