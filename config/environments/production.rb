@@ -113,9 +113,9 @@ Rails.application.configure do
   #   :s3_host_alias => 's3-us-west-2.amazonaws.com/nutilesblog',
   #   :s3_credentials => "#{Rails.root}/config/s3.yml"
   # }
-  config.paperclip_defaults = {
-    :url => "/system/:rails_env/:class/:attachment/:id_partition/:style/:filename",
-    :path => ":rails_root/public:url"
-    }
+  # config.paperclip_defaults = {
+  #   :url => "/system/:rails_env/:class/:attachment/:id_partition/:style/:filename",
+  #   :path => ":rails_root/public:url"
+  #   }
 end
 

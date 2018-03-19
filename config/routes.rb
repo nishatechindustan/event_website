@@ -13,6 +13,7 @@ Rails.application.routes.draw do
         # Dashboards Api
         get "/" => "dashboards#index"
         get '/get_chart_data' => "dashboards#get_chart_data"
+        get '/usr_evnt_count'  => "dashboards#usr_event"
 
         #users Api's
         get "listusers" => "users#all_users"
@@ -38,6 +39,7 @@ Rails.application.routes.draw do
         
         get '/artist_list' =>"artists#get_artist_list"
         post  "/artists/activeDeactve" => "artists#change_status"
+        get 'delete_artists' => 'artists#delete_artists'
         
         # Events Api's
         resources :events , :only =>[:index, :create, :update, :show, :edit, :destroy]
@@ -46,11 +48,7 @@ Rails.application.routes.draw do
         post '/latestEvent' => "events#latest_event"
         post '/event_list/:event_type' => "events#event_list"
         post  "/events/activeDeactve" => "events#change_status"
-
-        # user and events count api's
-
-        get '/usr_evnt_count'  => "dashboards#usr_event"
-
+        get 'delete_events' => 'events#delete_events'
       end
     end
   end

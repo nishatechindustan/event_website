@@ -98,6 +98,13 @@ class App::Api::Admin::ArtistsController < AdminController
     render :json=>response
   end
 
+  def delete_artists
+    @artists = Artist.where(:id=> params[:artists_ids])
+    if @artists.destroy_all
+      render :json => {:status=> true, :message=> "Artist has been Deleted successfully."}
+    end
+  end
+
   private
 
   # callback use for get artist id before call edit, show, destroy, update
