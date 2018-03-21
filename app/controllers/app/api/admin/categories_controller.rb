@@ -97,7 +97,9 @@ class App::Api::Admin::CategoriesController < AdminController
 	end
 	
 	def sort_column
-    	column_value  = params[:order].first[:column]
+		# column_value  = params[:order].first[:column]
+  #   	params[:order].first[:dir]
+    	column_value  = params[:order]["0"][:column]
     	case column_value
    		when 1
     		"name"
@@ -109,6 +111,6 @@ class App::Api::Admin::CategoriesController < AdminController
 	end
 
  	def sort_direction
-    	params[:order].first[:dir]
+    	params[:order]["0"][:dir]
   	end
 end
