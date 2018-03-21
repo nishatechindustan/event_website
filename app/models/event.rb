@@ -89,7 +89,7 @@ class Event < ApplicationRecord
 			event_loca =  Location.find_by(:locatable_id=> self.id, :locatable_type=>"Event")
 			event_loca.update(event_location)
 		else
-		self.locations.create(event_location)
+			self.locations.create(event_location)
 		end
 	end
 
