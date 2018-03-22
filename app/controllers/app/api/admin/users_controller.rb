@@ -4,7 +4,8 @@ class App::Api::Admin::UsersController < AdminController
 	before_action :get_user, only: [:delete_user, :edit, :change_status]
 
 	def all_users
-	  	current_user = User.find_by_auth_token(params[:auth_token])
+		token = request.headers['token']
+	  	current_user = User.find_by_auth_token(token)
 	    @users = User.all - [current_user]
 	    users= []
 	    @users.each do |user|
