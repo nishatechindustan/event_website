@@ -33,7 +33,7 @@ class User < ApplicationRecord
 	end
 
 	def self.from_socialLogin(auth)
-  	where(provider: auset_statusth[:provider], uid: auth[:uid]).first_or_create do |user|
+  	where(provider: auth[:provider], uid: auth[:uid]).first_or_create do |user|
 			if auth[:email].blank?
 				if auth[:provider].include?("facebook")
 					user.email = auth[:uid] + "@facebook.com"
