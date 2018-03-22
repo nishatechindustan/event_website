@@ -1,6 +1,4 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-   #before_action :configure_sign_in_params, only: [:create]
-   #skip_before_action :verify_authenticity_token, :only => [:destroy,:create]
    prepend_before_action :require_no_authentication, :only => [:create ]
 
   # GET /resource/sign_in
@@ -37,25 +35,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
         end
       end
     else
-      # resource.user_location =  params[:location]
      resource = User.new(sign_up_params)
       if resource.save
-      #  send_conformation_email
-        # sign_in(resource)
         resource.authentication_token
         user_details = {:first_name=>resource.first_name,:last_name=>resource.last_name, :user_name=>resource.user_name,:auth_token=>resource.auth_token,:uid=>resource.uid,:is_admin=>resource.is_admin, :provider=> resource.provider, :email=> resource.email, :status=>resource.status}
         render :json=> {:status=>true, :userDetails=> user_details, :message=>"Your Registration is successful. A verification code has been sent to your email. Please login and provide verification code."}
       else
         render :json=> {:status=>false, :errors=> resource.errors.full_messages}
-      #resource.locations.create(user_location_params)
-        # users_location = resource.locations.new(user_location_params)
-        # if users_location.save
-        # end
-        #flash[:notice] = "user sign success"
-        #redirect_to root_path
-      # else
-      #   flash[:errors] = resource.errors.full_messages
-      #   redirect_to new_user_registration_path
       end
     end
    end
@@ -63,15 +49,4 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def sign_up_params
     params.require(:registration).permit(:user_name, :first_name, :last_name, :email, :password, :password_confirmation, :address)
   end
-  #
-  #  def user_location_params
-  #   params.require(:location).permit(:latitude,:longitude,:address)
-  # end
-  #
-  # def send_conformation_email
-  #   debugger
-  #   UserMailer.registration_confirmation(@user).deliver
-  #   # @user.update(:confirmation_token=>User.digest(@user.confirmation_token))
-  # end
-
 end

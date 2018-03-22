@@ -9,8 +9,6 @@ class App::Api::Admin::CategoriesController < AdminController
 		render :json => {:data=>@categories, :status=>true}
 	end
 
-
-
 	#add new catagory
 	def create
 		@category = Category.new(name: params[:name])

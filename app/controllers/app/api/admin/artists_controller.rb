@@ -121,19 +121,6 @@ class App::Api::Admin::ArtistsController < AdminController
     params.require(:artists).permit(:attachment)
   end
 
-  # def setorder(params)
-  #   column_value  = params[:column]
-  #   case column_value
-  #   when "0"
-  #   {:name, :params[:dir]}
-  #   when "1"
-  #   when "2"
-  #   when "3"
-  #   when "4"
-  #  end   
-    
-  # end
-
   def sort_column
     column_value  = params[:order]["0"][:column]
     case column_value

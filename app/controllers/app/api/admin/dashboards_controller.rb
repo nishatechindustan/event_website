@@ -25,5 +25,4 @@ class App::Api::Admin::DashboardsController < AdminController
 		render :json=>response
 	end
 end
-# today_events = Event.where(:created_at => (Date.today.beginning_of_day..Date.today.end_of_day)).count
 

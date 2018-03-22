@@ -10,9 +10,9 @@ class Event < ApplicationRecord
 	has_many :event_adver_dates , as: :event_adver_datable, :dependent => :destroy
 	has_many :locations, as: :locatable , :dependent => :destroy
 	has_many :event_categories#, dependent: :destroy
-	has_many :categories, through: :event_categories
+	has_many :categories, through: :event_categories , dependent: :destroy
 	has_many :event_artists#, dependent: :destroy
-	has_many :artists, through: :event_artists
+	has_many :artists, through: :event_artists , dependent: :destroy
 	has_many :attachments, as: :attachable, dependent: :destroy
 	validates_presence_of :category_ids_present?
 	validates_presence_of :artist_ids_present?
@@ -246,6 +246,6 @@ class Event < ApplicationRecord
 
 			end
 		end
-	    return @events,recordsFiltered
+    return @events,recordsFiltered
     end
 end

@@ -1,9 +1,5 @@
 class ConfirmationsController < Devise::ConfirmationsController
 
-	# private
-	# def after_confirmation_path_for(resource_name, resource)
-	# 	new_user_session_path
-	# end
   def show
     user = User.find_by(:confirmation_token =>params[:confirmation_token])
     if user.present? && user.confirmed_at.blank?

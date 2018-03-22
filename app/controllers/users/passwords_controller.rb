@@ -1,7 +1,5 @@
 class Users::PasswordsController < Devise::PasswordsController
 	prepend_before_action :require_no_authentication
-	# append_before_action :assert_reset_token_passed, only: :edit
-
 
 	def create
 	    resource = User.find_by(:email=> user_params, :provider=>nil)
