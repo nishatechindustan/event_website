@@ -12,7 +12,7 @@ class User < ApplicationRecord
 	validates_length_of  :password, :within => Devise.password_length, :allow_blank => true
 	devise :database_authenticatable, :registerable,:confirmable,
          :recoverable, :rememberable, :trackable, :omniauthable, :omniauth_providers => [:google_oauth2,:facebook]
-  before_create :set_status
+	before_create :set_status
 
 	def self.from_omniauth(auth)
 		where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
