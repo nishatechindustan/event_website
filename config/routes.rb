@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   
   namespace :app do
     namespace :api do
+
+      ###### Admin Api######
+      
       namespace :admin do
         
         # Dashboards Api
@@ -49,6 +52,16 @@ Rails.application.routes.draw do
         post '/event_list/:event_type' => "events#event_list"
         post  "/events/activeDeactve" => "events#change_status"
         get 'delete_events' => 'events#delete_events'
+      end
+
+      ###### web Api's ##################
+      namespace :web do
+        resources :advertises, :except =>[:new, :edit]
+        resources :contacts, :except =>[:new, :edit, :update]
+        post '/customer_feedback' => "contacts#customer_feedback"
+
+        get '/today_event' => "events#today_event"
+        get '/paid_event' => "events#paid_event"
       end
     end
   end

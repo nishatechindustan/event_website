@@ -112,6 +112,7 @@ class Event < ApplicationRecord
 	def self.fetch_today_event_list(params)
 		recordsTotal = searchQuery("latest")
 		events = []
+
 		if params[:search][:value].present?
 			@events = Event.find_by_sql("select events.* from events inner join event_adver_dates on events.id=event_adver_dates.event_adver_datable_id  where events.title like '%#{params[:search][:value]}%' and '#{Time.zone.now.beginning_of_day}' BETWEEN event_adver_dates.start_date AND event_adver_dates.end_date  ORDER BY events.created_at DESC LIMIT '#{params[:length].to_i}' offset '#{params[:start].to_i}' ")
 			
@@ -129,7 +130,6 @@ class Event < ApplicationRecord
 	    end
 
 	    return {:events=>events, :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
-		
 	end
 
 	def self.evnt_list(params,token)
@@ -233,7 +233,7 @@ class Event < ApplicationRecord
 		    
 		    else
 
-		      @events = Event.all.order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
+		      @events = Event.all.ord events.* er(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
 		      recordsFiltered = recordsTotal
 		    end
 		else
@@ -246,6 +246,21 @@ class Event < ApplicationRecord
 
 			end
 		end
-    return @events,recordsFiltered
+    	return @events,recordsFiltered
+    end
+
+    def self.fetch_event
+    	events =[]
+    	@events = Event.find_by_sql("select events.* from events inner join event_adver_dates on events.id=event_adver_dates.event_adver_datable_id and '#{Time.zone.now.beginning_of_day}' BETWEEN event_adver_dates.start_date AND event_adver_dates.end_date")
+    	if @events.present?
+    	
+	    	@events.each do |event|
+		        @event_image = event.attachments.present? ? event.attachments.first.attachment.url : '/default_image.jpg';
+		        events <<{:title=>event.title, :id=>event.id, :description=>event.description, :ticket_available => event.ticket_available, :cost=> event.cost, :currency=> event.currency, :contact_number => event.contact_number, :image=> @event_image,
+		        :cost_offers=>event.cost_offers, :email=>event.email, :event_type => event.event_type, :status=> event.status, :event_categories=> event.categories.map(&:name), :event_artists=>event.artists.map(&:name), :event_added_by=>event.user.user_name,:event_location=>event.locations.first.address,:latitude=>event.locations.first.latitude,:longitude=>event.locations.first.longitude,:city=>event.locations.first.city,:state=>event.locations.first.state,:venue=>event.locations.first.venue,:country=>event.locations.first.country, :event_date=>event.event_adver_dates.map{|a| [a.start_date, a.end_date]}.flatten!}
+		    end
+		end
+
+	    return events
     end
 end
