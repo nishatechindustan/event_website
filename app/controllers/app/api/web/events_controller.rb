@@ -25,7 +25,7 @@ class App::Api::Web::EventsController < ApplicationController
 		response = {:status=>true,:events=>events, :total_events=> events.count}
 		json_response(response)
 	end
-	
+
 	def event_details
 
 		@event_image = @event.attachments.present? ? @event.attachments.first.attachment.url : '/default_image.jpg';
@@ -34,7 +34,7 @@ class App::Api::Web::EventsController < ApplicationController
  		event_date_time = {:start_date=>@event_dates.start_date,:end_date=>@event_dates.end_date ,:start_time=>@event_dates.start_time,:end_time=>@event_dates.end_time}
 		event_location= {:address=>@event_location.address,:latitude=>@event_location.latitude,:longitude=>@event_location.longitude,:venue=>@event_location.venue,:locality=> @event_location.city,:administrative_area_level_1=>@event_location.state,:country=>@event_location.country}
 
-		event = {:id=>@event.id,:title=>@event.title, :description=> @event.description, :ticket_available=>@event.ticket_available,:cost=>@event.cost, :currency=>@event_currency, :contact_number=>contact_number,:cost_offers=>@event.cost_offers, :email=>@event.email, :event_type=>event_type, :status=>@event.status, :event_categories=>@event_categories.map(&:name), :event_location=>event_location,
+		event = {:id=>@event.id,:title=>@event.title, :description=> @event.description, :ticket_available=>@event.ticket_available,:cost=>@event.cost, :currency=>@event_currency, :contact_number=>@event.contact_number,:cost_offers=>@event.cost_offers, :email=>@event.email, :event_type=>event_type, :status=>@event.status, :event_categories=>@event_categories.map(&:name), :event_location=>event_location,
 		  :event_artists=>@event_artists.map(&:name),:event_date=>event_date_time, :image=>@event_image}
 		 response ={:status=>true, :event=>event}
 		    
