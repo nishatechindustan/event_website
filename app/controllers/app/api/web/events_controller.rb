@@ -39,8 +39,7 @@ class App::Api::Web::EventsController < ApplicationController
 		event_location= {:address=>@event_location.address,:latitude=>@event_location.latitude,:longitude=>@event_location.longitude,:venue=>@event_location.venue,:locality=> @event_location.city,:administrative_area_level_1=>@event_location.state,:country=>@event_location.country}
 
 		event = {:id=>@event.id,:title=>@event.title, :description=> @event.description, :ticket_available=>@event.ticket_available,:cost=>@event.cost, :currency=>@event_currency, :contact_number=>@event.contact_number,:cost_offers=>@event.cost_offers, :email=>@event.email, :event_type=>event_type, :status=>@event.status, :event_categories=>@event_categories.map(&:name), :event_location=>event_location,
-		  :event_artists=>artists}
-,:event_date=>event_date_time, :image=>@event_image}
+		  :event_artists=>artists,:event_date=>event_date_time, :image=>@event_image}
 		 response ={:status=>true, :event=>event}
 		    
 		json_response(response)
