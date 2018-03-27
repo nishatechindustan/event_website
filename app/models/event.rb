@@ -274,6 +274,7 @@ class Event < ApplicationRecord
     end
 
     def self.search(params)
+    	events = []
     	if params[:category_name]
     		@events = Event.joins(:categories).where('categories.name ILIKE ?', "%#{params[:category_name]}%").order('created_at DESC')
     	else
