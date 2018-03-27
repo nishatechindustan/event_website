@@ -276,7 +276,7 @@ class Event < ApplicationRecord
     def self.search(params)
     	events = []
     	if params[:category_name]
-    		@events = Event.joins(:categories).where('categories.name ILIKE ?', "%#{params[:category_name]}%").order('created_at DESC')
+    		@events = Event.joins(:categories).where('categories.name ILIKE ?', "%#{params[:category_name]}%").order('created_at DESC').uniq
     	else
     		@events = Event.all.order('created_at DESC')
     	end
