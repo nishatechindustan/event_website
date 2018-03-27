@@ -15,4 +15,9 @@ class App::Api::Web::EventsController < ApplicationController
 		response = {:status=>true,:events=>events, :total_events=> events.count}
 		json_response(response)
 	end
+	def recent_event
+		events = Event.fetch_event('')	
+		response = {:status=>true,:events=>events, :total_events=> events.count}
+		json_response(response)
+	end
 end

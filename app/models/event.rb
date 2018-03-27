@@ -257,7 +257,10 @@ class Event < ApplicationRecord
     		@events = Event.where(:event_type=>1)
     	elsif params.include?("free")
     		@events = Event.where(:event_type=>0)
+    	else
+    		@events = Event.all.order(:created_at => :desc).limit(10)
     	end
+
     	if @events.present?
     	
 	    	@events.each do |event|
