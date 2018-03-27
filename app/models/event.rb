@@ -233,7 +233,7 @@ class Event < ApplicationRecord
 		    
 		    else
 
-		      @events = Event.all.ord events.* er(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
+		      @events = Event.all.order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
 		      recordsFiltered = recordsTotal
 		    end
 		else
