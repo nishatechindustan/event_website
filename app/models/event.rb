@@ -249,9 +249,15 @@ class Event < ApplicationRecord
     	return @events,recordsFiltered
     end
 
-    def self.fetch_event
+    def self.fetch_event(param)
     	events =[]
-    	@events = Event.find_by_sql("select events.* from events inner join event_adver_dates on events.id=event_adver_dates.event_adver_datable_id and '#{Time.zone.now.beginning_of_day}' BETWEEN event_adver_dates.start_date AND event_adver_dates.end_date")
+    	if params.include?("today")
+    		@events = Event.find_by_sql("select events.* from events inner join event_adver_dates on events.id=event_adver_dates.event_adver_datable_id and '#{Time.zone.now.beginning_of_day}' BETWEEN event_adver_dates.start_date AND event_adver_dates.end_date")
+    	elsif params.include?("paid")
+    		@events = Event.where(:event_type=>1)
+    	elsif params.include?("free")
+    		@events = Event.where(:event_type=>0)
+    	end
     	if @events.present?
     	
 	    	@events.each do |event|
