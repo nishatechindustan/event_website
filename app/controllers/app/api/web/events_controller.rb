@@ -1,6 +1,6 @@
 class App::Api::Web::EventsController < ApplicationController
-  	before_action :get_event_id ,only:[:edit]
-  	before_action :get_event_data ,only:[:edit]
+  	before_action :get_event_id ,only:[:event_details]
+  	before_action :get_event_data ,only:[:event_details]
 
 	def today_event
 		events = Event.fetch_event("today")	
@@ -26,6 +26,7 @@ class App::Api::Web::EventsController < ApplicationController
 		json_response(response)
 	end
 	def event_details
+
 		@event_image = @event.attachments.present? ? @event.attachments.first.attachment.url : '/default_image.jpg';
 		@event_currency = @event.currency.present? ? @event.currency: ''
 		event_date_time = {:start_date=>@event_dates.start_date,:end_date=>@event_dates.end_date ,:start_time=>@event_dates.start_time,:end_time=>@event_dates.end_time}
