@@ -275,9 +275,10 @@ class Event < ApplicationRecord
 
     def self.search(params)
     	events = []
-    	if params[:category_name]
-    		@events = Event.joins(:categories).where('categories.name ILIKE ?', "%#{params[:category_name]}%").order('created_at DESC').uniq
-    	else
+    	if params[:category_id]
+    		#@events = Event.joins(:categories).where('categories.name ILIKE ?', "%#{params[:category_name]}%").order('created_at DESC').uniq
+			@events = Event.joins(:categories).where('categories.id' => params[:category_id]).order('created_at DESC').uniq
+		else
     		@events = Event.all.order('created_at DESC')
     	end
 
@@ -291,8 +292,5 @@ class Event < ApplicationRecord
 		end
 		return events
     end
-    
-    
-
 end
 # @posts = Post.search(params[:search]).order("created_at DESC")
