@@ -23,4 +23,5 @@
 .byebug_history
 
 /eventwebsite.tar.gz
-/db/database.yml
+/config/database.yml
+/.env
