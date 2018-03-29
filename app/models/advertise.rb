@@ -2,6 +2,7 @@ class Advertise < ApplicationRecord
     attr_accessor :advertise_date
     
     validates :organization_name, :contact_person, :contact_number, :event_type, presence: true
+    validates :contact_number, :numericality => {:only_integer => true}
     after_save :add_advertise_dates
 
     def add_advertise_dates
