@@ -4,8 +4,8 @@ class Users::PasswordsController < Devise::PasswordsController
 	def create
 	    resource = User.find_by(:email=> user_params, :provider=>nil)
 		if resource.present?
-		    resource = resource.send_reset_password_instructions
-		    render :json=>{:status=>true, :message=> "Reset password send your email address.", :reset_password_token=>resource}
+			resource.send_reset_password_instructions
+		    render :json=>{:status=>true, :message=> "Reset password send your email address.", :reset_password_token=>resource.reset_password_token}
 		else
 			render :json=>{:status=>false, :message=> "Email does not exit Please provide valid email address."}
 		end

@@ -53,12 +53,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
     #  params.fetch(:registration, {}).permit(:user_name, :first_name, :last_name, :email, :password, :password_confirmation)
     else
       user_sign_up ={
-        user_name: params.fetch(:user_name,{}),
-        email: params.fetch(:email,{}),
-        password: params.fetch(:password,{}),
-        password_confirmation: params.fetch(:password_confirmation,{}),
-        first_name: params.fetch(:first_name,{}),
-        last_name: params.fetch(:last_name, {})
+        user_name: params.fetch(:user_name,''),
+        email: params.fetch(:email,''),
+        password: params.fetch(:password,''),
+        password_confirmation: params.fetch(:password_confirmation,''),
+        first_name: params.fetch(:first_name,''),
+        last_name: params.fetch(:last_name, '')
       }
     end
   end
