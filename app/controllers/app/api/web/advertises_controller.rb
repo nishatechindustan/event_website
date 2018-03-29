@@ -15,7 +15,7 @@ class App::Api::Web::AdvertisesController < ApplicationController
 	def create
 		if params[:advertise_date][:start_date].present? && params[:advertise_date][:end_date].present?
 			advertise = Advertise.new(advertise_params)
-			advertise.advertise_date = advertise_date
+			advertise.advertise_date = advertise_date_data
 			if advertise.save
 				render :json =>{:status=>true, :message=>"Your Details successfully submitted"}
 			else
@@ -28,7 +28,7 @@ class App::Api::Web::AdvertisesController < ApplicationController
 
 	def update
 		if params[:advertise_date][:start_date].present? && params[:advertise_date][:end_date].present?
-			@advertise.advertise_date = advertise_date
+			@advertise.advertise_date = advertise_date_data
 			if @advertise.update(advertise_params)
 				render :json =>{:status=>true, :message=>" Advertise Details successfully Updated"}
 			else
@@ -45,7 +45,7 @@ class App::Api::Web::AdvertisesController < ApplicationController
 		params.require(:advertise).permit(:organization_name, :contact_person, :contact_number, :event_type)
 	end
 
-	def advertise_date
+	def advertise_date_data
     params.require(:advertise_date).permit!
   end
 

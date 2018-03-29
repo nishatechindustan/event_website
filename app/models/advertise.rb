@@ -7,8 +7,8 @@ class Advertise < ApplicationRecord
 
     def add_advertise_dates
 		if self.event_adver_dates.present?
-			advertise_date = Advertise.find_by(event_adver_datable_id: self.id, event_adver_datable_type: "Event")
-			advertise_date.update(advertise_date)
+			advertise = Advertise.find_by(event_adver_datable_id: self.id, event_adver_datable_type: "Advertise")
+			advertise.update(advertise_date)
 		else
 			self.event_adver_dates.create(advertise_date)
 		end
