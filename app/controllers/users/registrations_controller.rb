@@ -8,7 +8,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource/sign_in
   def create
-    if params[:registration][:uid].present? && params[:registration][:provider].present?
+    uid =  params[:registration][:uid].present? && params[:registration][:provider].present? if params[:registration]
+    if (uid) 
       @user = User.find_by(:uid => params[:registration][:uid])
       if @user.present?
         @user_image =  @user.attachments.present? ? @user.attachments.first.attachment.url : '';
@@ -35,7 +36,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         end
       end
     else
-     resource = User.new(sign_up_params)
+      resource = User.new(sign_up_params)
       if resource.save
         resource.authentication_token
         user_details = {:first_name=>resource.first_name,:last_name=>resource.last_name, :user_name=>resource.user_name,:auth_token=>resource.auth_token,:uid=>resource.uid,:is_admin=>resource.is_admin, :provider=> resource.provider, :email=> resource.email, :status=>resource.status}
@@ -47,6 +48,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
    end
   
   def sign_up_params
-    params.require(:registration).permit(:user_name, :first_name, :last_name, :email, :password, :password_confirmation, :address)
+    if params[:registration]
+      params.require(:registration).permit(:user_name, :first_name, :last_name, :email, :password, :password_confirmation, :address) 
+    #  params.fetch(:registration, {}).permit(:user_name, :first_name, :last_name, :email, :password, :password_confirmation)
+    else
+      user_sign_up ={
+        user_name: params.fetch(:user_name,{}),
+        email: params.fetch(:email,{}),
+        password: params.fetch(:password,{}),
+        password_confirmation: params.fetch(:password_confirmation,{}),
+        first_name: params.fetch(:first_name,{}),
+        last_name: params.fetch(:last_name, {})
+      }
+    end
   end
 end
