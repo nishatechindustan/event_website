@@ -17,14 +17,14 @@ class Users::PasswordsController < Devise::PasswordsController
 			if (params[:users][:password]==params[:users][:password_confirmation])
 				user  = User.find_by_reset_password_token(params[:reset_token])
 				if user.present?
-					if user.update(:password=>params[:password], :password_confirmation=>params[:password_confirmation])
+					if user.update(password_params)
 						# send_reset_password_instructions_notification(user.reset_password_token)
 						response = {:status=>true, :message => "We're contacting you to notify you that your password has been changed."}
 					else
 						response = {:status=>false, :errors=>user.errors.full_messages}	
 					end
 				else
-					response = {:status=>false,:message=>"Something went wrong." } 
+					response = {:status=>false,:message=>"Invalid token"  } 
 				end
 			else
 				response = {:status=>false, :message => "password and confirm password does not matches."}
@@ -37,8 +37,9 @@ class Users::PasswordsController < Devise::PasswordsController
 	  	params.require(:email)
 	end
 
-	# def password_params
-	# 	params.require(:users).permit!
-	# end
+	def password_params
+		params.require(:users).permit!
+		
+	end
  
 end
