@@ -1,4 +1,15 @@
 class Advertise < ApplicationRecord
-    validates :organization_name, :contact_person, :contact_number, :event_type, presence: true
+    attr_accessor :advertise_date
     
+    validates :organization_name, :contact_person, :contact_number, :event_type, presence: true
+    after_save :add_advertise_dates
+
+    def add_advertise_dates
+		if self.event_adver_dates.present?
+			advertise_date = Advertise.find_by(event_adver_datable_id: self.id, event_adver_datable_type: "Event")
+			advertise_date.update(advertise_date)
+		else
+			self.event_adver_dates.create(advertise_date)
+		end
+	end
 end
