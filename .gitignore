@@ -25,3 +25,4 @@
 /eventwebsite.tar.gz
 /config/database.yml
 /.env
+coverage
