@@ -12,8 +12,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     if (uid) 
       @user = User.find_by(:uid => params[:registration][:uid])
       if @user.present?
-        @user_image =  @user.attachments.present? ? @user.attachments.first.attachment.url : '';
-        user_details = {:first_name=>@user.first_name,:last_name=>@user.last_name, :user_name=>@user.user_name,:auth_token=>@user.auth_token,:uid=>@user.uid,:is_admin=>@user.is_admin, :provider=> @user.provider,:image=> @user_image, :email=> @user.email, :status=>@user.status}
+        user_details= payload(@user)
         render :json=> {:status=>true , :message=>"you are sign up successfully.",:userDetails=> user_details}
 
       else
@@ -28,10 +27,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
           else
            @user_new.attachments.create(:attachment=>params[:image])# assuming the user model has an image
           end
-            @user_image =  @user_new.attachments.present? ? @user_new.attachments.first.attachment.url : '';
-          if @user_new.email.include?("facebook") || @user_new.email.include?("twitter") || @user_new.email.include?("linkedin")
-          end
-            user_details = {:first_name=>@user_new.first_name,:last_name=>@user_new.last_name, :user_name=>@user_new.user_name,:auth_token=>@user_new.auth_token,:uid=>@user_new.uid,:is_admin=>@user_new.is_admin, :provider=> @user_new.provider,:image=> @user_image, :email=>@user_new.email, :status=>@user_new.status}
+            user_details= payload(@user_new)
           render :json=> {:status=>true , :message=>"you are sign up successfully.",:userDetails=>user_details}
         end
       end
@@ -39,8 +35,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       resource = User.new(sign_up_params)
       resource.skip_confirmation!
       if resource.save
-        resource.authentication_token
-        user_details = {:first_name=>resource.first_name,:last_name=>resource.last_name, :user_name=>resource.user_name,:auth_token=>resource.auth_token,:uid=>resource.uid,:is_admin=>resource.is_admin, :provider=> resource.provider, :email=> resource.email, :status=>resource.status}
+        user_details= payload(resource)
         render :json=> {:status=>true, :userDetails=> user_details, :message=>"Your Registration is successful. A verification code has been sent to your email. Please login and provide verification code."}
       else
         render :json=> {:status=>false, :errors=> resource.errors.full_messages}
@@ -62,5 +57,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
         last_name: params.fetch(:last_name, '')
       }
     end
+  end
+
+  def payload(user)
+    return nil unless user and user.id
+    {
+      auth_token: JsonWebToken.encode({user_id: user.id}),image: user.attachments.present? ? user.attachments.first.attachment.url : '/default_image.jpg',
+      email: user.email, user_name: user.user_name, first_name: user.first_name, last_name: user.last_name, :uid=>user.uid, is_admin: user.is_admin, status: user.status,:provider=> user.provider
+    }
   end
 end

@@ -50,6 +50,7 @@ class User < ApplicationRecord
 			user.last_name = auth[:last_name]
 			user.auth_token = auth[:auth_token]
 			user.status = true
+			user.skip_confirmation!
 		end
 	end
 
@@ -57,14 +58,14 @@ class User < ApplicationRecord
     	!address.blank?
 	end
 
-  def authentication_token
-  	auth_token= SecureRandom.urlsafe_base64
-    self.update_columns(auth_token: auth_token)
-  end
+  # def authentication_token
+  # 	auth_token= SecureRandom.urlsafe_base64
+  #   self.update_columns(auth_token: auth_token)
+  # end
 
-  def self.digest(token)
-    Digest::SHA1.hexdigest(token.to_s)
-  end
+  # def self.digest(token)
+  #   Digest::SHA1.hexdigest(token.to_s)
+  # end
 
   def self.changeStatus(user)
   	if user.status==true
