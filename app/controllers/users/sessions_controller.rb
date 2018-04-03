@@ -13,8 +13,9 @@ class Users::SessionsController < Devise::SessionsController
     
     if resource.valid_password?(params[:password])
       @user_image =  resource.attachments.present? ? resource.attachments.first.attachment.url : '';
-      resource.authentication_token
-      userDetails = {:auth_token=>resource.auth_token, :email=>resource.email, :user_name => resource.user_name, :first_name=> resource.first_name, :last_name=> resource.last_name, :is_admin => resource.is_admin,:status=>resource.status, :image=> @user_image}
+        userDetails= payload(resource)
+      # resource.authentication_token
+      # userDetails = {:auth_token=>auth_token, :email=>resource.email, :user_name => resource.user_name, :first_name=> resource.first_name, :last_name=> resource.last_name, :is_admin => resource.is_admin,:status=>resource.status, :image=> @user_image}
       render :json=> {:status=>true, :userDetails=>userDetails, :message=> "Successfully Login"}
       return
     end
@@ -32,6 +33,16 @@ class Users::SessionsController < Devise::SessionsController
 
   def invalid_login_attempt
     warden.custom_failure!
-    render :json=> {:status=>false, :message=>"Error with your login or password"}, :status=>false
+    render :json=> {:status=>false, :message=>"Invalid Username/Password"}, :status=>false
+  end
+
+  def payload(user)
+    return nil unless user and user.id
+    {
+      auth_token: JsonWebToken.encode({user_id: user.id}),image: user.attachments.present? ? user.attachments.first.attachment.url : '',
+      email: user.email, user_name: user.user_name, first_name: user.first_name, last_name: user.last_name, is_admin: user.is_admin, status: user.status
+      #  :email=>user.email, :user_name => user.user_name, :first_name=> user.first_name, :last_name=> user.last_name, :is_admin => user.is_admin,:status=>user.status, :image=> @user_image}
+      # # auth_token: JsonWebToken.encode({user_id: user.id})
+    }
   end
 end

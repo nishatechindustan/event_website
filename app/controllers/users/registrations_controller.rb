@@ -37,6 +37,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       end
     else
       resource = User.new(sign_up_params)
+      resource.skip_confirmation!
       if resource.save
         resource.authentication_token
         user_details = {:first_name=>resource.first_name,:last_name=>resource.last_name, :user_name=>resource.user_name,:auth_token=>resource.auth_token,:uid=>resource.uid,:is_admin=>resource.is_admin, :provider=> resource.provider, :email=> resource.email, :status=>resource.status}

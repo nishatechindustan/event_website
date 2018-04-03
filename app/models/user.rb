@@ -16,7 +16,7 @@ class User < ApplicationRecord
 	before_create :set_status
 
 	def self.from_omniauth(auth)
-		where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+		where(provider: auth.provider, uid: auth.uid).first_or_create do|user|
 			if auth.info.email.blank?
 				if auth.provider.include?("facebook")
 					user.email = auth.uid + "@facebook.com"

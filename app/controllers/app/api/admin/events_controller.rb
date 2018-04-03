@@ -1,5 +1,5 @@
 class App::Api::Admin::EventsController < AdminController
-
+   before_action :authenticate_request! , only:[:create,:get_event_list,:latest_event,:event_list]
   # callbacks
   before_action :get_category_and_artist ,only:[:create,:new, :edit, :update, :show]
   before_action :get_event_id ,only:[:edit, :destroy, :update ,:show, :change_status]
@@ -17,27 +17,23 @@ class App::Api::Admin::EventsController < AdminController
   end
 
   def create
-    if params[:auth_token].present?
-      user = User.find_by_auth_token(params[:auth_token])
-      if user.present?
-        @event = user.events.new(event_params)
-        @event.category_ids = params[:category_ids]
-        @event.artist_ids = params[:artist_ids]
-        @event.event_location = event_location
-        @event.event_dates = event_dates
-        if @event.save
-          if event_image_param.present?
-           @event.attachments.create(event_image_param)
-          end
-          render :json=>{:message=> "Event successfuly added", :status=> true}
-        else
-          render :json=>{:errors=>@event.errors.full_messages, :status=> false}
+    user||= @current_user
+    if user.present?
+      @event = user.events.new(event_params)
+      @event.category_ids = params[:category_ids]
+      @event.artist_ids = params[:artist_ids]
+      @event.event_location = event_location
+      @event.event_dates = event_dates
+      if @event.save
+        if event_image_param.present?
+         @event.attachments.create(event_image_param)
         end
+        render :json=>{:message=> "Event successfuly added", :status=> true}
       else
-        render :json=>{:message=> "Plase provide valid token", :status=> false}
+        render :json=>{:errors=>@event.errors.full_messages, :status=> false}
       end
     else
-      render :json =>{:message=>"Invalid toekn", :status=>false }
+      render :json=>{:message=> "Something went wrong", :status=> false}
     end
   end
 
@@ -90,8 +86,7 @@ class App::Api::Admin::EventsController < AdminController
 
   # using this method show datatable records 
   def get_event_list
-    token = request.headers['token']
-    events = Event.evnt_list(params, token)
+    events = Event.evnt_list(params, @current_user)
     render :json => {:data=>events[:events], :status=>true ,:draw=>params[:draw], :recordsTotal=>events[:recordsTotal], :recordsFiltered=>events[:recordsFiltered]}
   end
 
@@ -101,15 +96,22 @@ class App::Api::Admin::EventsController < AdminController
   end
 
   def event_list
-    token = request.headers['token']
-    param_type =params[:event_type] 
-    if param_type.present?
-      if param_type.include?("passed")
-        events = Event.passed_event(params)
-      else
-        events= Event.evnt_list(params,token)
-      end
+    # param_type =params[:event_type] 
+    # if param_type.present?
+    #   if param_type.include?("passed")
+    #     events = Event.passed_event(params)
+    #   else
+    #     events= Event.evnt_list(params,@current_user)
+    #   end
+    # end
+    if params[:event_type] && params[:event_type].include?("passed")
+      events = Event.passed_event(params)
+      puts "------------ inside passed-----------"
+    else
+      events= Event.evnt_list(params,@current_user)
+      puts "------------ inside else-----------"
     end
+    
     render :json => {:data=>events[:events], :status=>true ,:draw=>params[:draw], :recordsTotal=>events[:recordsTotal], :recordsFiltered=>events[:recordsFiltered]}
   end
 

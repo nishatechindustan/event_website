@@ -1,12 +1,11 @@
 class App::Api::Admin::UsersController < AdminController
-
 	# callbacks
+
+	before_action :authenticate_request! , :except => [:edit, :delete_user,:change_status]
 	before_action :get_user, only: [:delete_user, :edit, :change_status]
 
 	def all_users
-		token = request.headers['token']
-	  	current_user = User.find_by_auth_token(token)
-	    @users = User.all - [current_user]
+	    @users = User.all - [@current_user]
 	    users= []
 	    @users.each do |user|
 	      @user_image =  user.attachments.present? ? user.attachments.first.attachment.url : '/default_image.jpg';
@@ -23,7 +22,7 @@ class App::Api::Admin::UsersController < AdminController
 
 	# users profile
 	def show
-		 user = User.find_by_auth_token(params[:auth_token])
+		 user||= @current_user
 		# user = User.first
 		if user.present?
 			user_events = user.events
@@ -55,7 +54,7 @@ class App::Api::Admin::UsersController < AdminController
 
 	#update user
 	def update
-		@user= User.find_by(auth_token: params[:auth_token])
+		@user||= @current_user
 		if @user.present?
 			if @user.update(users_params)
 				if params[:user][:attachment].present? && avatar_image_params.present?
@@ -88,10 +87,9 @@ class App::Api::Admin::UsersController < AdminController
   	#get_users_list nethods for get all list of users for datatable
 
   	def get_users_list
-  		current_user = User.find_by_auth_token(request.headers["Authorization"])
-  		recordsTotal = (User.all - [current_user]).count
+  		recordsTotal = (User.all - [@current_user]).count
   		users = []
-	    search_value = params[:search][:value]
+	    search_value = params[:search][:value] if params[:search]
 	    
 	    if search_value.present?
 	      @users = User.where('user_name ILIKE ? OR first_name ILIKE ?', "%#{search_value}%", "%#{search_value}%").order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i).where.not(id: current_user)

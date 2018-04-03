@@ -9,7 +9,7 @@ RSpec.describe App::Api::Web::ContactsController, type: :controller do
 	      expect(response).to be_successful
 	    end
 
-	    it 'returns all contacts us users /' do
+	    it 'returns all contacts_us users /' do
 	      expect(response).to be_successful
 	    end
   	end

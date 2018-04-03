@@ -1,17 +1,20 @@
 class App::Api::Admin::DashboardsController < AdminController
+	 before_action :authenticate_request! , only:[:usr_event]
 	
 	def usr_event
-		current_user = User.find_by_auth_token(params[:auth_token])
-	    if current_user.is_admin
-		    user_count = (User.all - [current_user]).count
+	    if @current_user && @current_user.is_admin
+		    user_count = (User.all - [@current_user]).count
 		    event_count = Event.all.count
 		    today_events = Event.fetch_today_event
 		    response = {:status=>true, :user_count=>user_count,:event_count=>event_count, :today_event=>today_events }
-		else
-			user_events = current_user.events.count
+		elsif @current_user
+			user_events = @current_user.events.count
 			response = {:status=>true, :events=>user_events}
+		else
+		response = {:status => false, :message=> "invalid token"}
 		end
-		render :json=>response
+		json_response(response)
+		# render :json=>response
 	end
 
 	def get_chart_data

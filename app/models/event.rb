@@ -113,7 +113,7 @@ class Event < ApplicationRecord
 		recordsTotal = searchQuery("latest")
 		events = []
 
-		if params[:search][:value].present?
+		if params[:search] && params[:search][:value].present?
 			@events = Event.find_by_sql("select events.* from events inner join event_adver_dates on events.id=event_adver_dates.event_adver_datable_id  where events.title like '%#{params[:search][:value]}%' and '#{Time.zone.now.beginning_of_day}' BETWEEN event_adver_dates.start_date AND event_adver_dates.end_date  ORDER BY events.created_at DESC LIMIT '#{params[:length].to_i}' offset '#{params[:start].to_i}' ")
 			
 			recordsFiltered = @events.count
@@ -132,9 +132,8 @@ class Event < ApplicationRecord
 	    return {:events=>events, :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
 	end
 
-	def self.evnt_list(params,token)
+	def self.evnt_list(params,current_user)
 		events= []
-    	current_user = User.find_by(:auth_token=>token)
 		recordsTotal = get_total_record(current_user,params)
 	    @events,recordsFiltered = get_event_list(params,recordsTotal,current_user)
 	    if @events.present?
@@ -153,7 +152,7 @@ class Event < ApplicationRecord
 		
 		recordsTotal = searchQuery("passed")
 
-		if params[:search][:value].present?
+		if params[:search] && params[:search][:value].present?
 			@events = Event.find_by_sql("select events.* from events where events.title like '%#{params[:search][:value]}%' ORDER BY events.created_at DESC LIMIT '#{params[:length].to_i}' offset '#{params[:start].to_i}'")
 			
 			recordsFiltered = @events.count
@@ -215,8 +214,8 @@ class Event < ApplicationRecord
     end
 
     def self.get_event_list(params,recordsTotal,current_user)
-    	search_value = params[:search][:value]
-    	event_type = params[:event_type]
+    	search_value = params[:search][:value] if params[:search]
+    	event_type = params[:event_type] 
     	if current_user.is_admin
 	    	if search_value.present? && event_type.present?
 		      @events = Event.where('title ILIKE ?', "%#{search_value}%").where(:event_type=>event_type).order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
