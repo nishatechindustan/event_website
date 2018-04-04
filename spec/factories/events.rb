@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :event do
   	title 'testing'
+  	event_type '0'
   end
   # after(:create) {|user|
   #     debugger

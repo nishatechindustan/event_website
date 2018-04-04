@@ -1,35 +1,58 @@
 require 'rails_helper'
 
 RSpec.describe App::Api::Web::EventsController, type: :controller do
-	before do
-      #@user = User.create!(email: 'customer@test.com', password: '123456', password_confirmation: '123456', first_name: "Abc", last_name: "Def", base_role: BaseRole.find(:customer)).assign_base_role_permissions
-      #@reminder=User.first.reminders.create!(weekday_num: '6', reminder_time: '10:20', treatment_kinds:[])
+  	let(:valid_attr) { attributes_for(:event)}
+  	let(:location_params) { attributes_for(:location)}
+  	let(:eventdate_params) { attributes_for(:event_adver_date)}
+
+	before(:each) do
       user=create(:user)
       category = create(:category)
       artist = create(:artist)
-       event = user.events.new()
-       debugger		
-   #    @reminder = create(:reminder,user:@user)  # <= this line changed
-			# @reminder.treatment_kinds<<create(:treatment_kind)
-   #    build(:reminder_item,reminder:@reminder)
-   #    build(:reminder_item,reminder:@reminder)
+       @event = user.events.new(valid_attr)
+       @event.artist_ids = {:artist =>artist.id}
+       @event.category_ids = {:category =>category.id}
+       @event.save
+       @event.categories << Category.where(id: category.id)
+       @event.artists << Artist.where(id: category.id)
+       @event.locations.create(location_params) 
+       @event.event_adver_dates.create(eventdate_params)
   	end
-  	 describe "GET 'today_event'" do
-	    before :each do
-	      # @today_event = 
-	    end
 
+  	describe "GET 'today_event'" do
+  		let(:query) { '#{Date.today}' }
 	    it "returns http success" do
 	      get 'today_event'
 	      expect(response).to be_successful
 	    end
   	end
-end
 
-# user = FactoryBot.create :user
-# 		artist = FactoryBot.create :artist
-# 		category = FactoryBot.create :category
-# 	  let(:valid_attr) { attributes_for(:event)}
-# 	  before do
-# 	  	user.events.create(valid_attr)
-# 	  end
+  	describe "GET 'paid_event'" do
+	    it "returns http success" do
+	      get 'paid_event'
+	      expect(response).to be_successful
+	    end
+  	end
+
+  	describe "GET 'free_event'" do
+	    it "returns http success" do
+	      get 'free_event'
+	      expect(response).to be_successful
+	    end
+  	end
+
+  	describe "GET 'recent_event'" do
+	    it "returns http success" do
+	      get 'recent_event'
+	      expect(response).to be_successful
+	    end
+  	end
+
+  	describe "GET 'event_details'" do
+  		
+	    it "returns http success" do
+	      get 'event_details',params: {id: @event.id} 
+	      expect(response).to be_successful
+	    end
+  	end
+end

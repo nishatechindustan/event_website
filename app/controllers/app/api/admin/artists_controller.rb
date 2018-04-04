@@ -7,12 +7,13 @@ class App::Api::Admin::ArtistsController < AdminController
   def index
     artists= []
     recordsTotal = Artist.all.count
-    search_value = params[:search][:value]
+    search_value = params[:search][:value] if params[:search]
     
     if search_value.present?
       @artists = Artist.where('name ILIKE ? OR address ILIKE ? OR artist_type ILIKE ?', "%#{search_value}%", "%#{search_value}%","%#{search_value}%").order(sort_column + " " + sort_direction).limit(params[:length].to_i).offset(params[:start].to_i)
       recordsFiltered = @artists.count
     else
+      debugger
       @artists = Artist.all.order(sort_column + " " + sort_direction).limit(params[:length].to_i).offset(params[:start].to_i)
       recordsFiltered = recordsTotal
     end
@@ -83,7 +84,7 @@ class App::Api::Admin::ArtistsController < AdminController
     render :json=> response
   end
 
-  # delete artist
+  # delete  single artist
   def destroy
 
     if @artist.destroy
@@ -98,6 +99,7 @@ class App::Api::Admin::ArtistsController < AdminController
     render :json=>response
   end
 
+  #  delete multiple artists
   def delete_artists
     @artists = Artist.where(:id=> params[:artists_ids])
     if @artists.destroy_all
@@ -122,7 +124,7 @@ class App::Api::Admin::ArtistsController < AdminController
   end
 
   def sort_column
-    column_value  = params[:order]["0"][:column]
+    column_value  = params[:order]["0"][:column]  if params[:order]
     case column_value
     when "0"
       "name"
@@ -140,6 +142,6 @@ class App::Api::Admin::ArtistsController < AdminController
   end
 
   def sort_direction
-    params[:order]["0"][:dir]
+    params[:order]["0"][:dir] if params[:order]
   end
 end
