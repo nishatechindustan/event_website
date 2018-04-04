@@ -1,5 +1,5 @@
 class App::Api::Web::AdvertisesController < ApplicationController
-	before_action :get_advertise, only: [:update]
+	# before_action :get_advertise, only: [:update]
 
 	def index
 		advertises=[]
@@ -27,6 +27,7 @@ class App::Api::Web::AdvertisesController < ApplicationController
 	end
 
 	def update
+		@advertise = Advertise.find(params[:id])
 		if params[:advertise_date][:start_date].present? && params[:advertise_date][:end_date].present?
 			@advertise.advertise_date = advertise_date_data
 			if @advertise.update(advertise_params)
@@ -46,12 +47,9 @@ class App::Api::Web::AdvertisesController < ApplicationController
 	end
 
 	def advertise_date_data
-    params.require(:advertise_date).permit!
-  end
-
-  def get_advertise
-  	@advertise = Advertise.find(params[:id])
-
-  end
-
+   	 params.require(:advertise_date).permit!
+  	end
+ #  def get_advertise
+ #  	@advertise = Advertise.find(params[:id])
+ #  end
 end

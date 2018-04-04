@@ -1,7 +1,10 @@
 FactoryBot.define do
   factory :event do
-    
+  	title 'testing'
   end
+  # after(:create) {|user|
+  #     debugger
+  #   }
 end
 # FactoryBot.define do
 #   factory :user do

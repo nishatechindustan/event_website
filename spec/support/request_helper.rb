@@ -4,4 +4,4 @@ module Requests
         JSON.parse(last_response.body)
       end
     end
-  end  
+end  
