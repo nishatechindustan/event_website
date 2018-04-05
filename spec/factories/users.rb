@@ -7,5 +7,7 @@ FactoryBot.define do
     is_admin false
     password "123456"
     password_confirmation "123456"
+    confirmed_at Date.today
+    status true
   end
 end

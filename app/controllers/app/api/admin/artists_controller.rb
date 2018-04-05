@@ -13,7 +13,6 @@ class App::Api::Admin::ArtistsController < AdminController
       @artists = Artist.where('name ILIKE ? OR address ILIKE ? OR artist_type ILIKE ?', "%#{search_value}%", "%#{search_value}%","%#{search_value}%").order(sort_column + " " + sort_direction).limit(params[:length].to_i).offset(params[:start].to_i)
       recordsFiltered = @artists.count
     else
-      debugger
       @artists = Artist.all.order(sort_column + " " + sort_direction).limit(params[:length].to_i).offset(params[:start].to_i)
       recordsFiltered = recordsTotal
     end
@@ -142,6 +141,10 @@ class App::Api::Admin::ArtistsController < AdminController
   end
 
   def sort_direction
-    params[:order]["0"][:dir] if params[:order]
+    if params[:order]
+      params[:order]["0"][:dir] 
+    else
+      "DESC"
+    end
   end
 end

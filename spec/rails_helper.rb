@@ -47,7 +47,7 @@ RSpec.configure do |config|
   
   # config.include ApiHelper, type: :controller
   config.include Requests::JsonHelpers, type: :request
-  
+  config.include Devise::Test::ControllerHelpers, type: :controller
   config.use_transactional_fixtures = false
 
   # RSpec Rails can automatically mix in different behaviours to your tests

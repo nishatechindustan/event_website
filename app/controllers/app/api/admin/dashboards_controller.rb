@@ -14,7 +14,6 @@ class App::Api::Admin::DashboardsController < AdminController
 		response = {:status => false, :message=> "invalid token"}
 		end
 		json_response(response)
-		# render :json=>response
 	end
 
 	def get_chart_data

@@ -96,22 +96,11 @@ class App::Api::Admin::EventsController < AdminController
   end
 
   def event_list
-    # param_type =params[:event_type] 
-    # if param_type.present?
-    #   if param_type.include?("passed")
-    #     events = Event.passed_event(params)
-    #   else
-    #     events= Event.evnt_list(params,@current_user)
-    #   end
-    # end
     if params[:event_type] && params[:event_type].include?("passed")
       events = Event.passed_event(params)
-      puts "------------ inside passed-----------"
     else
       events= Event.evnt_list(params,@current_user)
-      puts "------------ inside else-----------"
     end
-    
     render :json => {:data=>events[:events], :status=>true ,:draw=>params[:draw], :recordsTotal=>events[:recordsTotal], :recordsFiltered=>events[:recordsFiltered]}
   end
 

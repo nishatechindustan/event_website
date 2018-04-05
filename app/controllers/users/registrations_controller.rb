@@ -33,7 +33,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
       end
     else
       resource = User.new(sign_up_params)
-      resource.skip_confirmation!
       if resource.save
         user_details= payload(resource)
         render :json=> {:status=>true, :userDetails=> user_details, :message=>"Your Registration is successful. A verification code has been sent to your email. Please login and provide verification code."}
