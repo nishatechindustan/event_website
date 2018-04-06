@@ -95,6 +95,11 @@ class App::Api::Admin::EventsController < AdminController
     render :json => {:data=>events[:events], :status=>true ,:draw=>params[:draw], :recordsTotal=>events[:recordsTotal], :recordsFiltered=>events[:recordsFiltered]}
   end
 
+  def unapprove_event
+    events = Event.fetch_unapprove_event_list(params)
+    render :json => {:data=>events[:events], :status=>true ,:draw=>params[:draw], :recordsTotal=>events[:recordsTotal], :recordsFiltered=>events[:recordsFiltered]}
+  end
+
   def event_list
     if params[:event_type] && params[:event_type].include?("passed")
       events = Event.passed_event(params)

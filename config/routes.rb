@@ -47,6 +47,7 @@ Rails.application.routes.draw do
         resources :events , :only =>[:index, :create, :update, :show, :edit, :destroy]
         post '/all_event_list' => "events#get_event_list"
         post '/latestEvent' => "events#latest_event"
+        post '/UnapproveEvent' => "events#unapprove_event"
         post '/event_list/:event_type' => "events#event_list"
         post  "/events/activeDeactve" => "events#change_status"
         get 'delete_events' => 'events#delete_events'
