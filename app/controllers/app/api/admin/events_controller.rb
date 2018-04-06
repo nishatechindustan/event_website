@@ -17,8 +17,7 @@ class App::Api::Admin::EventsController < AdminController
   end
 
   def create
-    user = User.first
-    #user||= @current_user
+    user||= @current_user
     if user.present?
       @event = user.events.new(event_params)
       # @event.category_ids = params[:category_ids]
