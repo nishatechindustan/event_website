@@ -23,7 +23,7 @@ class Event < ApplicationRecord
 	after_save :add_event_locations
 	after_save :add_event_dates
 	after_save :set_event_approval, :on => :create
-	after_save :event_approval_notification
+	#after_save :event_approval_notification, :on => :create
 
 	#use method add remove categories for the  event
 	def remove_add_categories
