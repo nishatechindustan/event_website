@@ -1,5 +1,5 @@
 class App::Api::Admin::EventsController < AdminController
-   before_action :authenticate_request! , only:[:create,:get_event_list,:latest_event,:event_list]
+   #before_action :authenticate_request! , only:[:create,:get_event_list,:latest_event,:event_list]
   # callbacks
   before_action :get_category_and_artist ,only:[:create,:new, :edit, :update, :show]
   before_action :get_event_id ,only:[:edit, :destroy, :update ,:show, :change_status]
@@ -17,11 +17,12 @@ class App::Api::Admin::EventsController < AdminController
   end
 
   def create
-    user||= @current_user
+    user = User.first
+    #user||= @current_user
     if user.present?
       @event = user.events.new(event_params)
-      @event.category_ids = params[:category_ids]
-      @event.artist_ids = params[:artist_ids]
+      # @event.category_ids = params[:category_ids]
+      # @event.artist_ids = params[:artist_ids]
       @event.event_location = event_location
       @event.event_dates = event_dates
       if @event.save

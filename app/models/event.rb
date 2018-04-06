@@ -14,15 +14,15 @@ class Event < ApplicationRecord
 	has_many :event_artists#, dependent: :destroy
 	has_many :artists, through: :event_artists , dependent: :destroy
 	has_many :attachments, as: :attachable, dependent: :destroy
-	validates_presence_of :category_ids_present?
-	validates_presence_of :artist_ids_present?
+	#validates_presence_of :category_ids_present?
+	#validates_presence_of :artist_ids_present?
 
-	after_save :remove_add_categories, :if => lambda {|obj| obj.category_ids.present?}
-	after_save :remove_add_artist, :if => lambda {|obj| obj.artist_ids.present?}
+	#after_save :remove_add_categories, :if => lambda {|obj| obj.category_ids.present?}
+	#after_save :remove_add_artist, :if => lambda {|obj| obj.artist_ids.present?}
 
 	after_save :add_event_locations
 	after_save :add_event_dates
-	before_create :set_event_approval
+	after_save :set_event_approval, :on => :create
 
 	#use method add remove categories for the  event
 	def remove_add_categories
@@ -125,55 +125,50 @@ class Event < ApplicationRecord
 		end
 
 		@events.each do |event|
-	        @event_image = event.attachments.present? ? event.attachments.first.attachment.url : '/default_image.jpg';
-	        events <<{:title=>event.title, :id=>event.id, :description=>event.description, :ticket_available => event.ticket_available, :cost=> event.cost, :currency=> event.currency, :contact_number => event.contact_number, :image=> @event_image,
-	        :cost_offers=>event.cost_offers, :email=>event.email, :event_type => event.event_type, :status=> event.status,:approved=>event.approved, :event_categories=> event.categories.map(&:name), :event_added_by=>event.user.user_name,:event_location=>event.locations.first.address,:latitude=>event.locations.first.latitude,:longitude=>event.locations.first.longitude, :event_date=>event.event_adver_dates.map{|a| [a.start_date, a.end_date]}.flatten!}
-	    end
+      @event_image = event.attachments.present? ? event.attachments.first.attachment.url : '/default_image.jpg';
+      events <<{:title=>event.title, :id=>event.id, :description=>event.description, :ticket_available => event.ticket_available, :cost=> event.cost, :currency=> 	event.currency, :contact_number => event.contact_number, :image=> @event_image,
+      :cost_offers=>event.cost_offers, :email=>event.email, :event_type => event.event_type, :status=> event.status,:approved=>event.approved, :event_categories=> event.categories.map(&:name), :event_added_by=>event.user.user_name,:event_location=>event.locations.first.address,:latitude=>event.locations.first.latitude,:longitude=>event.locations.first.longitude, :event_date=>event.event_adver_dates.map{|a| [a.start_date, a.end_date]}.flatten!}
+    end
 
-	    return {:events=>events, :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
+    return {:events=>events, :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
 	end
 
 	def self.evnt_list(params,current_user)
 		events= []
 		recordsTotal = get_total_record(current_user,params)
-	    @events,recordsFiltered = get_event_list(params,recordsTotal,current_user)
-	    if @events.present?
-		    @events.each do |event|
-		        @event_image = event.attachments.present? ? event.attachments.first.attachment.url : '/default_image.jpg';
-		        events <<{:title=>event.title, :id=>event.id, :description=>event.description, :ticket_available => event.ticket_available, :cost=> event.cost, :currency=> event.currency, :contact_number => event.contact_number, :image=> @event_image,
-		        :cost_offers=>event.cost_offers, :email=>event.email, :event_type => event.event_type, :status=> event.status,:approved=>event.approved, :event_categories=> event.categories.map(&:name), :event_added_by=>event.user.user_name,:event_location=>event.locations.first.address,:latitude=>event.locations.first.latitude,:longitude=>event.locations.first.longitude,:event_date=>event.event_adver_dates.map{|a| [a.start_date, a.end_date]}.flatten!}
-		    end
+    @events,recordsFiltered = get_event_list(params,recordsTotal,current_user)
+    if @events.present?
+	    @events.each do |event|
+        @event_image = event.attachments.present? ? event.attachments.first.attachment.url : '/default_image.jpg';
+        events <<{:title=>event.title, :id=>event.id, :description=>event.description, :ticket_available => event.ticket_available, :cost=> event.cost, :currency=> event.currency, :contact_number => event.contact_number, :image=> @event_image,
+        :cost_offers=>event.cost_offers, :email=>event.email, :event_type => event.event_type, :status=> event.status,:approved=>event.approved, :event_categories=> event.categories.map(&:name), :event_added_by=>event.user.user_name,:event_location=>event.locations.first.address,:latitude=>event.locations.first.latitude,:longitude=>event.locations.first.longitude,:event_date=>event.event_adver_dates.map{|a| [a.start_date, a.end_date]}.flatten!}
+	    end
 		end
-
-	    return {:events=>events, :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
+    return {:events=>events, :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
 	end
 
 
 	def self.passed_event(params)
-		
 		recordsTotal = searchQuery("passed")
-
 		if params[:search] && params[:search][:value].present?
 			@events = Event.find_by_sql("select events.* from events where events.title like '%#{params[:search][:value]}%' ORDER BY events.created_at DESC LIMIT '#{params[:length].to_i}' offset '#{params[:start].to_i}'")
 			
 			recordsFiltered = @events.count
 		else
-
 			@events = Event.find_by_sql("select events.* from events inner join event_adver_dates on events.id=event_adver_dates.event_adver_datable_id and '#{Time.zone.now.beginning_of_day}'>event_adver_dates.start_date and '#{Time.zone.now.beginning_of_day}'>event_adver_dates.end_date ORDER BY events.created_at DESC LIMIT '#{params[:length].to_i}' offset '#{params[:start].to_i}'")
 			recordsFiltered =recordsTotal
 		end
 		events = []
 		@events.each do |event|
-	        @event_image = event.attachments.present? ? event.attachments.first.attachment.url : '/default_image.jpg';
-	        events <<{:title=>event.title, :id=>event.id, :description=>event.description, :ticket_available => event.ticket_available, :cost=> event.cost, :currency=> event.currency, :contact_number => event.contact_number, :image=> @event_image,
-	        :cost_offers=>event.cost_offers, :email=>event.email, :event_type => event.event_type, :status=> event.status,:approved=>event.approved, :event_categories=> event.categories.map(&:name), :event_added_by=>event.user.user_name,:event_location=>event.locations.first.address,:latitude=>event.locations.first.latitude,:longitude=>event.locations.first.longitude, :event_date=>event.event_adver_dates.map{|a| [a.start_date, a.end_date]}.flatten!}
-	    end
+      @event_image = event.attachments.present? ? event.attachments.first.attachment.url : '/default_image.jpg';
+      events <<{:title=>event.title, :id=>event.id, :description=>event.description, :ticket_available => event.ticket_available, :cost=> event.cost, :currency=> event.currency, :contact_number => event.contact_number, :image=> @event_image,
+      :cost_offers=>event.cost_offers, :email=>event.email, :event_type => event.event_type, :status=> event.status,:approved=>event.approved, :event_categories=> event.categories.map(&:name), :event_added_by=>event.user.user_name,:event_location=>event.locations.first.address,:latitude=>event.locations.first.latitude,:longitude=>event.locations.first.longitude, :event_date=>event.event_adver_dates.map{|a| [a.start_date, a.end_date]}.flatten!}
+    end
 
-	    return {:events=>events, :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
+    return {:events=>events, :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
 	end
 
 	def self.searchQuery(value)
-
 		if value.include?("latest")
 			query = "select events.* from events inner join event_adver_dates on events.id=event_adver_dates.event_adver_datable_id and '#{Time.zone.now.beginning_of_day}' BETWEEN event_adver_dates.start_date AND event_adver_dates.end_date"
 			
@@ -184,21 +179,20 @@ class Event < ApplicationRecord
 	end
 
 	def self.changeStatus(event)
-    	if event.status==true
-    		event.update_columns(:status=>false)
-    		message = "Event has been Deactivate successfully"
-    	else
-    		event.update_columns(:status=>true)
-    		message = "Event has been Activate successfully"
-    	end
+  	if event.status==true
+  		event.update_columns(:status=>false)
+  		message = "Event has been Deactivate successfully"
+  	else
+  		event.update_columns(:status=>true)
+  		message = "Event has been Activate successfully"
+  	end
+  	return {:status=>true, :message=>message}
+  end
 
-    	return {:status=>true, :message=>message}
-    end
-
-    def self.get_total_record(current_user,params)
-    	event_type = params[:event_type]
-    	if current_user.is_admin
-	    	if event_type.present? 
+  def self.get_total_record(current_user,params)
+  	event_type = params[:event_type]
+  	if current_user.is_admin
+    	if event_type.present? 
 				if event_type.include?("free")
 					event_type = 0
 					recordsTotal = Event.where(:event_type=>0).count
@@ -207,76 +201,70 @@ class Event < ApplicationRecord
 					recordsTotal = Event.where(:event_type=>1).count
 				end
 			else
-				 recordsTotal = Event.all.count
+			 recordsTotal = Event.all.count
 			end
 		else
 			recordsTotal = current_user.events.count
 		end
-    end
+  end
 
-    def self.get_event_list(params,recordsTotal,current_user)
-    	search_value = params[:search][:value] if params[:search]
-    	event_type = params[:event_type] 
-    	if current_user.is_admin
-	    	if search_value.present? && event_type.present?
-		      @events = Event.where('title ILIKE ?', "%#{search_value}%").where(:event_type=>event_type).order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
+  def self.get_event_list(params,recordsTotal,current_user)
+  	search_value = params[:search][:value] if params[:search]
+  	event_type = params[:event_type] 
+  	if current_user.is_admin
+    	if search_value.present? && event_type.present?
+	      @events = Event.where('title ILIKE ?', "%#{search_value}%").where(:event_type=>event_type).order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
+	      recordsFiltered = @events.count
+
+	    elsif search_value.present?
+    	 @events = Event.where('title ILIKE ?', "%#{search_value}%").order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
 		      recordsFiltered = @events.count
 
-		    elsif search_value.present?
-		    	 @events = Event.where('title ILIKE ?', "%#{search_value}%").order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
-		      recordsFiltered = @events.count
-
-		    elsif event_type.present?
-		    		event_type = event_type.include?("free") ? '0' :'1'
-		    	@events = Event.where(:event_type=>event_type).order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
+	    elsif event_type.present?
+    		event_type = event_type.include?("free") ? '0' :'1'
+	    	@events = Event.where(:event_type=>event_type).order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
 		      recordsFiltered = @events.count
 		    
-		    else
-
-		      @events = Event.all.order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
+	    else
+	      @events = Event.all.order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
 		      recordsFiltered = recordsTotal
-		    end
+	    end
 		else
 			if search_value.present?
-		      	@events = current_user.events.where('title ILIKE ?', "%#{search_value}%").where(:event_type=>event_type).order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
+      	@events = current_user.events.where('title ILIKE ?', "%#{search_value}%").where(:event_type=>event_type).order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
 		      	recordsFiltered = @events.count
 			else
-		      	@events = current_user.events.order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
+      	@events = current_user.events.order(:created_at => :desc).limit(params[:length].to_i).offset(params[:start].to_i)
 			    recordsFiltered = recordsTotal
-
 			end
 		end
     	return @events,recordsFiltered
-    end
+  end
 
-    def self.fetch_event(params)
-    	events =[]
-    	if params.include?("today")
-    		@events = Event.find_by_sql("select events.* from events inner join event_adver_dates on events.id=event_adver_dates.event_adver_datable_id and '#{Time.zone.now.beginning_of_day}' BETWEEN event_adver_dates.start_date AND event_adver_dates.end_date")
-    	elsif params.include?("paid")
-    		@events = Event.where(:event_type=>1)
-    	elsif params.include?("free")
-    		@events = Event.where(:event_type=>0)
-    	else
-    		@events = Event.all.order(:created_at => :desc).limit(10)
-    	end
-
-    	if @events.present?
-    	
-	    	@events.each do |event|
-		        @event_image = event.attachments.present? ? event.attachments.first.attachment.url : '/default_image.jpg';
-		        events <<{:title=>event.title, :id=>event.id, :description=>event.description, :ticket_available => event.ticket_available, :cost=> event.cost, :currency=> event.currency, :contact_number => event.contact_number, :image=> @event_image,
-		        :cost_offers=>event.cost_offers, :email=>event.email, :event_type => event.event_type, :status=> event.status,:approved=>event.approved, :event_categories=> event.categories.map(&:name), :event_artists=>event.artists.map(&:name), :event_added_by=>event.user.user_name,:event_location=>event.locations.first.address,:latitude=>event.locations.first.latitude,:longitude=>event.locations.first.longitude,:city=>event.locations.first.city,:state=>event.locations.first.state,:venue=>event.locations.first.venue,:country=>event.locations.first.country, :event_date=>event.event_adver_dates.map{|a| [a.start_date, a.end_date]}.flatten!}
-		    end
+  def self.fetch_event(params)
+  	events =[]
+  	if params.include?("today")
+  		@events = Event.find_by_sql("select events.* from events inner join event_adver_dates on events.id=event_adver_dates.event_adver_datable_id and '#{Time.zone.now.beginning_of_day}' BETWEEN event_adver_dates.start_date AND event_adver_dates.end_date")
+  	elsif params.include?("paid")
+  		@events = Event.where(:event_type=>1)
+  	elsif params.include?("free")
+  		@events = Event.where(:event_type=>0)
+  	else
+  		@events = Event.all.order(:created_at => :desc).limit(10)
+  	end
+  	if @events.present?
+    	@events.each do |event|
+	      @event_image = event.attachments.present? ? event.attachments.first.attachment.url : '/default_image.jpg';
+	      events <<{:title=>event.title, :id=>event.id, :description=>event.description, :ticket_available => event.ticket_available, :cost=> event.cost, :currency=> event.currency, :contact_number => event.contact_number, :image=> @event_image,
+	      :cost_offers=>event.cost_offers, :email=>event.email, :event_type => event.event_type, :status=> event.status,:approved=>event.approved, :event_categories=> event.categories.map(&:name), :event_artists=>event.artists.map(&:name), :event_added_by=>event.user.user_name,:event_location=>event.locations.first.address,:latitude=>event.locations.first.latitude,:longitude=>event.locations.first.longitude,:city=>event.locations.first.city,:state=>event.locations.first.state,:venue=>event.locations.first.venue,:country=>event.locations.first.country, :event_date=>event.event_adver_dates.map{|a| [a.start_date, a.end_date]}.flatten!}
+	    end
 		end
+  	return events
+	end
 
-	    return events
-    end
-
-    def self.search(params)
-    	events = []
+  def self.search(params)
+  	events = []
 		if params[:category_id].present? && params[:state_name].present? 
-			
 			@events = Event.includes(:categories, :locations).where('locations.state ILIKE ?', "%#{params[:state_name]}%").references(:locations).where('categories.id' => params[:category_id]).references(:categories).uniq
      		#@events = Event.joins(:categories).where('categories.name ILIKE ?', "%#{params[:category_name]}%").order('created_at DESC').uniq
 			
@@ -285,22 +273,21 @@ class Event < ApplicationRecord
 		elsif params[:state_name]
 			@events = Event.joins(:locations).where('locations.state ILIKE ?', "%#{params[:state_name]}%").order('created_at DESC').uniq
 		else
-    		@events = Event.all.order('created_at DESC')
-    	end
-
-    	if @events.present?
-    	
-	    	@events.each do |event|
-		        @event_image = event.attachments.present? ? event.attachments.first.attachment.url : '/default_image.jpg';
-		        events <<{:title=>event.title, :id=>event.id, :description=>event.description, :ticket_available => event.ticket_available, :cost=> event.cost, :currency=> event.currency, :contact_number => event.contact_number, :image=> @event_image,
-		        :cost_offers=>event.cost_offers, :email=>event.email, :event_type => event.event_type, :status=> event.status,:approved=>event.approved, :event_categories=> event.categories.map(&:name), :event_artists=>event.artists.map(&:name), :event_added_by=>event.user.user_name,:event_location=>event.locations.first.address,:latitude=>event.locations.first.latitude,:longitude=>event.locations.first.longitude,:city=>event.locations.first.city,:state=>event.locations.first.state,:venue=>event.locations.first.venue,:country=>event.locations.first.country, :event_date=>event.event_adver_dates.map{|a| [a.start_date, a.end_date]}.flatten!}
-		    end
+  		@events = Event.all.order('created_at DESC')
+  	end
+  	if @events.present?
+    	@events.each do |event|
+        @event_image = event.attachments.present? ? event.attachments.first.attachment.url : '/default_image.jpg';
+        events <<{:title=>event.title, :id=>event.id, :description=>event.description, :ticket_available => event.ticket_available, :cost=> event.cost, :currency=> event.currency, :contact_number => event.contact_number, :image=> @event_image,
+        :cost_offers=>event.cost_offers, :email=>event.email, :event_type => event.event_type, :status=> event.status,:approved=>event.approved, :event_categories=> event.categories.map(&:name), :event_artists=>event.artists.map(&:name), :event_added_by=>event.user.user_name,:event_location=>event.locations.first.address,:latitude=>event.locations.first.latitude,:longitude=>event.locations.first.longitude,:city=>event.locations.first.city,:state=>event.locations.first.state,:venue=>event.locations.first.venue,:country=>event.locations.first.country, :event_date=>event.event_adver_dates.map{|a| [a.start_date, a.end_date]}.flatten!}
+	    end
 		end
-		return events
-    end
+			return events
+  end
 
-    def set_event_approval
-  		self.is_admin = true
+  def set_event_approval
+  	self.user.is_admin && (self.approved = true)
+		# self.is_admin? = true
 	end
 end
 # @posts = Post.search(params[:search]).order("created_at DESC")
