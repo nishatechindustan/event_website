@@ -5,13 +5,13 @@ class App::Api::Admin::UsersController < AdminController
 	before_action :get_user, only: [:delete_user, :edit, :change_status]
 
 	def all_users
-    @users = User.all - [@current_user]
-    users= []
-    @users.each do |user|
-      @user_image =  user.attachments.present? ? user.attachments.first.attachment.url : '/default_image.jpg';
-      users<<{:auth_token=>user.auth_token, :id=>user.id, :email=>user.email, :user_name => user.user_name, :first_name=> user.first_name, :last_name=> user.last_name, :is_admin => user.is_admin, :image=> @user_image}
-    end
-    render :json =>{result: users, status: 200}
+	    @users = User.all - [@current_user]
+	    users= []
+	    @users.each do |user|
+	      @user_image =  user.attachments.present? ? user.attachments.first.attachment.url : '/default_image.jpg';
+	      users<<{:auth_token=>user.auth_token, :id=>user.id, :email=>user.email, :user_name => user.user_name, :first_name=> user.first_name, :last_name=> user.last_name, :is_admin => user.is_admin, :image=> @user_image}
+	    end
+    	render :json =>{result: users, status: 200}
 	end
 
 	def edit
