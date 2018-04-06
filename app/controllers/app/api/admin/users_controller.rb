@@ -74,7 +74,7 @@ class App::Api::Admin::UsersController < AdminController
 			userDetails = {:auth_token=>@user.auth_token, :email=>@user.email, :user_name => @user.user_name, :first_name=> @user.first_name, :last_name=> @user.last_name, :is_admin => @user.is_admin, :image=> @user_image}
 			render :json=> {:status=> true, :message=>" Profile updated successfully", :userDetails=>userDetails}
 		 	else
-			 	render :json=> {:status=> false, :message=>@user.errors.full_messages}
+			 	render :json=> {:status=> false, :errors=>@user.errors.full_messages}
 			end
 		else
 			render :json=> {:status=> false, :message=>"Invalid token"}
@@ -85,7 +85,7 @@ class App::Api::Admin::UsersController < AdminController
 		if @user.destroy
 			render :json =>{:status=>true, :notice=> "User Deleted successfully", :data=>@user}
 		else
-			render :json => {:status=> false, :messages=> @user.errors.full_messages}
+			render :json => {:status=> false, :errors=> @user.errors.full_messages}
 		end
   	end
 
