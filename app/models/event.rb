@@ -23,6 +23,7 @@ class Event < ApplicationRecord
 	after_save :add_event_locations
 	after_save :add_event_dates
 	after_save :set_event_approval, :on => :create
+	after_save :event_approval_notification
 
 	#use method add remove categories for the  event
 	def remove_add_categories
@@ -289,6 +290,10 @@ class Event < ApplicationRecord
 	    end
 
     return events
+	end
+
+	def event_approval_notification
+		EventMailer.event_approval_notification(self).deliver
 	end
 end
 # @posts = Post.search(params[:search]).order("created_at DESC")

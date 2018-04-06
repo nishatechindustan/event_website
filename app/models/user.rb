@@ -16,7 +16,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :omniauthable, :omniauth_providers => [:google_oauth2,:facebook]
 	before_create :set_status
 
-    after_create :subscribe_user_to_newslatter
+    #after_create :subscribe_user_to_newslatter
 
 
 	def self.from_omniauth(auth)
