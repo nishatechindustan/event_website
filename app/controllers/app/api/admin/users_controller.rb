@@ -1,7 +1,7 @@
 class App::Api::Admin::UsersController < AdminController
 	# callbacks
-	before_action :authenticate_request!, except: [:edit, :delete_user,:change_status]
-	before_action :get_user, only: [:delete_user, :edit, :change_status]
+	before_action :authenticate_request!, except: [:edit, :delete_user,:change_status, :update]
+	before_action :get_user, only: [:delete_user, :edit, :change_status, :update]
 
 	def all_users
 	    @users = User.all - [@current_user]
@@ -59,7 +59,7 @@ class App::Api::Admin::UsersController < AdminController
 
 	#update user
 	def update
-		@user||= @current_user
+		# @user||= @current_user
 		if @user.present?
 			if @user.update(users_params)
 				if params[:user][:attachment].present? && avatar_image_params.present?
