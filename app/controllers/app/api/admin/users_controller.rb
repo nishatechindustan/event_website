@@ -1,7 +1,6 @@
 class App::Api::Admin::UsersController < AdminController
 	# callbacks
-
-	before_action :authenticate_request!,:except =>[:edit, :delete_user,:change_status]
+	before_action :authenticate_request!, except: [:edit, :delete_user,:change_status]
 	before_action :get_user, only: [:delete_user, :edit, :change_status]
 
 	def all_users
@@ -20,12 +19,12 @@ class App::Api::Admin::UsersController < AdminController
 		render :json =>{data: user, status: true}
 	end
 
-	def user_edit
-		@user|| = @current_user
-		@user_image =  @user.attachments.present? ? @user.attachments.first.attachment.url : '/default_image.jpg';
-		user = {:id=>@user.id, :email=>@user.email, :user_name => @user.user_name, :first_name=> @user.first_name, :last_name=> @user.last_name, :is_admin => @user.is_admin, :image=> @user_image}
-		render :json =>{data: user, status: true}
-	end
+	# def user_edit
+	# 	@user|| = @current_user
+	# 	@user_image =  @user.attachments.present? ? @user.attachments.first.attachment.url : '/default_image.jpg';
+	# 	user = {:id=>@user.id, :email=>@user.email, :user_name => @user.user_name, :first_name=> @user.first_name, :last_name=> @user.last_name, :is_admin => @user.is_admin, :image=> @user_image}
+	# 	render :json =>{data: user, status: true}
+	# end
 
 	# users profile
 	def show

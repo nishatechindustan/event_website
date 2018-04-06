@@ -24,7 +24,7 @@ Rails.application.routes.draw do
         get  "/profile" => "users#show", as: "user_profile"
         post '/users_list' => "users#get_users_list"
         post  "/users/setting" => "users#edit"
-  	    post  "/users/edit" => "users#user_edit"
+  	    get  "/users/edit" => "users#user_edit"
         post  "/users/activeDeactve" => "users#change_status"
 
         ################### categories Api's ##############################
