@@ -91,7 +91,7 @@ RSpec.describe App::Api::Admin::EventsController, type: :controller do
        
        # @event = Event.evnt_list(params, @user)
        # ,headers:  {"access-token" => ''}
-       # get 'get_event_list' 
+        # get 'get_event_list', :headers=> {"Authorization" => request.headers['Authorization']}
        expect(response).to be_successful
     end
   end
@@ -100,10 +100,20 @@ RSpec.describe App::Api::Admin::EventsController, type: :controller do
     it "returns http success" do
       get_auth_token
        params = {:length=>10}
-       get 'latest_event'
+       post 'latest_event'
        expect(response).to be_successful
     end
   end
+
+  describe "GET 'unapprove events details '" do
+    it "returns http success" do
+      get_auth_token
+       params = {:length=>10}
+       post 'unapprove_event'
+       expect(response).to be_successful
+    end
+  end
+  
 
   describe "GET 'event_list  details '" do
     context "if event type are present" do

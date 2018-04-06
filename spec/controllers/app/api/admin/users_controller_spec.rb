@@ -78,7 +78,7 @@ RSpec.describe App::Api::Admin::UsersController, type: :controller do
  	describe "#update" do
  	  context 'with valid attributes' do
 	    it 'should update the user' do
-	      process :update, method: :put, params: { id: @user.id, registration: attributes_for(:user, :email=>"as@gmail.com") }
+	      process :update, method: :put, params: { id: @user.id, user: attributes_for(:user, :email=>"as@gmail.com") }
 	      @user.events.reload
 	      expect(response).to have_http_status(200)
 	    end

@@ -16,6 +16,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :omniauthable, :omniauth_providers => [:google_oauth2,:facebook]
 	before_create :set_status
 
+    after_create :subscribe_user_to_newslatter
+
+
 	def self.from_omniauth(auth)
 		where(provider: auth.provider, uid: auth.uid).first_or_create do|user|
 			if auth.info.email.blank?
@@ -82,5 +85,9 @@ class User < ApplicationRecord
 
   def set_status
   	self.status = true
+  end
+
+  def subscribe_user_to_newslatter
+    SubscribeUserToMailingListJob.perform_later(self)
   end
 end
