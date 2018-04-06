@@ -292,9 +292,8 @@ class Event < ApplicationRecord
 	def self.fetch_unapprove_event_list(params)
 		recordsTotal = Event.where(:approved=>false).count
 		events = []
-
 		if params[:search] && params[:search][:value].present?
-			@events = Event.find_by_sql("select * from events where events.title like '%#{params[:search][:value]}%' and events.approved=false  ORDER BY events.created_at DESC LIMIT '#{params[:length].to_i}' offset '#{params[:start].to_i}' ")
+			@events = Event.find_by_sql("select * from events where events.title like '%#{params[:search][:value]}%' and events.approved=false  ORDER BY events.created_at DESC LIMIT '#{params[:length].to_i}' offset '#{params[:start].to_i}'")
 			recordsFiltered = @events.count
 		else
 
@@ -309,8 +308,6 @@ class Event < ApplicationRecord
     end
 
     return {:events=>events, :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
-	end
-		
 	end
 end
 # @posts = Post.search(params[:search]).order("created_at DESC")
