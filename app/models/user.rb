@@ -9,7 +9,7 @@ class User < ApplicationRecord
 	has_many :events,dependent: :destroy
 	has_many :attachments, as: :attachable, dependent: :destroy
 
-	validates_uniqueness_of :email, :case_sensitive => false, :scope=>:provider, on: :create
+	validates_uniqueness_of :email, :case_sensitive => false, :allow_blank => true, :scope=>:provider, :if => :email_changed?
 	validates_format_of  :email, :with  => Devise.email_regexp, :allow_blank => true, :if => :email_changed?
 	validates_presence_of :email , :on=>:create
 	validates_presence_of  :password, :on=>:create
