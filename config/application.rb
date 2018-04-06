@@ -13,7 +13,7 @@ module Myappfgfg
     config.action_dispatch.default_headers = {
       "Access-Control-Allow-Origin" => "*",
       "Access-Control-Request-Method" => "*",
-      "Access-Control-Allow-Methods" => "POST, PUT, DELETE, GET, OPTIONS",
+      "Access-Control-Allow-Methods" => "POST, PUT,,EDIT, DELETE, GET, OPTIONS",
       "Access-Control-Allow-Headers" => "Origin, X-Requested-With, Content-Type, Accept, Authorization",
       "Access-Control-Max-Age" => "1728000",
       "X-Frame-Options" => "http://localhost"
@@ -23,7 +23,7 @@ module Myappfgfg
         origins '*'
         resource '*',
           headers: :any,
-          methods: %i(get post put patch delete options head)
+          methods: %i(get edit post put patch delete options head)
       end
     end
     
