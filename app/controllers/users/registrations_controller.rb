@@ -1,6 +1,6 @@
 class Users::RegistrationsController < Devise::RegistrationsController
    prepend_before_action :require_no_authentication, :only => [:create ]
-
+   before_action :authenticate_request! , only:[:edit]
   # GET /resource/sign_in
   def new
     super
@@ -40,8 +40,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
         render :json=> {:status=>false, :errors=> resource.errors.full_messages}
       end
     end
-   end
-  
+  end
+
+  def edit
+    @user|| = @current_user
+    @user_image =  @user.attachments.present? ? @user.attachments.first.attachment.url : '/default_image.jpg';
+    user = {:id=>@user.id, :email=>@user.email, :user_name => @user.user_name, :first_name=> @user.first_name, :last_name=> @user.last_name, :is_admin => @user.is_admin, :image=> @user_image}
+    render :json =>{data: user, status: true}
+  end  
   def sign_up_params
     if params[:registration]
       params.require(:registration).permit(:user_name, :first_name, :last_name, :email, :password, :password_confirmation, :address) 
