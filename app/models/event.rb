@@ -243,7 +243,7 @@ class Event < ApplicationRecord
 
   def self.search(params)
   	events = []
-		if params[:category_id].present? && params[:state_name].present? $$ params[:title]
+		if params[:category_id].present? && params[:state_name].present? && params[:title].present?
 			@events = Event.where('title ILIKE ?', '%#{params[:title]}%').includes(:categories, :locations).where('locations.state ILIKE ?', "%#{params[:state_name]}%").references(:locations).where('categories.id' => params[:category_id]).references(:categories).uniq
      		#@events = Event.joins(:categories).where('categories.name ILIKE ?', "%#{params[:category_name]}%").order('created_at DESC').uniq
 			
