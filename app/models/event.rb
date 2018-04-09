@@ -244,21 +244,21 @@ class Event < ApplicationRecord
   def self.search(params)
   	events = []
 		if params[:category_id].present? && params[:state_name].present? && params[:title].present?
-			@events = Event.where('title ILIKE ?', '%#{params[:title]}%').includes(:categories, :locations).where('locations.state ILIKE ?', "%#{params[:state_name]}%").references(:locations).where('categories.id' => params[:category_id]).references(:categories).uniq
+			@events = Event.where('title ILIKE ?', "%#{params[:title]}%"").includes(:categories, :locations).where('locations.state ILIKE ?', "%#{params[:state_name]}%").references(:locations).where('categories.id' => params[:category_id]).references(:categories).uniq
      		#@events = Event.joins(:categories).where('categories.name ILIKE ?', "%#{params[:category_name]}%").order('created_at DESC').uniq
 			
 		elsif params[:category_id].present? && params[:title]
-			@events = Event.where('title ILIKE ?', '%#{params[:title]}%').joins(:categories).where('categories.id' => params[:category_id]).order('created_at DESC').uniq
+			@events = Event.where('title ILIKE ?', "%#{params[:title]}%").joins(:categories).where('categories.id' => params[:category_id]).order('created_at DESC').uniq
 		elsif params[:state_name] && params[:category_id].present?
 			@events = Event.includes(:categories, :locations).where('locations.state ILIKE ?', "%#{params[:state_name]}%").references(:locations).where('categories.id' => params[:category_id]).references(:categories).uniq
 		elsif params[:state_name].present? && params[:title].present?
-			@events = Event.where('title ILIKE ?', '%#{params[:title]}%').joins(:locations).where('locations.state ILIKE ?', "%#{params[:state_name]}%").order('created_at DESC')
+			@events = Event.where('title ILIKE ?', "%#{params[:title]}%").joins(:locations).where('locations.state ILIKE ?', "%#{params[:state_name]}%").order('created_at DESC')
 		elsif params[:category_id]
 			@events = Event.joins(:categories).where('categories.id' => params[:category_id]).order('created_at DESC').uniq
 		elsif params[:state_name]
 			@events = Event.joins(:locations).where('locations.state ILIKE ?', "%#{params[:state_name]}%").order('created_at DESC').uniq
 		elsif params[:title]
-			@events = Event.where('title ILIKE ?', '%#{params[:title]}%')
+			@events = Event.where('title ILIKE ?', "%#{params[:title]}%")
 			
 		else
   		@events = Event.all.order('created_at DESC')
