@@ -26,3 +26,5 @@
 /config/database.yml
 /.env
 coverage
+/jmeter-server.log
+/jmeter.log
