@@ -24,7 +24,7 @@ class Users::PasswordsController < Devise::PasswordsController
 						response = {:status=>false, :errors=>user.errors.full_messages}	
 					end
 				else
-					response = {:status=>false,:message=>"Invalid token"  } 
+					response = {:status=>false,:message=>" Please Provide valid token"  } 
 				end
 			else
 				response = {:status=>false, :message => "password and confirm password does not matches."}
