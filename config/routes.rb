@@ -51,6 +51,7 @@ Rails.application.routes.draw do
         post '/UnapproveEvent' => "events#unapprove_event"
         post '/event_list/:event_type' => "events#event_list"
         post  "/events/activeDeactve" => "events#change_status"
+        post  "/events/event_approve_unapprove" => "events#event_approve_unapprove"
         get 'delete_events' => 'events#delete_events'
       end
 

@@ -172,6 +172,17 @@ class Event < ApplicationRecord
   	end
   	return {:status=>true, :message=>message}
   end
+  def self.changeEvent(event)
+  	if event.approved==true
+  		event.update_columns(:approved=>false)
+  		message = "Event has been Unapproved successfully"
+  	else
+  		event.update_columns(:approved=>true)
+  		message = "Event has been approved successfully"
+  	end
+  	return {:status=>true, :message=>message}
+  end
+  
 
   def self.get_total_record(current_user,params)
   	event_type = params[:event_type]

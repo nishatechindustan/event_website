@@ -2,7 +2,7 @@ class App::Api::Admin::EventsController < AdminController
   # callbacks
   before_action :authenticate_request! , only:[:create,:get_event_list,:latest_event,:event_list]
   before_action :get_category_and_artist ,only:[:create,:new, :edit, :update, :show]
-  before_action :get_event_id ,only:[:edit, :destroy, :update ,:show, :change_status]
+  before_action :get_event_id ,only:[:edit, :destroy, :update ,:show, :change_status,:event_approve_unapprove]
   before_action :get_event_data ,only:[:edit, :update, :show]
   
   def index
@@ -111,6 +111,11 @@ class App::Api::Admin::EventsController < AdminController
 
   def change_status
     response = Event.changeStatus(@event)
+    render :json=>response
+  end
+  
+  def event_approve_unapprove
+    response = Event.changeEvent(@event)
     render :json=>response
   end
 
