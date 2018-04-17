@@ -77,7 +77,7 @@ class App::Api::Admin::UsersController < AdminController
 			 	render :json=> {:status=> false, :errors=>@user.errors.full_messages}
 			end
 		else
-			render :json=> {:status=> false, :message=>"Invalid token"}
+			render :json=> {:status=> false, :message=>"Invalid User Id"}
 		end
 	end
 

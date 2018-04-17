@@ -81,8 +81,10 @@ class App::Api::Admin::CategoriesController < AdminController
 
 	def delete_categories
 		@categories = Category.where(:id=> params[:category_ids])
-		if @categories.destroy_all
+		if @categories && @categories.destroy_all
 			render :json => {:status=> true, :message=> "Category has been Deleted successfully."}
+		else
+			render :json =>{:status=>false, :message => "something wrong"}
 		end
 	end
 
