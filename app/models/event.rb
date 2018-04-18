@@ -27,7 +27,7 @@ class Event < ApplicationRecord
 
 	#use method add remove categories for the  event
 	def remove_add_categories
-		category_idss = category_ids.values.map{|a| a.to_i}
+		category_idss = category_ids.map{|a| a.to_i}
 		db_category_ids = self.categories.pluck(:id)
 		to_remove_category_ids = db_category_ids - category_idss
 		to_add_category_ids = category_idss - db_category_ids
@@ -43,7 +43,7 @@ class Event < ApplicationRecord
 
 	#use methods add remove artist for the  event
 	def remove_add_artist
-		artist_idss = artist_ids.values.map{|a| a.to_i}
+		artist_idss = artist_ids.map{|a| a.to_i}
 		db_artist_ids = self.artists.pluck(:id)
 		to_remove_artist_ids = db_artist_ids - artist_idss
 		to_add_artist_ids = artist_idss - db_artist_ids
@@ -61,7 +61,7 @@ class Event < ApplicationRecord
 	#check category are present or not in the params value or the database.
 	def category_ids_present?
 		if self.category_ids.present?
-			db_categories = Category.where(id: self.category_ids.values)
+			db_categories = Category.where(id: self.category_ids)
 			if db_categories.present?
 				true
 			else
@@ -74,7 +74,7 @@ class Event < ApplicationRecord
 	#check artist are present or not in the params value or database.
 	def artist_ids_present?
 		if self.artist_ids.present?
-			db_artist = Artist.where(id: self.artist_ids.values)
+			db_artist = Artist.where(id: self.artist_ids)
 			if db_artist.present?
 				true
 			else
