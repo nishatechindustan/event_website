@@ -6,7 +6,7 @@ class App::Api::Admin::CategoriesController < AdminController
 	#show all category
 	def index
 		@categories =  Category.all
-		render :json => {:data=>@categories, :status=>true}
+		render :json => {:data=>@categories, :status=>true, :count=>@categories.count}
 	end
 
 	#add new catagory

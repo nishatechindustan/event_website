@@ -27,7 +27,7 @@ class App::Api::Admin::ArtistsController < AdminController
 
   def get_artist_list
     @artists = Artist.all
-    render :json => {:data=>@artists, :status=>true}
+    render :json => {:data=>@artists, :status=>true, :count=>@artists.count}
   end
 
   #add new Artist
