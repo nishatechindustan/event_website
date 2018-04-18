@@ -21,7 +21,7 @@ class App::Api::Admin::EventsController < AdminController
     if user.present?
       @event = user.events.new(event_params)
       @event.category_ids = JSON.parse(params[:category_ids])
-      @event.artist_ids = JSON.parse(params[:artist_ids]
+      @event.artist_ids = JSON.parse(params[:artist_ids])
       @event.event_location = event_location
       @event.event_dates = event_dates
       if @event.save
