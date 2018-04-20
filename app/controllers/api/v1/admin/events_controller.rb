@@ -53,7 +53,7 @@ module Api::V1::Admin
       @event.artist_ids = JSON.parse(params[:artist_ids])
       @event.event_location = event_location
       @event.event_dates = event_dates
-      if @event.update(event_params)
+      if @event.update_columns(event_params)
         if event_image_param.present?
           if @event.attachments.present?
             @event.attachments.update(event_image_param)
