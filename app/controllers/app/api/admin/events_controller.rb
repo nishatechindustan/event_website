@@ -74,6 +74,13 @@ class App::Api::Admin::EventsController < AdminController
     end
   end
 
+  def delete_events
+    @events = Event.where(:id=> params[:event_ids])
+    if @events.destroy_all
+      render :json => {:status=> true, :message=> "Event has been Deleted successfully."}
+    end
+  end
+
   def show
     @event_image = @event.attachments.present? ? @event.attachments.first.attachment.url : '/default_image.jpg';
     @event_currency = @event.currency.present? ? @event.currency: ''

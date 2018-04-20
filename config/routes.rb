@@ -76,8 +76,6 @@ Rails.application.routes.draw do
         
         ###################  Search Api #################################
         get '/searchevents/' => "search#search"
-
-        
       end
     end
   end
