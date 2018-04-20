@@ -61,7 +61,7 @@ module Api::V1::Admin
             @event.attachments.create(event_image_param)
           end
         end
-        render :json=>{:message=> "Event Update successfuly.", :status=> true}
+        render :json=>{:message=> "Event Update successfuly.", :status=> true, :event=>@event}
       else
         render :json=>{:status=> false, :errors=>@event.errors.full_messages}
       end
