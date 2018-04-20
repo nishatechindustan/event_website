@@ -1,4 +1,4 @@
-class AdminController < ApplicationController
+class ApiController < ApplicationController
 	#layout 'admin'
 	# before_action :authorized?
 	# private
