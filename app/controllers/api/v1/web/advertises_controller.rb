@@ -1,4 +1,4 @@
-class App::Api::Web::AdvertisesController < ApplicationController
+class Api::v1::Web::AdvertisesController < ApplicationController
 	# before_action :get_advertise, only: [:update]
 
 	def index

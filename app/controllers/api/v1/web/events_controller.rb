@@ -1,4 +1,4 @@
-class App::Api::Web::EventsController < ApplicationController
+class Api::v1::Web::EventsController < ApplicationController
   	before_action :get_event_id ,only:[:event_details]
   	before_action :get_event_data ,only:[:event_details]
 

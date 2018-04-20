@@ -1,4 +1,4 @@
-class App::Api::Admin::DashboardsController < AdminController
+class Api::v1::Admin::DashboardsController < AdminController
 	 before_action :authenticate_request! , only:[:usr_event]
 	
 	def usr_event

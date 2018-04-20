@@ -1,4 +1,4 @@
-class App::Api::Admin::ArtistsController < AdminController
+class Api::v1::Admin::ArtistsController < AdminController
     
   #callbacks
   before_action :get_artist, only: [:show, :update,:destroy, :edit, :change_status]

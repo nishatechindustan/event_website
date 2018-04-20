@@ -7,8 +7,8 @@ Rails.application.routes.draw do
   # subcription api
   get "/subscription/news_letter_subscription" => "subscription#news_letter_subscription"
   
-  namespace :app do
-    namespace :api do
+  namespace :api do
+    namespace :v1 do
 
       ###### Admin Api ########################
       namespace :admin do

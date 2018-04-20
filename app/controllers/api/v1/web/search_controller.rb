@@ -1,4 +1,4 @@
-class App::Api::Web::SearchController < ApplicationController
+class Api::v1::Web::SearchController < ApplicationController
 
 	def search
 		events = Event.search(params)

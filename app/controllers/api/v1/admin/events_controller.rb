@@ -1,4 +1,4 @@
-class App::Api::Admin::EventsController < AdminController
+class Api::v1::Admin::EventsController < AdminController
   # callbacks
   before_action :authenticate_request! , only:[:create,:get_event_list,:latest_event,:event_list]
   before_action :get_category_and_artist ,only:[:create,:new, :edit, :update, :show]

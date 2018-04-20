@@ -1,4 +1,4 @@
-class App::Api::Admin::CategoriesController < AdminController
+class Api::v1::Admin::CategoriesController < AdminController
 
 	#callbacks
 	before_action :get_category, only: [:edit, :show, :update,:destroy,:change_status]

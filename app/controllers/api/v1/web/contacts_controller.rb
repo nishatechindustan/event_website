@@ -1,4 +1,4 @@
-class App::Api::Web::ContactsController < ApplicationController
+class Api::v1::Web::ContactsController < ApplicationController
 
 	def index
 		contacts = Contact.all

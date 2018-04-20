@@ -1,4 +1,4 @@
-class App::Api::Admin::UsersController < AdminController
+class Api::v1::Admin::UsersController < AdminController
 	# callbacks
 	before_action :authenticate_request!, except: [:edit, :delete_user,:change_status, :update]
 	before_action :get_user, only: [:delete_user, :edit, :change_status, :update]
