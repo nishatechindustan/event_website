@@ -1,5 +1,5 @@
 module Api::V1::Web
-	class SearchController < ApplicationController
+	class SearchController < ApiController
 
 		def search
 			events = Event.search(params)

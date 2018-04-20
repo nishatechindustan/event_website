@@ -1,5 +1,5 @@
 module Api::V1::Web
-	class ContactsController < ApplicationController
+	class ContactsController < ApiController
 
 		def index
 			contacts = Contact.all

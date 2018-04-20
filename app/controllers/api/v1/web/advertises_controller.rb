@@ -1,5 +1,5 @@
 module Api::V1::Web
-	class AdvertisesController < ApplicationController
+	class AdvertisesController < ApiController
 		# before_action :get_advertise, only: [:update]
 
 		def index

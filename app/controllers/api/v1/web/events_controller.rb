@@ -1,5 +1,5 @@
 module Api::V1::Web
-	class EventsController < ApplicationController
+	class EventsController < ApiController
 	  	before_action :get_event_id ,only:[:event_details]
 	  	before_action :get_event_data ,only:[:event_details]
 
