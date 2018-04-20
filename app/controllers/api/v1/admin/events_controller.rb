@@ -29,7 +29,7 @@ module Api::V1::Admin
           if event_image_param.present?
            @event.attachments.create(event_image_param)
           end
-          render :json=>{:message=> "Event successfuly added", :status=> true}
+          render :json=>{:message=> "Event successfuly added", :status=> true, :event=>@event}
         else
           render :json=>{:errors=>@event.errors.full_messages, :status=> false}
         end
