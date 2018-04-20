@@ -7,3 +7,4 @@ module Api::V1::Web
 			json_response(response)
 		end
 	end
+end
