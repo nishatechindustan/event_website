@@ -22,7 +22,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'devise'
 gem "paperclip", "~> 5.0.0"
 gem 'jwt'
-
+gem 'rest-client'
 # for newslatter
 gem 'gibbon'
 

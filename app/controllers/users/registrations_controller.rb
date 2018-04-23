@@ -1,6 +1,6 @@
 class Users::RegistrationsController < Devise::RegistrationsController
    prepend_before_action :require_no_authentication, :only => [:create ]
-    skip_before_action :verify_authenticity_token, :only => [:create]
+   #skip_before_action :verify_authenticity_token, :only => [:create]
 
    #before_action :authenticate_request! , only:[:edit]
   # GET /resource/sign_in
