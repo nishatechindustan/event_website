@@ -1,7 +1,7 @@
 class Users::SessionsController < Devise::SessionsController
 #  skip_before_action :verify_authenticity_token, :only => [:destroy,:create]
   prepend_before_action :require_no_authentication, :only => [:create ]
-  skip_before_action :verify_authenticity_token, :only => [:create]
+  #skip_before_action :verify_authenticity_token, :only => [:create]
 
   before_action :ensure_params_exist, :only =>[:create]
 
