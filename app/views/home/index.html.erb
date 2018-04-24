@@ -63,7 +63,7 @@
             	<div class="top-card-wrapper">
                	<div class="top-card-image">
                   <img src="https://eventwesite.herokuapp.com/<%= recent_event[:image]%>">
-                  <label><%= (Time.now.to_date - recent_event[:event_date][0]).to_i%> days left</label>
+                  <label><%= distance_of_day(recent_event[:event_date][0],recent_event[:event_date][1] )%></label>
                	</div>
                	<div class="top-card-content">
                   <div class="top-card-timing">

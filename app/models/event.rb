@@ -14,11 +14,11 @@ class Event < ApplicationRecord
 	has_many :event_artists#, dependent: :destroy
 	has_many :artists, through: :event_artists , dependent: :destroy
 	has_many :attachments, as: :attachable, dependent: :destroy
-	#validates_presence_of :category_ids_present?
-	#validates_presence_of :artist_ids_present?
+	validates_presence_of :category_ids_present?
+	validates_presence_of :artist_ids_present?
 
-	#after_save :remove_add_categories, :if => lambda {|obj| obj.category_ids.present?}
-	#after_save :remove_add_artist, :if => lambda {|obj| obj.artist_ids.present?}
+	after_save :remove_add_categories, :if => lambda {|obj| obj.category_ids.present?}
+	after_save :remove_add_artist, :if => lambda {|obj| obj.artist_ids.present?}
 
 	after_save :add_event_locations
 	after_save :add_event_dates

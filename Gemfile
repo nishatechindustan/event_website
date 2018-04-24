@@ -25,7 +25,6 @@ gem 'jwt'
 gem 'rest-client'
 # for newslatter
 gem 'gibbon'
-gem 'byebug'
 gem 'turbolinks', '~> 5'
 gem 'coffee-rails', '~> 4.2'
 gem 'uglifier', '>= 1.3.0'
