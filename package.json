@@ -1,7 +1,5 @@
 {
   "name": "myappfgfg",
   "private": true,
-  "dependencies": {
-    "angular-drag-and-drop-lists": "^2.1.0"
-  }
+  "dependencies": {}
 }

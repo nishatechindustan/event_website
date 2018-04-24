@@ -3,6 +3,7 @@
 <%flash[:errors] = resource.errors.full_messages%>
 <!-- <h2>Sign up</h2>
 <%#= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
   <div class="field">
     <%#= f.label :user_name %>
           <%#= f.text_field :user_name, placeholder: "User Name", autofocus: true %>
@@ -49,12 +50,12 @@
         <div class="row">
           <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="form-group">
-                <input type="text" name="user[first_name]" id="first_name" class="form-control input-lg" placeholder="First Name" tabindex="1">
+                <input type="text" name="user[first_name]" value ="<%= resource.first_name%>" id="first_name" class="form-control input-lg" placeholder="First Name" tabindex="1">
             </div>
           </div>
           <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="form-group">
-              <input type="text" name="user[last_name]" id="last_name" class="form-control input-lg" placeholder="Last Name" tabindex="2">
+              <input type="text" name="user[last_name]" value ="<%= resource.last_name%>" id="last_name" class="form-control input-lg" placeholder="Last Name" tabindex="2">
             </div>
           </div>
         </div>
@@ -64,16 +65,16 @@
         <div class="row">
           <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="form-group">
-                 <input type="text" name="user[user_name]" id="user_name" class="form-control input-lg" placeholder="User Name" tabindex="3" required>
+                 <input type="text" name="user[user_name]" value ="<%= resource.last_name%>" id="user_name" class="form-control input-lg" placeholder="User Name" tabindex="3" required>
             </div>
           </div>
           <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="form-group">
-              <div id="locationField">
+              <!-- <div id="locationField">
                 <input id="autocomplete" placeholder="Enter your address" onFocus="geolocate()" type="text" name="location[address]" class="form-control input-lg" required >
 
                 </input>
-              </div>
+              </div> -->
               <input type="hidden" id="latitude" class="form-control" name="location[latitude]" value="" placeholder="latitude">
               <input type="hidden" id="longitude" class="form-control" name="location[longitude]" value="" placeholder="longitude">
             </div>
@@ -82,7 +83,7 @@
         <div class="row">
           <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="form-group">
-              <input type="email" name="user[email]"  class="form-control input-lg" placeholder="Email Address" required>
+              <input type="email" name="user[email]" value ="<%= resource.email%>"  class="form-control input-lg" placeholder="Email Address" required>
             </div>
           </div>
           <div class="col-xs-12 col-sm-6 col-md-6">

@@ -5,8 +5,11 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => {confirmations: 'confirmations',registrations: "users/registrations", sessions: "users/sessions", omniauth_callbacks: 'callbacks',passwords: 'users/passwords' }
   #namespace "api/v1", :as=>:api do
   # subcription api
+  get  "/profile/:id" => "users#show", as: "user_profile"
+  post "/users/update" => "users#update"
+  get  "/users/setting" => "users#edit"
   get "/subscription/news_letter_subscription" => "subscription#news_letter_subscription"
-  
+  get '/admin' => redirect('https://eventwebsite2018.herokuapp.com')
   namespace :api do
     namespace :v1 do
 

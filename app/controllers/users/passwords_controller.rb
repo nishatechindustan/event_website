@@ -8,7 +8,9 @@ class Users::PasswordsController < Devise::PasswordsController
 			resource.send_reset_password_instructions
 		    render :json=>{:status=>true, :message=> "Reset password send your email address.", :reset_password_token=>resource.reset_password_token}
 		else
-			render :json=>{:status=>false, :message=> "Email does not exit Please provide valid email address."}
+			flash.notice ="Email does not exit Please provide valid email address." 
+			redirect_to new_user_password_path
+			#render :json=>{:status=>false, :message=> "Email does not exit Please provide valid email address."}
 		end
 	end
 
@@ -35,7 +37,9 @@ class Users::PasswordsController < Devise::PasswordsController
 	end
 
 	def user_params
-	  	params.require(:email)
+	  	# params.require(:email)
+	  	 # Rails.logger.info("PARAMS: #{params.inspect}")
+	  	params.require(:user).require(:email) if params[:user][:email].present?
 	end
 
 	def password_params

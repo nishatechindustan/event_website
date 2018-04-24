@@ -63,14 +63,14 @@
             	<div class="top-card-wrapper">
                	<div class="top-card-image">
                   <img src="https://eventwesite.herokuapp.com/<%= recent_event[:image]%>">
-                  <label>7 days left</label>
+                  <label><%= (Time.now.to_date - recent_event[:event_date][0]).to_i%> days left</label>
                	</div>
                	<div class="top-card-content">
                   <div class="top-card-timing">
                      <div class="fl">
                         <i class="fa fa-calendar">
                         </i>
-                        <%#= recent_event.first[:event_date][0].to_date%> to <%#= recent_event.first[:event_date][1].to_date%>
+                        <%= recent_event[:event_date][0]%> to <%= recent_event[:event_date][1]%>
                      </div>
                      <div class="fr">
                         <i class="fa fa-clock-o"></i>

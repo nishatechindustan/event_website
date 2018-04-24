@@ -2,31 +2,50 @@ class Users::SessionsController < Devise::SessionsController
 #  skip_before_action :verify_authenticity_token, :only => [:destroy,:create]
   prepend_before_action :require_no_authentication, :only => [:create ]
   #skip_before_action :verify_authenticity_token, :only => [:create]
-
   before_action :ensure_params_exist, :only =>[:create]
 
-  respond_to :json
+  #respond_to :json
 
   def create
     # resource = User.find_for_database_authentication(:email => params[:email])
-    resource = User.find_by(:email => params[:email], :provider=>nil)
-    return invalid_login_attempt unless resource
-    
-    if resource.valid_password?(params[:password])
-        userDetails= payload(resource)
-      # resource.authentication_token
-      # userDetails = {:auth_token=>auth_token, :email=>resource.email, :user_name => resource.user_name, :first_name=> resource.first_name, :last_name=> resource.last_name, :is_admin => resource.is_admin,:status=>resource.status, :image=> @user_image}
-      render :json=> {:status=>true, :userDetails=>userDetails, :message=> "You logged in"}
-      return
+    if request.format.json?
+      resource = User.find_by(:email => params[:email], :provider=>nil)
+      return invalid_login_attempt unless resource
+      
+      if resource.valid_password?(params[:password])
+          userDetails= payload(resource)
+        # resource.authentication_token
+        # userDetails = {:auth_token=>auth_token, :email=>resource.email, :user_name => resource.user_name, :first_name=> resource.first_name, :last_name=> resource.last_name, :is_admin => resource.is_admin,:status=>resource.status, :image=> @user_image}
+        render :json=> {:status=>true, :userDetails=>userDetails, :message=> "You logged in"}
+        return
+      end
+      invalid_login_attempt
+    else
+    resource = User.find_by(:email => params[:user][:email], :provider=>nil)
+    return invalid_login_attempt_user unless resource
+      if resource.valid_password?(params[:user][:password])
+        sign_in(resource)
+        flash[:message] = "user Sign in successfully" 
+        redirect_to root_path
+
+      end
     end
-    invalid_login_attempt
+  end
+
+  def destroy
+    sign_out(current_user)
+    flash[:message] = "Sign out successfully"
   end
 
   protected
 
   def ensure_params_exist
-    return unless params[:email].blank? || params[:password].blank?
-    render :json=>{:status=>false, :message=>"missing user_login parameter"}, :status=>false
+    if !request.format.json?
+      params.require(:user).permit(:email,:password, :remember_me)
+    else
+      return unless params[:email].blank? || params[:password].blank?
+      render :json=>{:status=>false, :message=>"missing user_login parameter"}, :status=>false
+    end
   end
 
 
@@ -34,6 +53,13 @@ class Users::SessionsController < Devise::SessionsController
   def invalid_login_attempt
     warden.custom_failure!
     render :json=> {:status=>false, :message=>"Invalid Username / Password"}, :status=>false
+  end
+
+  def invalid_login_attempt_user
+    warden.custom_failure!
+    flash[:message] = "invalid Username/Password"
+    redirect_to user_session_path
+    
   end
 
   def payload(user)
