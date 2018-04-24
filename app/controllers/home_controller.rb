@@ -4,7 +4,7 @@ class HomeController < ApplicationController
 		@events = Event.fetch_event('')
 		Rails.logger.info("PARAMS: #{@events}")
 		Rails.logger.info("-------------------------------------------------------")
-		Rails.logger.info(@events)
+		byebug
 		# @users= User.all
 		# render :json =>{:status=>true,:message=> "List of all users details",:data=> @users}
 		# response = RestClient::Request.execute(
