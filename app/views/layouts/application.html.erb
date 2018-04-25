@@ -44,7 +44,7 @@
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#signup" onclick="hideregshowlogin()">Sign up</a>
+              <a class="nav-link" href="<%= new_user_registration_url%>">Sign up</a>
             </li>
             <li>
                <div class=out1>
@@ -56,7 +56,7 @@
               <%unless !user_signed_in?%>
                <a class="nav-link " data-method="delete" href="<%=destroy_user_session_path%>">Logout</a>
               <%else%>
-               <a class="nav-link " href="#login" onclick="hideregshowlogin()">Login</a>
+               <a class="nav-link " href="<%= user_session_path%>">Login</a>
               <%end%>
             </li>
             <li>
