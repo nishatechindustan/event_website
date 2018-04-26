@@ -1,0 +1,74 @@
+
+.sign-up {
+    background: #fff;
+    padding: 0;
+    border-top: 0;
+    box-shadow: 0px 0 3px 2px #f2f2f2f2;
+    margin: 100px auto;
+}
+
+
+h2.header-text {
+    background: #26a9c3 none repeat scroll 0 0;
+    color: #fff;
+    text-align: center;
+    text-transform: capitalize;
+    margin: 0 0 20px;
+    font-size: 24px;
+    padding: 12px 0;
+}
+.nopadding{
+    padding: 0;
+}
+
+.btn_sign_up input {
+    background: #191919 none repeat scroll 0 0;
+    border-radius: 0;
+    color: #fff;
+    font-size: 20px;
+    line-height: 35px;
+    margin-bottom: 1em;
+    padding: 4px 20px;
+    /* text-transform: uppercase; */
+    transition: all 0.6s ease-out 0s;
+    width: 100%;
+}
+
+
+
+
+ul.socialsarea li a{
+    color: #fff;
+    float: right;
+    font-size: 17px;
+    font-weight: lighter;
+    height: 40px;
+    line-height: 26px;
+    padding: 7px 15px;
+    text-align: left;
+    width: 100%;
+}
+
+a.facebook {
+    background: #617ac3 none repeat scroll 0 0;
+
+}
+a.twitter {
+    background: #dd4b39 none repeat scroll 0 0;
+    border-left: 1px solid #bd2b19;
+}
+ul.socialsarea li {
+    margin-bottom: 14px;
+}
+.sign-up form {
+    padding: 0 40px;
+}
+.signup.sign-up {
+    padding: 0;
+}
+p.sign_up {
+    padding: 0;
+    color: #dd4b39;
+    margin-top: -24px;
+    margin-bottom: 40px;
+}

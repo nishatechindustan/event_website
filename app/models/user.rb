@@ -6,14 +6,15 @@ class User < ApplicationRecord
 	has_many :events,dependent: :destroy
 	has_many :attachments, as: :attachable, dependent: :destroy
 
-	validates_uniqueness_of :email, :case_sensitive => false, :allow_blank => true, :scope=>:provider, :if => :email_changed?
-	validates_format_of  :email, :with  => Devise.email_regexp, :allow_blank => true, :if => :email_changed?
-	validates_presence_of :email , :on=>:create
-	validates_presence_of  :password, :on=>:create
-	validates_confirmation_of :password, :on=>:create
-	validates_length_of  :password, :within => Devise.password_length, :allow_blank => true
+	# validates_uniqueness_of :email, :case_sensitive => false, :allow_blank => true, :scope=>:provider, :if => :email_changed?
+	# validates_format_of  :email, :with  => Devise.email_regexp, :allow_blank => true, :if => :email_changed?
+	# validates_presence_of :email , :on=>:create
+	# validates_presence_of  :password, :on=>:create
+	# validates_confirmation_of :password, :on=>:create
+	# validates_length_of  :password, :within => Devise.password_length, :allow_blank => true
+
 	devise :database_authenticatable, :registerable,:confirmable,
-         :recoverable, :rememberable, :trackable, :omniauthable, :omniauth_providers => [:google_oauth2,:facebook]
+         :recoverable,:validatable, :rememberable, :trackable, :omniauthable, :omniauth_providers => [:google_oauth2,:facebook]
 	before_create :set_status
 
     #after_create :subscribe_user_to_newslatter
@@ -62,14 +63,6 @@ class User < ApplicationRecord
     	!address.blank?
 	end
 
-  # def authentication_token
-  # 	auth_token= SecureRandom.urlsafe_base64
-  #   self.update_columns(auth_token: auth_token)
-  # end
-
-  # def self.digest(token)
-  #   Digest::SHA1.hexdigest(token.to_s)
-  # end
 
   def self.changeStatus(user)
   	if user.status==true
@@ -89,5 +82,9 @@ class User < ApplicationRecord
 
   def subscribe_user_to_newslatter
     SubscribeUserToMailingListJob.perform_later(self)
+  end
+
+  def self.get_user(email)
+  	find_by(:email=> email, :provider=>nil)
   end
 end

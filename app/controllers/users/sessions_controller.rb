@@ -21,20 +21,8 @@ class Users::SessionsController < Devise::SessionsController
       end
       invalid_login_attempt
     else
-    resource = User.find_by(:email => params[:user][:email], :provider=>nil)
-    return invalid_login_attempt_user unless resource
-      if resource.valid_password?(params[:user][:password])
-        sign_in(resource)
-        flash[:message] = "user Sign in successfully" 
-        redirect_to root_path
-
-      end
-    end
-  end
-
-  def destroy
-    sign_out(current_user)
-    flash[:message] = "Sign out successfully"
+      super
+     end
   end
 
   protected
@@ -53,13 +41,6 @@ class Users::SessionsController < Devise::SessionsController
   def invalid_login_attempt
     warden.custom_failure!
     render :json=> {:status=>false, :message=>"Invalid Username / Password"}, :status=>false
-  end
-
-  def invalid_login_attempt_user
-    warden.custom_failure!
-    flash[:message] = "invalid Username/Password"
-    redirect_to user_session_path
-    
   end
 
   def payload(user)

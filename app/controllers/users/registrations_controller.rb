@@ -51,13 +51,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   render :json =>{data: user, status: true}
   # end 
   def create
-    # super
-    # if resource.save
-    #  sign_in(resource)
-    # # else
-    # #   render :action => :new
-    # end 
-    if request.format.json?
+    if params[:registration].present?
        resource = User.new(sign_up_params1)
       if resource.save
         user_details= payload(resource)

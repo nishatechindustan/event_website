@@ -1,161 +1,60 @@
-<!-- 
-<h2>Log in</h2>
-
-<%#= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%#= f.label :email %><br />
-    <%#= f.email_field :email, autofocus: true %>
-  </div>
-
-  <div class="field">
-    <%#= f.label :password %><br />
-    <%#= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <%# if devise_mapping.rememberable? -%>
-    <div class="field">
-      <%#= f.check_box :remember_me %>
-      <%#= f.label :remember_me %>
-    </div>
-  <%# end -%>
-
-  <div class="actions">
-    <%#= f.submit "Log in" %>
-  </div>
-<%# end %>
- -->
-<%#= render "devise/shared/links" %>
-
-
-<div class="universal_spacer">
 <div class="container">
+  <div class="col-sm-12 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8 signup sign-up">
+    <h2 class="header-text">LOGIN HERE</h2>
     <div class="row">
-        <div class="login-form">
-          
-            <div class="account-box">
-               <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-                  <div class="form-head">
-                    <h2>LOGIN HERE</h2>
-                  </div>
-                <div class="form-group">
-                  <label>Username or email</label>
-                  <%= f.email_field :email, autofocus: true, :class => 'form-control', :placeholder => "Email" %>
-                </div>
-                <div class="form-group">
-                  <a class="pull-right" href="/users/password/new">Forgot password?</a>
-                  <label>Password</label>
-                 <%= f.password_field :password, autocomplete: "off", :class => 'form-control', :placeholder => "Password"%>
-                </div>
-                <% if devise_mapping.rememberable? -%>
-                  <div class="checkbox-user">
-                    <%= f.check_box :remember_me %>
-                   <%= f.label :remember_me %>
-                  </div>
-                <% end %>
-                 <%= f.submit "Log in", :class =>"btn btn-primary btn-block" %>
-              <%end%>
-
-                <a class="forgotLnk" href="http://www.jquery2dotnet.com">I can't access my account</a>
-                <div class="or-box">
-                    <span class="or">OR</span>
-                    <div class="row">
-                        <div class="col-md-6 row-block">
-                            <a href="/users/auth/facebook" class="btn btn-facebook btn-block">Facebook</a>
-                        </div>
-                        <div class="col-md-6 row-block">
-                            <a href="/users/auth/google_oauth2" class="btn btn-google btn-block">Google</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="or-box row-block">
-                    <div class="row">
-                        <div class="col-md-12 row-block">
-                            <a href="<%= new_user_registration_path%>" class="btn btn-primary btn-block">Create New Account</a>
-                        </div>
-                    </div>
-                </div>
+      <div class="col-sm-12 nopadding">
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <div class="form-group col-sm-12 ">
+            <input type="text" name="user[email]" id="email" class="form-control input" value ="<%= resource.email%>" placeholder="Email" >
+          </div>
+          <div class="form-group col-sm-12 ">
+            <input type="password" name="user[password]" id="password" class="form-control input" value ="<%= resource.password%>" placeholder="Password" >
+          </div>
+          <% if devise_mapping.rememberable? -%>
+            <div class="checkbox-user">
+              <%= f.check_box :remember_me %>
+              <%= f.label :remember_me %>
             </div>
-        </div>
+          <% end %>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group text-center btn_sign_up">
+                <input type="submit" class="btn" value="Log in" id="regform" name="submit">
+              </div>
+            </div>
+          </div>
+          <%#= f.submit "Log in", :class =>"btn btn-primary btn-block" %>
+        <%end%>
+        <a class="forgotLnk" href="/users/password/new">I can't access my account</a>
+      </div>
     </div>
+    <div class="row">
+      <div class="form-group col-sm-12 text-center ">
+        <div class="or-txt">
+         <span>OR</span>
+        </div>
+      </div>
+      <div class="form-group col-sm-12 ">
+        <ul class="socialsarea">
+          <li class="">
+            <a href="/users/auth/facebook" class="facebook">
+              <i class="fa fa-facebook"></i>
+              <span>Facebook Login</span>
+            </a>
+          </li>
+          <li class="">
+            <a href="/users/auth/google_oauth2" class="twitter">
+              <i class="fa fa-google"></i>
+              <span>Google Login</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="form-group col-sm-12 ">
+        <p class="text-center sign_up"><a href="<%= new_user_registration_path%>">
+          Create New Account</a>
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
-</div>
-<style type="text/css">
-.account-box
-{
-    border: 2px solid rgba(24, 19, 19, 0.75);
-    border-radius: 2px;
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
-    -khtml-border-radius: 2px;
-    -o-border-radius: 2px;
-    z-index: 3;
-    font-size: 13px !important;
-    font-family: "Helvetica Neue" ,Helvetica,Arial,sans-serif;
-    background-color: #716e77f5;
-    padding: 16px;
-}
-
-.logo
-{
-    width: 138px;
-    height: 30px;
-    text-align: center;
-    margin: 10px 0px 27px 40px;
-    background-position: 0px -4px;
-    position: relative;
-}
-
-.forgotLnk
-{
-    margin-top: 10px;
-    display: block;
-}
-
-.purple-bg
-{
-    background-color: #6E329D;
-    color: #fff;
-}
-.or-box
-{
-    position: relative;
-    border-top: 1px solid #dfdfdf;
-    padding-top: 20px;
-    margin-top: 20px;
-    margin-left: 24px;
-}
-.or
-{
-    color: #666666;
-    background-color: #ffffff;
-    position: absolute;
-    text-align: center;
-    top: -12px;
-    width: 40px;
-    left: 90px;
-}
-.account-box .btn:hover
-{
-    color: #fff;
-}
-.btn-facebook
-{
-    background-color: #3F639E;
-    color: #fff;
-    font-weight:bold;
-}
-.btn-google
-{
-    background-color: #454545;
-    color: #fff;
-    font-weight:bold;
-}
-.universal_spacer{
-  padding-top: 15%;
-  padding-bottom: 8%;
-}
-.form-head{
-  text-align: center;
-}
-
-</style>
