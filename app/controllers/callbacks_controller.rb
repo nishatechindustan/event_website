@@ -4,6 +4,7 @@ class CallbacksController < Devise::OmniauthCallbacksController
   end
 
   def google_oauth2
+    # https://localhost:3000/users/auth/google_oauth2/callback
       authenticat_user(request.env["omniauth.auth"])
   end
 
@@ -19,14 +20,13 @@ class CallbacksController < Devise::OmniauthCallbacksController
     @user_new = User.from_omniauth(auth)
     if !@user_new.persisted?
         flash[:errors] = @user_new.errors.full_messages
-        redirect_to root_path
+        redirect_to root_path and return
     end
     sign_in(@user_new)
     if  @user_new.email.include?("facebook") || @user_new.email.include?("twitter") || @user_new.email.include?("linkedin")
       flash[:notice] = 'Please update email address'
     end 
 
-   
     if @user_new.sign_in_count==1
       redirect_to(users_setting_path) and return
     else

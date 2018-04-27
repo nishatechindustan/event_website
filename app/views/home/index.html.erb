@@ -1,6 +1,7 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <body id="page-top" style="overflow-x: hidden;">
-<header class="head-center">
-      <div class="head-container">
+  <header class="head-center">
+      <!-- <div class="head-container">
         <img  src="/assets/image-haed.png" alt="image" style="width:100%;">
         <div class="row my-head-wrapper">
           <div class="col-lg-6 col-head">
@@ -18,8 +19,12 @@
             </p>
           </div>
         </div>
-      </div>
-    </header>
+      </div> -->
+  <img class="mySlides" src="/assets/baner1.jpg">
+  <img class="mySlides" src="/assets/img_la.jpg">
+  <img class="mySlides" src="/assets/3_img.jpg">
+</div>
+  </header>
     <div class="custom-cards">
       <div style="position: relative;">
         <select class="banner-select-box">
@@ -420,3 +425,29 @@
                </h2>
             </div>
          </div>
+
+
+
+<script>
+var myIndex = 0;
+carousel();
+
+function carousel() {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    for (i = 0; i < x.length; i++) {
+       x[i].style.display = "none";  
+    }
+    myIndex++;
+    if (myIndex > x.length) {myIndex = 1}    
+    x[myIndex-1].style.display = "block";  
+    setTimeout(carousel, 3000); // Change image every 2 seconds
+}
+</script>
+<style>
+.mySlides {display:none;}
+img.mySlides {
+    min-width: 100%;
+    /* max-width: 50%; */
+}
+</style>

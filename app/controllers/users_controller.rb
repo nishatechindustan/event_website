@@ -28,8 +28,8 @@ class UsersController < ApplicationController
 			flash[:notice] =  "Profile updated successfully"
 			redirect_to users_setting_path
 		else
-			#flash[:errors] =  @user.errors.full_messages
-			flash[:notice] = @user.errors
+			flash[:errors] =  @user.errors.full_messages
+			# flash[:notice] = @user.errors
 			#{}"something went wrong"
 			redirect_to users_setting_path
 		end
