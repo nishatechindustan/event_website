@@ -1,9 +1,9 @@
 class ApplicationController < ActionController::Base
 	# with: :exception, unless: -> { request.format.json? }
-  	protect_from_forgery 
-   	before_action :configure_permitted_parameters, if: :devise_controller?
-   	skip_before_action :verify_authenticity_token, if: :json_request?
- 	before_action :check_email, if: :user_signed_in?
+	protect_from_forgery 
+	before_action :configure_permitted_parameters, if: :devise_controller?
+	skip_before_action :verify_authenticity_token, if: :json_request?
+	before_action :check_email, if: :user_signed_in?
 
   
 	def configure_permitted_parameters

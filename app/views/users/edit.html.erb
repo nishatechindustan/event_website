@@ -6,9 +6,10 @@
                 <hr>
                 <!-- <form method="post" action="/users/update" enctype="multipart/form-data"> -->
                    <%= form_tag "/users/update", :method => :post, :multipart => true do %>
+                   
                     <div class="input-with-label text-left">
                         <span>Your User Name </span>
-                        <input type="text" name="user[user_name]" value="<%=@user.user_name %>" placeholder="Type in your User Name e.g. ashish">
+                        <input type="text" name="user[user_name]" value="<%=current_user.user_name %>" placeholder="Type in your User Name e.g. ashish">
                     </div>
                     <div class="input-with-label text-left">
                         <span>First Name</span>
@@ -29,7 +30,7 @@
                     <div class="input-with-label text-left">
                         <div class="settingsimg">
                             <% if @user.attachments.present? %>
-                                <img src="<%=@user.attachments.first.attachment.url(:thumb)
+                                <img src="<%=@user.attachments.first.attachment.url
                                 %>">
                             <% end %>
                         </div>
