@@ -8,14 +8,12 @@ class Users::SessionsController < Devise::SessionsController
 
   def create
     # resource = User.find_for_database_authentication(:email => params[:email])
-    if params[:session].present?
+    if !params[:session].present?
       resource = User.find_by(:email => params[:email], :provider=>nil)
       return invalid_login_attempt unless resource
       
       if resource.valid_password?(params[:password])
           userDetails= payload(resource)
-        # resource.authentication_token
-        # userDetails = {:auth_token=>auth_token, :email=>resource.email, :user_name => resource.user_name, :first_name=> resource.first_name, :last_name=> resource.last_name, :is_admin => resource.is_admin,:status=>resource.status, :image=> @user_image}
         render :json=> {:status=>true, :userDetails=>userDetails, :message=> "You logged in"}
         return
       end
@@ -28,7 +26,7 @@ class Users::SessionsController < Devise::SessionsController
   protected
 
   def ensure_params_exist
-    if !params[:session].present?
+    if params[:session].present?
       params.require(:user).permit(:email,:password, :remember_me)
     else
       return unless params[:email].blank? || params[:password].blank?
