@@ -8,7 +8,7 @@ class Users::SessionsController < Devise::SessionsController
 
   def create
     # resource = User.find_for_database_authentication(:email => params[:email])
-    if !params[:session].present?
+    if !params[:user].present?
       resource = User.find_by(:email => params[:email], :provider=>nil)
       return invalid_login_attempt unless resource
       
@@ -26,7 +26,7 @@ class Users::SessionsController < Devise::SessionsController
   protected
 
   def ensure_params_exist
-    if params[:session].present?
+    if params[:user].present?
       params.require(:user).permit(:email,:password, :remember_me)
     else
       return unless params[:email].blank? || params[:password].blank?
