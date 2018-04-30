@@ -51,7 +51,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   render :json =>{data: user, status: true}
   # end 
   def create
-    if params[:registration].present?
+    if !params[:user].present? 
        resource = User.new(sign_up_params1)
       if resource.save
         user_details= payload(resource)
@@ -73,7 +73,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def sign_up_params1
     if params[:registration]
       params.require(:registration).permit(:user_name, :first_name, :last_name, :email, :password, :password_confirmation, :address) 
-    #  params.fetch(:registration, {}).permit(:user_name, :first_name, :last_name, :email, :password, :password_confirmation)
+   
     else
       user_sign_up ={
         user_name: params.fetch(:user_name,''),
