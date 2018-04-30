@@ -75,3 +75,28 @@ p.sign_up {
 .settingsimg img {
     width: 20%;
 }
+
+ul.socialsarea li {
+    text-align: center;
+    flex: 1;
+    margin: 0 15px;
+}
+ul.socialsarea {
+    display: flex;
+    padding: 0 20px 0 30px;
+}
+.nopadding {
+    padding: 0;
+}
+
+
+.form-group input {
+    margin-bottom: 20px;
+}
+.checkbox-user {
+    padding: 0 15px;
+}
+
+.checkbox-user {
+    padding: 0 15px;
+}

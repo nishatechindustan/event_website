@@ -67,7 +67,7 @@
          		<% @events.each do |recent_event|%>
             	<div class="top-card-wrapper">
                	<div class="top-card-image">
-                  <img src="https://eventwesite.herokuapp.com/<%= recent_event[:image]%>">
+                  <img src="https://eventwebsite.herokuapp.com/<%= recent_event[:image]%>">
                   <label><%= distance_of_day(recent_event[:event_date][0],recent_event[:event_date][1] )%></label>
                	</div>
                	<div class="top-card-content">
