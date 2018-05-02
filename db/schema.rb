@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180406052715) do
+ActiveRecord::Schema.define(version: 20180502061650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,6 +121,13 @@ ActiveRecord::Schema.define(version: 20180406052715) do
     t.string "city"
     t.string "state"
     t.string "country"
+  end
+
+  create_table "states", force: :cascade do |t|
+    t.string "name"
+    t.boolean "status", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

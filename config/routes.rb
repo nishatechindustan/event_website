@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get  "/users/setting" => "users#edit"
   get "/subscription/news_letter_subscription" => "subscription#news_letter_subscription"
   get '/admin' => redirect('https://eventwebsite2018.herokuapp.com')
+  get '/searchevents' => "searchs#index"
   namespace :api do
     namespace :v1 do
 

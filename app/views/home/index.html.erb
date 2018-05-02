@@ -1,61 +1,24 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<body id="page-top" style="overflow-x: hidden;">
-  <header class="head-center">
-      <!-- <div class="head-container">
-        <img  src="/assets/image-haed.png" alt="image" style="width:100%;">
-        <div class="row my-head-wrapper">
-          <div class="col-lg-6 col-head">
-           <p class="text-fadded1" style="font-size: 25px; font-family: 'Dosis', sans-serif !important; margin-bottom:0rem; padding-left:
-                 28px;">10 Dec to 31 December 2017</p>
-          </div>
-          <div class="col-lg-10 col-head" style="margin-top: 45px;">
-            <h1 class="text-uppercase">
-              <strong>DON'T MISS THE UPCOMING EVENTS</strong>
-            </h1>
-          </div>
-          <div class="col-lg-8 col-head">
-            <p class="text-fadded">
-              <b> Weekend getaways, events near you etc. just finger tips Away.</b>
-            </p>
-          </div>
-        </div>
-      </div> -->
+<header class="head-center">
   <img class="mySlides" src="/assets/baner1.jpg">
   <img class="mySlides" src="/assets/img_la.jpg">
   <img class="mySlides" src="/assets/3_img.jpg">
-</div>
-  </header>
-    <div class="custom-cards">
-      <div style="position: relative;">
-        <select class="banner-select-box">
-          <option>Select Category</option>
-          <option>category 1</option>
-          <option>category 2</option>
-          <option>category 3</option>
-        </select>
-        <i style="font-size:30px; color: #8d8d8d;" class="fa arrow pull-right custom-select-box-arrow">&#xf107;</i>
-      </div>
-      <div style="position: relative;">
-        <select class="banner-select-box">
-          <option>Select State</option>
-          <option>state 1</option>
-          <option>state 2</option>
-          <option>state 3</option>
-        </select>
-        <i style="font-size:30px; color: #8d8d8d;" class="fa arrow pull-right custom-select-box-arrow">&#xf107;</i>
-      </div>
-      <div style="border-right: none;  position: relative;">
-        <select class="banner-select-box">
-          <option>Select Price</option>
-          <option>price 1</option>
-          <option>price 2</option>
-          <option>price 3</option>
-        </select>
-        <i style="font-size:30px; color: #8d8d8d;" class="fa arrow pull-right custom-select-box-arrow">&#xf107;</i>
-      </div>
-      <div style="border-right: none;" class="lets-start">Let's start</div>
-         <article class="clearfix"></article>
+</header>
+<div class="custom-cards">
+  <%= form_tag searchevents_path, :method => 'get' do %>
+    <div style="position: relative;">
+     <%= select_tag(:category_id, options_for_select(@categories), :prompt=> "select a categories", :class=>"banner-select-box")%>
     </div>
+    <div style="position: relative;">
+      <%= select_tag(:state_name, options_for_select(@states), :prompt=> "select a state", :class=>"banner-select-box")%>
+      
+    </div>
+    <div style="border-right: none;  position: relative;">
+     <%= text_field_tag :title, params[:title] ,:placeholder=>"title name",:class=>"banner-select-box"%>
+    </div>
+    <%= submit_tag "Search", :name => nil , :class=> "lets-start" %>
+  <%end%>
+</div>
       <div class="container">
          <h3 class="heading"><b>RECENT EVENTS</b></h3>
          <hr class="line">
