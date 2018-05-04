@@ -1,7 +1,7 @@
 module Api::V1::Admin
   class EventsController < ApiController
     # callbacks
-   # before_action :authenticate_request! , only:[:create,:get_event_list,:latest_event,:event_list]
+    before_action :authenticate_request! , only:[:create,:get_event_list,:latest_event,:event_list]
     before_action :get_category_and_artist ,only:[:create,:new, :edit, :update, :show]
     before_action :get_event_id ,only:[:edit, :destroy, :update ,:show, :change_status,:event_approve_unapprove]
     before_action :get_event_data ,only:[:edit, :update, :show]
