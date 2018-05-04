@@ -132,8 +132,9 @@ class Event < ApplicationRecord
 	def self.evnt_list(params,current_user)
 		recordsTotal = get_total_record(current_user,params)
   	@events,recordsFiltered = get_event_list(params,recordsTotal,current_user)
-  	events = fetchEvent(@events) if @events
-    return {:events=>events, :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
+  	return @events,recordsFiltered, recordsTotal
+  	#events = fetchEvent(@events) if @events
+    #return {:events=>events, :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
 	end
 
 
@@ -307,7 +308,6 @@ class Event < ApplicationRecord
 	      events <<{:title=>event.title, :id=>event.id, :description=>event.description, :ticket_available => event.ticket_available, :cost=> event.cost, :currency=> event.currency, :contact_number => event.contact_number, :image=> @event_image,
 	      :cost_offers=>event.cost_offers, :email=>event.email, :event_type => event.event_type, :status=> event.status,:approved=>event.approved, :event_categories=> event.categories.map(&:name), :event_artists=>event.artists.map(&:name), :event_added_by=>event.user.user_name,:event_location=>event.locations.first.address,:latitude=>event.locations.first.latitude,:longitude=>event.locations.first.longitude,:city=>event.locations.first.city,:state=>event.locations.first.state,:venue=>event.locations.first.venue,:country=>event.locations.first.country, :event_date=>event.event_adver_dates.map{|a| [a.start_date, a.end_date]}.flatten!}
 	    end
-
     return events
 	end
 
