@@ -96,12 +96,16 @@ module Api::V1::Admin
     def get_event_list
      event, recordsFiltered,recordsTotal = Event.evnt_list(params, @current_user)
      events = get_event_details(event) if event.present?
+     events = 0 if events.blank?
      render :json=> {:data=> events, :status=>true, :draw=>params[:draw], :recordsFiltered=> recordsFiltered,:recordsTotal=> recordsTotal}
     end
 
     def latest_event
       event, recordsFiltered,recordsTotal = Event.fetch_today_event_list(params)
       events = get_event_details(event) if event.present?
+      events = 0 if events.blank?
+        
+      end
       render :json=> {:data=> events, :status=>true, :draw=>params[:draw], :recordsFiltered=> recordsFiltered,:recordsTotal=> recordsTotal}
     end
 
