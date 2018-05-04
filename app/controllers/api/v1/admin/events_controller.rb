@@ -94,17 +94,21 @@ module Api::V1::Admin
 
     # using this method show datatable records 
     def get_event_list
-     event, recordsFiltered,recordsTotal = Event.evnt_list(params, @current_user)
-     events = get_event_details(event) if event.present?
-     events = 0 if event.blank?
+      event, recordsFiltered,recordsTotal = Event.evnt_list(params, @current_user)
+      if event.present?
+       events = get_event_details(event)
+      else
+       events = 0
+      end
      render :json=> {:data=> events, :status=>true, :draw=>params[:draw], :recordsFiltered=> recordsFiltered,:recordsTotal=> recordsTotal}
     end
 
     def latest_event
       event, recordsFiltered,recordsTotal = Event.fetch_today_event_list(params)
-      events = get_event_details(event) if event.present?
-      events = 0 if events.blank?
-        
+      if event.present?
+       events = get_event_details(event)
+      else
+       events = 0
       end
       render :json=> {:data=> events, :status=>true, :draw=>params[:draw], :recordsFiltered=> recordsFiltered,:recordsTotal=> recordsTotal}
     end
