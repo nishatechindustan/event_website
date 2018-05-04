@@ -123,9 +123,10 @@ class Event < ApplicationRecord
 			recordsFiltered =recordsTotal
 		end
 
-		events = fetchEvent(@events) if @events
+		# events = fetchEvent(@events) if @events
 
-    return {:events=>events, :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
+    # return {:events=>events, :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
+    return @events,recordsTotal,recordsFiltered
 	end
 
 	def self.evnt_list(params,current_user)

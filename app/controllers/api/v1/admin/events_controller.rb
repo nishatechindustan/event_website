@@ -1,7 +1,7 @@
 module Api::V1::Admin
   class EventsController < ApiController
     # callbacks
-    before_action :authenticate_request! , only:[:create,:get_event_list,:latest_event,:event_list]
+   # before_action :authenticate_request! , only:[:create,:get_event_list,:latest_event,:event_list]
     before_action :get_category_and_artist ,only:[:create,:new, :edit, :update, :show]
     before_action :get_event_id ,only:[:edit, :destroy, :update ,:show, :change_status,:event_approve_unapprove]
     before_action :get_event_data ,only:[:edit, :update, :show]
@@ -100,7 +100,10 @@ module Api::V1::Admin
 
     def latest_event
       events = Event.fetch_today_event_list(params)
-      render :json => {:data=>events[:events], :status=>true ,:draw=>params[:draw], :recordsTotal=>events[:recordsTotal], :recordsFiltered=>events[:recordsFiltered]}
+      render :json=> events
+      # console.log(events)
+      #render :json=>events
+      # render :json => {:data=>events[:events], :status=>true ,:draw=>params[:draw], :recordsTotal=>events[:recordsTotal], :recordsFiltered=>events[:recordsFiltered]}
     end
 
     def unapprove_event
