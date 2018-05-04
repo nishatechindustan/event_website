@@ -94,18 +94,15 @@ module Api::V1::Admin
 
     # using this method show datatable records 
     def get_event_list
-      events = Event.evnt_list(params, @current_user)
-      render :json=> events
-      # render :json => {:data=>events[:events], :status=>true ,:draw=>params[:draw], :recordsTotal=>events[:recordsTotal], :recordsFiltered=>events[:recordsFiltered]}
+     event, recordsFiltered,recordsTotal = Event.evnt_list(params, @current_user)
+     events = get_event_details(event) if event.present?
+     render :json=> {:data=> events, :status=>true, :draw=>params[:draw], :recordsFiltered=> recordsFiltered,:recordsTotal=> recordsTotal}
     end
 
     def latest_event
       event, recordsFiltered,recordsTotal = Event.fetch_today_event_list(params)
       events = get_event_details(event) if event.present?
       render :json=> {:data=> events, :status=>true, :draw=>params[:draw], :recordsFiltered=> recordsFiltered,:recordsTotal=> recordsTotal}
-      # console.log(events)
-      #render :json=>events
-      # render :json => {:data=>events[:events], :status=>true ,:draw=>params[:draw], :recordsTotal=>events[:recordsTotal], :recordsFiltered=>events[:recordsFiltered]}
     end
 
     def unapprove_event
