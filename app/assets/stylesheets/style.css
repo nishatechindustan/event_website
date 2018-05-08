@@ -1463,10 +1463,6 @@ a {
   .paragraph2 {
     font-size: 10px;
   }
-  /* .date {
-  font-size: 10px;
-  padding-top: 0%;
-  } */
   .material-icons {
     font-size: 15px !important;
   }
@@ -1476,9 +1472,6 @@ a {
   ul.footer-events {
    margin-top: 0px !important;
   }
-  /* .events1 {
-  margin-top: 8px;
-  } */
 }
 @media only screen and (max-width: 800px) {
   .top-card-wrapper{
@@ -1742,86 +1735,79 @@ a {
   margin-top: 0;
   width: 70%;
   }
-  /* .events1 {
-  font-size:8px !important;
-  } */
   .custom-cards div {
   padding: 18px 5px;
   }
   .banner-select-box {
-  font-size: 12px;
+    font-size: 12px;
   }
   .arrow {
-  margin-right: 20px !important;
+    margin-right: 20px !important;
   }
   .custom-select-box-arrow {
-  top: calc(100% - 15px);
+    top: calc(100% - 15px);
   }
   .custom-cards div {
-  margin: 18px 0px;
+    margin: 18px 0px;
   }
   .time-pikker {
-  padding: 25px;
+    padding: 25px;
   }
   .cal-time {
-  margin-top: -10px;
+    margin-top: -10px;
   }
   .cal-time1 {
-  margin-top: -10px;
+   margin-top: -10px;
   }
   .fo-img {
-  width: 0;
+    width: 0%;
   }
   .read {
-  width: 75%;
+    width: 75%;
   }
   .button {
-  width: 40%;
+    width: 40%;
   }
 }
 @media only screen and (max-width: 375px)
 {
   ul.footer-events {
-  margin-top: 3px !important;
+   margin-top: 3px !important;
   }
   li.events {
-  padding-top: 3px;
-  padding-left: 0px;
-  padding-right: 0px;
+    padding-top: 3px;
+    padding-left: 0px;
+    padding-right: 0px;
   }
-  /* h6.events1 {
-  margin-top: 3px !important;
-  padding-left: 6px;
-  padding-right: 6px; */
   .text-uppercase {
-  font-size: 15px!important;
+    font-size: 15px!important;
   }
   .text-fadded {
-  font-size: 8px!important;
+    font-size: 8px!important;
   }
 }
 @media only screen and (max-width: 360px)
 {
   .text-fadded1 {
-  padding-right: 15px;
+   padding-right: 15px;
   }
   .col-lg-10 {
-  margin-top: 15px!important;
+   margin-top: 15px!important;
   }
   .time-time {
-  font-size: 14px !important;
+   font-size: 14px !important;
   }
   li.events {
   padding-left: 0px;
   padding-right:0px;
   }
   .text-uppercase {
-  font-size: 15px!important;
+   font-size: 15px!important;
   }
   .text-fadded {
-  font-size: 8px!important;
+   font-size: 8px!important;
   }
   .button {
-  width: 100;
+    width: 100%;
   }
 }
