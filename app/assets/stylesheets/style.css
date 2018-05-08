@@ -18,7 +18,7 @@ img {
 #mainNav .navbar-brand {
   color: rgba(255,255,255,.7);
   text-transform: uppercase;
-  font-family: roboto condensed;
+  /*font-family: roboto condensed;*/
 }
 .nav_header {
   background: rgba(0, 0, 0, 0.4) none repeat scroll 0 0!important;
