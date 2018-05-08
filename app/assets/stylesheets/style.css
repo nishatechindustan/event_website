@@ -465,7 +465,7 @@ i.arrow_style {
   right: 30px;
 }
 ::placeholder {
-  color: #595959
+  color: #595959;
   opacity: 0.5;
 }
 .custom-cards{
