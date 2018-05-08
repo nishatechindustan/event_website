@@ -1,0 +1,87 @@
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+<div class="advertising">
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="advertise_title">
+        <h2>
+          Advertise
+          <storng>with us</storng>
+        </h2>
+      </div>
+      <div class="col-sm-8 partition">
+        <div class="row">
+          <%= form_tag('/advertises') do -%>
+            <div class="form-group">
+              <div class="col-sm-3 form-text">
+                Organization Name
+              </div>
+              <div class="col-sm-9">
+                <input class="form-control" placeholder="Organization Name" type="text" name="organization_name" value="<%= @advertise.organization_name%>">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-3 form-text">
+                Contact Person
+              </div>
+              <div class="col-sm-9">
+                    <input class="form-control" placeholder="Contact Person" type="text" name="contact_person" value="<%= @advertise.contact_person%>">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-3 form-text">
+              Contact Number
+              </div>
+              <div class="col-sm-9">
+                <input class="form-control" placeholder="contact Number" type="text" name="contact_number" id="" value="<%= @advertise.contact_number%>">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-3 form-text">
+                Event Category
+              </div>
+              <div class="col-sm-9">
+                <input class="form-control" placeholder="Event Category" type="text" name="event_type" id="" value="<%= @advertise.event_type%>">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-3 form-text">
+              Event Date
+              </div>
+              <div class="col-sm-9">
+                <!-- <input class="form-control" placeholder="  Event Date" type="text" name="date" id=""> -->
+                <input type="text" class="form-control"  name="advertise_date" />
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form_submit form-group">
+                <button class="btn btn-primary" type="submit" name="submit" id="" value="send">Submit</button>
+              </div>
+            </div>
+          <%end%>
+        </div>
+      </div>
+      <div class="col-sm-4 col_address">
+        <div class="row">
+          <address>
+            <p class="add_para">To get in touch with us : <b>123456789</b>
+            </p>
+            <p class="add_para">Email us: abc@gmail.com
+            </p>
+            <p class="add_para">Website: <a class="nav-link" href="https://www.techindustan.com" target="_blank">www.techindustan.com</a>
+            </p>
+          </address>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</div>
+<script type="text/javascript">
+	$('input[name="advertise_date"]').daterangepicker();
+</script>

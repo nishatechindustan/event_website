@@ -6,7 +6,7 @@ class User < ApplicationRecord
 	has_many :events,dependent: :destroy
 	has_many :attachments, as: :attachable, dependent: :destroy
 
-	devise :database_authenticatable, :registerable,
+	devise :database_authenticatable, :registerable,:timeoutable,
          :recoverable,:validatable, :rememberable, :trackable, :omniauthable, :omniauth_providers => [:google_oauth2,:facebook]
 	before_create :set_status
 

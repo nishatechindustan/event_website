@@ -13,6 +13,7 @@ Devise.setup do |config|
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
   config.mailer_sender = 'ASHISH MISHRA <kmrashish18@gmail.com>'
+  config.timeout_in = 5.hours
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'

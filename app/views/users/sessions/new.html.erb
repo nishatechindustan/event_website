@@ -1,59 +1,60 @@
-<div class="container">
-  <div class="col-sm-12 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8 signup sign-up">
-    <h2 class="header-text">LOGIN HERE</h2>
-    <div class="row">
-      <div class="col-sm-12 nopadding">
-        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-          <div class="form-group col-sm-12 nopadding">
-            <input type="text" name="user[email]" id="email" class="form-control input" value ="<%= resource.email%>" placeholder="Email" >
-          
-         
-            <input type="password" name="user[password]" id="password" class="form-control input" value ="<%= resource.password%>" placeholder="Password" >
-          </div>
-          <% if devise_mapping.rememberable? -%>
-            <div class="checkbox-user">
-              <%= f.check_box :remember_me %>
-              <%= f.label :remember_me %>
+<div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 form-form" >
+   <div class="login-form">
+      <h2 class="header-text">Log In</h2>
+      <div class="form-body">
+        <div class="col-sm-12 ">
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+            <div class="form-group">
+              <input type="text" name="user[email]" id="email" class="form-control" value ="<%= resource.email%>" placeholder="Email" >
             </div>
-          <% end %>
-            <div class="col-sm-12">
-              <div class="form-group text-center btn_sign_up">
-                <input type="submit" class="btn" value="Log in" id="regform" name="submit">
-                <a class="forgotLnk" href="/users/password/new">I can't access my account</a>
-              </div>
-                
+            <div class="form-group">
+              <input type="password" name="user[password]" id="password" class="form-control" value ="<%= resource.password%>" placeholder="Password" >
             </div>
-          <%#= f.submit "Log in", :class =>"btn btn-primary btn-block" %>
-        <%end%>
-
-      
-      </div>
-    </div>
-      <div class="form-group col-sm-12 text-center ">
-        <div class="or-txt">
-         <span>OR</span>
+            <div class="form-group">
+              <% if devise_mapping.rememberable? -%>
+                <div class="remember-user">
+                  <%= f.check_box :remember_me %>
+                  <%= f.label :remember_me %>
+                  <a class="pull-right fgt_btn" href="/users/password/new" id="">Forgot Password?</a>
+                </div>
+              <% end %>
+            </div>
+            <div class="form-group text-center">
+              <input type="submit" class="btn" value="Log In" id="" name="submit">
+            </div>
+          <%end%>
         </div>
+            <div class="form-group">
+               <div class="or_txt">
+                  <span>OR</span>
+               </div>
+            </div>
+            <div class="form-group">
+               <ul class="socialsarea">
+                  <div class="row">
+                     <li class="col-sm-6">
+                        <a href="<%= user_facebook_omniauth_authorize_path%>" class="facebook">
+                        <i class="fa fa-facebook"></i>
+                        <span>Facebook Login</span>
+                        </a>
+                     </li>
+                     <li class="col-sm-6">
+                        <a href="<%= user_google_oauth2_omniauth_authorize_path%>" class="twitter">
+                        <i class="fa fa-google"></i>
+                        <span>Google Login</span>
+                        </a>
+                     </li>
+                  </div>
+               </ul>
+            </div>
+            <div class="form-group">
+               <p class="text-center sign_up">
+                  Not a member yet?
+                  <a class="fgt_btn_sign" href="<%= new_user_registration_path%>" id="">Sign up now</a>
+                  — it's fun and easy!
+               </p>
+            </div>
+         </div>
       </div>
-      <div class="form-group col-sm-12 ">
-        <ul class="socialsarea">
-          <li class="">
-            <a href="<%= user_facebook_omniauth_authorize_path%>" class="facebook">
-              <i class="fa fa-facebook"></i>
-              <span>Facebook Login</span>
-            </a>
-          </li>
-          <li class="">
-            <a href="<%= user_google_oauth2_omniauth_authorize_path%>" class="twitter">
-              <i class="fa fa-google"></i>
-              <span>Google Login</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div class="form-group col-sm-12 ">
-        <p class="text-center sign_up"><a href="<%= new_user_registration_path%>">
-          Create New Account</a>
-        </p>
-      </div>
-    </div>
-  </div>
+   </div>
+</div>

@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get "/subscription/news_letter_subscription" => "subscription#news_letter_subscription"
   get '/admin' => redirect('https://eventwebsite2018.herokuapp.com')
   get '/searchevents' => "searchs#index"
+
+  resources :advertises , :only=>[:new, :create]
   namespace :api do
     namespace :v1 do
 

@@ -1,4 +1,4 @@
-
+/*
 .sign-up {
     background: #fff;
     padding: 0;
@@ -30,10 +30,10 @@ h2.header-text {
     margin-bottom: 1em;
     padding: 4px 20px;
     /* text-transform: uppercase; */
-    transition: all 0.6s ease-out 0s;
-    width: 100%;
+   /* transition: all 0.6s ease-out 0s;
+    width: 100%;*/
 }
-
+/*
 
 
 
@@ -100,3 +100,7 @@ ul.socialsarea {
 .checkbox-user {
     padding: 0 15px;
 }
+
+.custom-cards.search {
+    margin: 100px 0;
+}*/*/
