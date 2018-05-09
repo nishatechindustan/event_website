@@ -120,11 +120,18 @@ module Api::V1::Admin
 
     def event_list
       if params[:event_type] && params[:event_type].include?("passed")
-        events = Event.passed_event(params)
+        event, recordsFiltered,recordsTotal = Event.passed_event(params)
       else
-        events= Event.evnt_list(params,@current_user)
+        event, recordsFiltered,recordsTotal= Event.evnt_list(params,@current_user)
       end
-      render :json => {:data=>events[:events], :status=>true ,:draw=>params[:draw], :recordsTotal=>events[:recordsTotal], :recordsFiltered=>events[:recordsFiltered]}
+      
+      if event.present?
+       events = get_event_details(event)
+      else
+       events = 0
+      end
+      render :json=> {:data=> events, :status=>true, :draw=>params[:draw], :recordsFiltered=> recordsFiltered,:recordsTotal=> recordsTotal}
+      # render :json => {:data=>events[:events], :status=>true ,:draw=>params[:draw], :recordsTotal=>events[:recordsTotal], :recordsFiltered=>events[:recordsFiltered]}
     end
 
     def change_status

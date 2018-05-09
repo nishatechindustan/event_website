@@ -148,10 +148,10 @@ class Event < ApplicationRecord
 			@events = Event.find_by_sql("select events.* from events inner join event_adver_dates on events.id=event_adver_dates.event_adver_datable_id and '#{Time.zone.now.beginning_of_day}'>event_adver_dates.start_date and '#{Time.zone.now.beginning_of_day}'>event_adver_dates.end_date ORDER BY events.created_at DESC LIMIT '#{params[:length].to_i}' offset '#{params[:start].to_i}'")
 			recordsFiltered =recordsTotal
 		end
+		return @events,recordsFiltered, recordsTotal
+		# events = fetchEvent(@events) if @events
 
-		events = fetchEvent(@events) if @events
-
-    return {:events=>events, :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
+    # return {:events=>events, :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
 	end
 
 	def self.searchQuery(value)
