@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
 	#before_action :authenticate_user!
+	    # include ActionView::Helpers::TextHelper
 	def index
 		@events = Event.fetch_event('')
 		Rails.logger.info("PARAMS: #{@events}")

@@ -248,10 +248,10 @@ class Event < ApplicationRecord
   	else
   		@events = Event.all.order(:created_at => :desc).limit(10)
   	end
+	return @events
+  	# events = fetchEvent(@events) if @events
 
-  	events = fetchEvent(@events) if @events
-
-  	return events
+  	# return events
 	end
 
   def self.search(params)
