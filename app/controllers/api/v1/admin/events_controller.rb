@@ -114,8 +114,14 @@ module Api::V1::Admin
     end
 
     def unapprove_event
-      events = Event.fetch_unapprove_event_list(params)
-      render :json => {:data=>events[:events], :status=>true ,:draw=>params[:draw], :recordsTotal=>events[:recordsTotal], :recordsFiltered=>events[:recordsFiltered]}
+      event, recordsFiltered,recordsTotal = Event.fetch_unapprove_event_list(params)
+      
+      if event.present?
+       events = get_event_details(event)
+      else
+       events = 0
+      end
+      render :json=> {:data=> events, :status=>true, :draw=>params[:draw], :recordsFiltered=> recordsFiltered,:recordsTotal=> recordsTotal}
     end
 
     def event_list

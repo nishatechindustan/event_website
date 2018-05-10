@@ -273,13 +273,13 @@ class Event < ApplicationRecord
 		elsif params[:title].present?
 			@events = Event.where('title ILIKE ?', "%#{params[:title]}%").order('created_at DESC')
 		else
-  		@events = Event.all.order('created_at DESC')
-  	end
-  	events = fetchEvent(@events) if @events
+  			@events = Event.all.order('created_at DESC')
+  		end
+  		# events = fetchEvent(@events) if @events
 
-		return events
+		return @events
 		
-  end
+	end
 
 	def set_event_approval
 		self.user.is_admin && (self.approved = true)
@@ -295,20 +295,10 @@ class Event < ApplicationRecord
 			@events = Event.find_by_sql("select * from events where events.approved=false ORDER BY events.created_at DESC LIMIT '#{params[:length].to_i}' offset '#{params[:start].to_i}'")
 			recordsFiltered =recordsTotal
 		end
+		return @events,recordsFiltered, recordsTotal
+		# events = fetchEvent(@events) if @events
 
-		events = fetchEvent(@events) if @events
-
-    return {:events=>events, :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
-	end
-
-	def self.fetchEvent(events)
-		events=[]
-		@events.each do |event|
-	      @event_image = event.attachments.present? ? event.attachments.first.attachment.url : '/default_image.jpg';
-	      events <<{:title=>event.title, :id=>event.id, :description=>event.description, :ticket_available => event.ticket_available, :cost=> event.cost, :currency=> event.currency, :contact_number => event.contact_number, :image=> @event_image,
-	      :cost_offers=>event.cost_offers, :email=>event.email, :event_type => event.event_type, :status=> event.status,:approved=>event.approved, :event_categories=> event.categories.map(&:name), :event_artists=>event.artists.map(&:name), :event_added_by=>event.user.user_name,:event_location=>event.locations.first.address,:latitude=>event.locations.first.latitude,:longitude=>event.locations.first.longitude,:city=>event.locations.first.city,:state=>event.locations.first.state,:venue=>event.locations.first.venue,:country=>event.locations.first.country, :event_date=>event.event_adver_dates.map{|a| [a.start_date, a.end_date]}.flatten!}
-	    end
-    return events
+  		#   return {:events=>events, :recordsTotal=>recordsTotal, :recordsFiltered=>recordsFiltered}
 	end
 
 	def event_approval_notification
