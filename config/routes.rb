@@ -12,6 +12,11 @@ Rails.application.routes.draw do
   get '/admin' => redirect('https://eventwebsite2018.herokuapp.com')
   get '/searchevents' => "searchs#index"
 
+  scope '/events' do
+    get '/today_event' => "events#today_event"
+  end
+  # get '/events/today_event' => "events#today_event"
+
   resources :advertises , :only=>[:new, :create]
   namespace :api do
     namespace :v1 do
