@@ -7,6 +7,7 @@
   <%= form_tag searchevents_path, :method => 'get' do %>
     <div>
       <%= select_tag(:category_id, options_for_select(@categories), :prompt=> "select a categories", :class=>"banner-select-box")%>
+       <i class="fa arrow pull-right custom-select-box-arrow arrow_style">&#xf107;</i>
     </div>
     <div>
        <%= select_tag(:state_name, options_for_select(@states), :prompt=> "select a state", :class=>"banner-select-box")%>
@@ -411,7 +412,7 @@
     min-width: 100%;
   }
 </style>
-
+<!-- 
 
 ar213220@gmail.com
 
@@ -433,4 +434,4 @@ Regards
 
 Evening report
 -- worked on changes response of the apis as well front-end too.
--- worked on setting pages of the advertise and searching page.
+-- worked on setting pages of the advertise and searching page. -->

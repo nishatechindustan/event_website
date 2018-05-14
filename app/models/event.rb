@@ -240,13 +240,13 @@ class Event < ApplicationRecord
 
   def self.fetch_event(params)
   	if params.include?("today")
-  		@events = Event.find_by_sql("select events.* from events inner join event_adver_dates on events.id=event_adver_dates.event_adver_datable_id and '#{Time.zone.now.beginning_of_day}' BETWEEN event_adver_dates.start_date AND event_adver_dates.end_date")
+  		@events = Event.find_by_sql("select events.* from events inner join event_adver_dates on events.id=event_adver_dates.event_adver_datable_id and '#{Time.zone.now.beginning_of_day}' BETWEEN event_adver_dates.start_date AND event_adver_dates.end_date ORDER BY events.title ASC")
   	elsif params.include?("paid")
-  		@events = Event.where(:event_type=>1)
+  		@events = Event.where(:event_type=>1).order("title ASC")
   	elsif params.include?("free")
-  		@events = Event.where(:event_type=>0)
+  		@events = Event.where(:event_type=>0).order("title ASC")
   	else
-  		@events = Event.all.order(:created_at => :desc).limit(10)
+  		@events = Event.all.order("title ASC").limit(10)
   	end
 	return @events
   	# events = fetchEvent(@events) if @events

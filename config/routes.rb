@@ -14,6 +14,10 @@ Rails.application.routes.draw do
 
   scope '/events' do
     get '/today_event' => "events#today_event"
+    get '/paid_event' => "events#paid_event"
+    get '/free_event' => "events#free_event"
+    get '/recent_event' => "events#recent_event"
+    get '/event_details/:id' => "events#event_details"
   end
   # get '/events/today_event' => "events#today_event"
 
