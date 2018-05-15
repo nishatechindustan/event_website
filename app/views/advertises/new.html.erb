@@ -1,4 +1,6 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
@@ -15,13 +17,13 @@
       </div>
       <div class="col-sm-8 partition">
         <div class="row">
-          <%= form_tag('/advertises' , remote: true) do %>
+          <%= form_tag('/advertises' ,id:"advertis_form") do %>
             <div class="form-group">
               <div class="col-sm-3 form-text">
                 Organization Name
               </div>
               <div class="col-sm-9">
-                <input class="form-control" placeholder="Organization Name" type="text" name="organization_name" value="<%= @advertise.organization_name%>">
+                <input class="form-control" placeholder="Organization Name" type="text" name="organization_name" id="organization_name" value="<%= @advertise.organization_name%>" required>
               </div>
             </div>
             <div class="form-group">
@@ -29,7 +31,7 @@
                 Contact Person
               </div>
               <div class="col-sm-9">
-                    <input class="form-control" placeholder="Contact Person" type="text" name="contact_person" value="<%= @advertise.contact_person%>">
+                    <input class="form-control" placeholder="Contact Person" type="text" name="contact_person" id="contact_person" value="<%= @advertise.contact_person%>">
               </div>
             </div>
             <div class="form-group">
@@ -37,7 +39,7 @@
               Contact Number
               </div>
               <div class="col-sm-9">
-                <input class="form-control" placeholder="contact Number" type="text" name="contact_number" id="" value="<%= @advertise.contact_number%>">
+                <input class="form-control" placeholder="contact Number" type="text" name="contact_number" id="contact_number" value="<%= @advertise.contact_number%>">
               </div>
             </div>
             <div class="form-group">
@@ -45,7 +47,7 @@
                 Event Category
               </div>
               <div class="col-sm-9">
-                <input class="form-control" placeholder="Event Category" type="text" name="event_type" id="" value="<%= @advertise.event_type%>">
+                <input class="form-control" placeholder="Event Category" type="text" name="event_type" id="event_type" value="<%= @advertise.event_type%>">
               </div>
             </div>
             <div class="form-group">
@@ -54,12 +56,12 @@
               </div>
               <div class="col-sm-9">
                 <!-- <input class="form-control" placeholder="  Event Date" type="text" name="date" id=""> -->
-                <input type="text" class="form-control"  name="advertise_date" />
+                <input type="text" class="form-control" id="advertise_date" name="advertise_date" />
               </div>
             </div>
             <div class="col-sm-12">
               <div class="form_submit form-group">
-                <button class="btn btn-primary" type="submit" name="submit" id="" value="send">Submit</button>
+                <button class="btn btn-primary" type="submit" name="submit" id="submit" value="send">Submit</button>
               </div>
             </div>
           <%end%>
@@ -84,4 +86,5 @@
 </div>
 <script type="text/javascript">
   $('input[name="advertise_date"]').daterangepicker();
+    $('#advertis_form').validate()
 </script>
