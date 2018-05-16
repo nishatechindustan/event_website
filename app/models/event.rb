@@ -245,6 +245,8 @@ class Event < ApplicationRecord
   		@events = Event.where(:event_type=>1).order("title ASC")
   	elsif params.include?("free")
   		@events = Event.where(:event_type=>0).order("title ASC")
+  	elsif params.include?("view_all")
+  		@events = Event.all.order("title ASC")
   	else
   		@events = Event.all.order("title ASC").limit(10)
   	end

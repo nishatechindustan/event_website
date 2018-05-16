@@ -2,9 +2,8 @@ class HomeController < ApplicationController
 	#before_action :authenticate_user!
 	    # include ActionView::Helpers::TextHelper
 	def index
-		@events = Event.fetch_event('')
-		Rails.logger.info("PARAMS: #{@events}")
-		Rails.logger.info("-------------------------------------------------------")
+		params[:name]||= ''
+		@events = Event.fetch_event(params[:name])
 		@states = State.all.order("name ASC").map(&:name)
 		@categories = Category.all.order("name ASC").map{|a| [a.name, a.id]}
 		# @users= User.all? { |e|  }

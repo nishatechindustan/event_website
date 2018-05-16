@@ -3,28 +3,26 @@
   <head>
     <title>SimplePropject</title>
     <%= csrf_meta_tags %>
+    <script src="/assets/jquery-1.12.4.js"></script>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link href='/assets/style.css' rel="stylesheet">
     <link href='/assets/style01.css' rel="stylesheet">
-    <script src="/assets/jquery-1.12.4.js"></script>
+      <script src="/assets/notify.js"></script>
+    
     <link href='/assets/bootstrap.min.css' rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" >
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-browser/0.1.0/jquery.browser.js"></script>
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
    <link href="https://blackrockdigital.github.io/startbootstrap-creative/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
   </head>
   <body>
     <%= render "layouts/header"%>
     <%= yield %>
     <%= render "layouts/footer"%>
   </body>
-      <script src="/assets/jquery-1.12.4.js"></script>
-      <script src="/assets/notify.js"></script>
 </html>
 <script type="text/javascript">
 

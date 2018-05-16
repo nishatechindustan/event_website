@@ -22,47 +22,13 @@
 <div class="container">
   <h3 class="heading"><b>RECENT EVENTS</b></h3>
   <hr class="line">
-  <p class="paragraph">Lorem Ipsum is somply dummy text of the printing and typesetting industry. Lorem Ipsum<br>
-      has been the industry's standard dummy text.
-  </p>
 	<div class="custom-top-cards">
-    <%if @events.present?%>
-   		<% @events.each do |recent_event|%>
-      	<div class="top-card-wrapper">
-         	<div class="top-card-image">
-            <img src="<%= recent_event.attachments.present? ? recent_event.attachments.first.attachment.url: "default_image.jpg"%>">
-            <label><%= distance_of_day(recent_event.event_adver_dates.first.start_date,recent_event.event_adver_dates.first.end_date )%></label>
-         	</div>
-         	<div class="top-card-content">
-            <div class="top-card-timing">
-               <div class="fl">
-                  <i class="fa fa-calendar">
-                  </i>
-                  <%= recent_event.event_adver_dates.first.start_date%> to <%= recent_event.event_adver_dates.first.end_date%>
-               </div>
-               <div class="fr">
-                  <i class="fa fa-clock-o"></i>
-                  12:00 PM
-               </div>
-               <div class="cl"></div>
-            </div>
-            <div class="top-card-heading">
-               <%= recent_event.title%>
-            </div>
-            <p class="top-card-des">
-               <%= strip_tags(recent_event.description)%>
-               <%#= truncate((recent_event.description.html_safe),length: 40, escape: true)%>
-            </p>
-            <a href="#" class="read-more-new">Read More...</a>
-         	</div>
-      	</div>
-      <%end%>
-    <%end%>
+    <%= render 'events/event_detail'%>
       <div class="clearfix"></div>
    </div>
    <div class="view_all">
       <h2>
-         <a class="ng-binding" href="#">View All</a>
+         <a class="ng-binding" href="<%= root_path(:name=>'view_all')%>">View All</a>
       </h2>
    </div>
 </div>

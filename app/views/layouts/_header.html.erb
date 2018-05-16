@@ -23,7 +23,7 @@
             <li class="nav-item">
            
               <%unless !user_signed_in?%>
-               <a class="nav-link " data-method="delete" href="<%=destroy_user_session_path%>">Logout</a>
+               <a class="nav-link " data-method="get" href="<%=destroy_user_session_path%>">Logout</a>
               <%else%>
                <a class="nav-link " href="<%= user_session_path%>">Login</a>
               <%end%>
