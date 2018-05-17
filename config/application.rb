@@ -9,6 +9,7 @@ Bundler.require(*Rails.groups)
 module Myappfgfg
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
+     config.paperclip_defaults = { storage: :fog, fog_credentials: { provider: "Local", local_root: "#{Rails.root}/public"}, fog_directory: "", fog_host: "#{Rails.env=='development' ? 'https://localhost:3000': 'https://eventwebsite.herokuapp.com' }"}
     config.load_defaults 5.1
     config.assets.paths << Rails.root.join("/app/assets")
     config.action_dispatch.default_headers = {
