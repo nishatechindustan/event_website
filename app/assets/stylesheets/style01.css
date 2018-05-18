@@ -5,3 +5,71 @@
     width: 32%;
     background-color: #fff;
 }
+.content{
+	margin-top: 60px;
+}
+.grid-container1 div img {
+  height: 277px;
+  width: 100%;
+  }
+img.logo-footer {
+  width: 22%;
+  background: #fff;
+  position: relative;
+  left: 140px;
+}
+.container-plus {
+  background-color: #f2f2f2;
+    /* padding-top: 30px; */
+}
+.image {
+  /* position: relative; */
+    /* top: -20%; */
+}
+.content {
+padding-top: 50px;
+}
+.content2 {
+  padding-top: 50px;
+ }
+.content3 {
+  padding-top: 50px;
+}
+.heading {
+  font-size: 34px;
+}
+.col2 {
+  width: 40%;
+    /* padding-right: 8%; */
+    /* padding-top: 15px; */
+    /* margin-top: 75px; */
+}
+.dark {
+  background-image: url(/assets/nearby_bg.jpg);
+  background-repeat: no-repeat;
+  width: 100%;
+    /* margin-top: 5%; */
+    height: auto;
+    /* padding-top: 65px; */
+}
+ul.footer-events li.events1 a {
+    border-right: none;
+}
+.top-card-image {
+  position: relative;
+  overflow: hidden;
+  padding: 10px;
+}
+.top-card-wrapper {
+  margin-bottom: 30px;
+}
+.top-card-des {
+  height: 50px;
+}
+.top-card-image {
+  height: 185px;
+}
+.advertising {
+  margin-top: 7em;
+  padding: 75px 0;
+}

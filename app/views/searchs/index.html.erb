@@ -1,58 +1,69 @@
-<div class="container">
-	<div class="custom-cards search">
-	  <%= form_tag searchevents_path, :method => 'get' do %>
-	  	<div>
-	     	<%= select_tag(:category_id, options_for_select(@categories), :prompt=> "select a categories", :class=>"banner-select-box")%>
-	    </div>
-	    <div>
-	      <%= select_tag(:state_name, options_for_select(@states), :prompt=> "select a state", :class=>"banner-select-box")%>
-	    </div>
-	    <div>
-	     <%= text_field_tag :title, params[:title] ,:placeholder=>"title name",:class=>"banner-select-box"%>
-	    </div>
-	    <div>
-	    	<%= submit_tag "Search", :name => nil , :class=> "lets-start" %>
-	  	</div>
-	  <%end%>
-	</div>
-  	<%if @events.present?%>
-   		<% @events.each do |recent_event|%>
-        <div class="top-card-wrapper">
-          <div class="top-card-image">
-            <img src="<%= recent_event.attachments.present? ? recent_event.attachments.first.attachment.url: "default_image.jpg"%>">
-            <label><%= distance_of_day(recent_event.event_adver_dates.first.start_date,recent_event.event_adver_dates.first.end_date )%></label>
-          </div>
-          <div class="top-card-content">
-            <div class="top-card-timing">
-               <div class="fl">
-                  <i class="fa fa-calendar">
-                  </i>
-                  <%= recent_event.event_adver_dates.first.start_date%> to <%= recent_event.event_adver_dates.first.end_date%>
-               </div>
-               <div class="fr">
-                  <i class="fa fa-clock-o"></i>
-                  12:00 PM
-               </div>
-               <div class="cl"></div>
-            </div>
-            <div class="top-card-heading">
-               <%= recent_event.title%>
-            </div>
-            <p class="top-card-des">
-               <%= strip_tags(recent_event.description)%>
-               <%#= truncate((recent_event.description.html_safe),length: 40, escape: true)%>
-            </p>
-            <a href="#" class="read-more-new">Read More...</a>
-          </div>
+<div class="container">  
+  <section class="search-events search-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <h1>
+          <span>Searched</span>
+          Events
+          </h1>
         </div>
-      <%end%>
-    <%else%>
-    	<h2>No records Founds</h2>
-    <%end%>
-  </div>
-
-          
-      
-      
-      
-    
+      </div>
+      <div class="savsrch">
+        <div class="custom-cards">
+          <%= form_tag searchevents_path, :method => 'get' do %>
+            <div class="custom_cards">
+              <%= select_tag(:category_id, options_for_select(@categories), :prompt=> "select a categories", :class=>"banner-select-box")%>
+              <!-- <i class="fa arrow pull-right custom-select-box-arrow arrow_style">&#xf107;</i> -->
+            </div>
+            <div class="custom_cards">
+              <%= select_tag(:state_name, options_for_select(@states), :prompt=> "select a state", :class=>"banner-select-box")%>
+              <!-- <i class="fa arrow pull-right custom-select-box-arrow arrow_style">&#xf107;</i> -->
+            </div>
+            <div class="custom_cards-cards">
+              <%= text_field_tag :title, params[:title] ,:placeholder=>"title name",:class=>"banner-select-box"%>
+            </div>
+            <%= submit_tag "Search", :name => nil , :class=> "lets-start" %>
+            <article class="clearfix"></article>
+          <%end%>
+        </div>
+      </div>
+      <div class="custom-top-cards">
+        <%if @events.present?%>
+            <% @events.each do |recent_event|%>
+              <div class="top-card-wrapper">
+                <div class="top-card-image">
+                  <img src="<%= recent_event.attachments.present? ? recent_event.attachments.first.attachment.url: "default_image.jpg"%>">
+                  <label><%= distance_of_day(recent_event.event_adver_dates.first.start_date,recent_event.event_adver_dates.first.end_date )%></label>
+                </div>
+                <div class="top-card-content">
+                  <div class="top-card-timing">
+                    <div class="fl">
+                      <i class="fa fa-calendar">
+                      </i>
+                      <%= recent_event.event_adver_dates.first.start_date%> to <%= recent_event.event_adver_dates.first.end_date%>
+                    </div>
+                    <div class="fr">
+                      <i class="fa fa-clock-o"></i>
+                      12:00 PM
+                    </div>
+                    <div class="cl"></div>
+                  </div>
+                  <div class="top-card-heading">
+                    <%= recent_event.title%>
+                  </div>
+                  <p class="top-card-des">
+                    <%= strip_tags(recent_event.description)%>
+                  </p>
+                  <a href="#" class="read-more-new">Read More...</a>
+                </div>
+              </div>
+            <%end%>
+        <%else%>
+          <div class="norecord"><h2>No Records Present</h2></div>
+        <%end%>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </section>
+</div>

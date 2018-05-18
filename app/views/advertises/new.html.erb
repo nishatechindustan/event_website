@@ -84,21 +84,14 @@
   </div>
 </div>
 </div>
-<script type="text/javascript">
-
-  // alert(typeof(daterangepicker),"ssd")
-
-   // $(document).ready(function () {
-   //  alert(typeof(daterangepicker) ,"test")
-      $('input[name="advertise_date"]').daterangepicker();
-   //    //$('#advertis_form').validate()
-   //  });
-   $.noConflict();
-  //  $(function() {
-  //   $('input[name="advertise_date"]').daterangepicker({
-  //     opens: 'left'
-  //   }, function(start, end, label) {
-  //     console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-  //   });
-  // });
+<script>
+  // onload();
+  //   function onload(){
+  //     $('#advertise_date').daterangepicker();
+  //     $('#advertis_form').validate()
+  //   }
+$(function(){
+  $('#advertise_date').daterangepicker();
+  $('#advertis_form').validate();
+});
 </script>
