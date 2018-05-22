@@ -1,27 +1,51 @@
-<banner class="head-center">
-  <img class="mySlides" src="/assets/baner1.jpg">
-  <img class="mySlides" src="/assets/img_la.jpg">
-  <img class="mySlides" src="/assets/3_img.jpg">
-</banner>
+<header class="head-center">
+  <div class="head-container">
+    <img  src="/assets/image-haed.png" alt="image" style="width:100%;">
+    <div class="row my-head-wrapper">
+      <div class="col-lg-6 col-head">
+        <p class="text-fadded1" style="font-size: 25px; font-family: 'Dosis', sans-serif !important; margin-bottom:0rem; padding-left:
+        28px;">10 Dec to 31 December 2017</p>
+      </div>
+      <div class="col-lg-10 col-head" style="margin-top: 45px;">
+        <h1 class="text-uppercase">
+          <strong>DON'T MISS THE UPCOMING EVENTS</strong>
+        </h1>
+      </div>
+      <div class="col-lg-8 col-head">
+        <p class="text-fadded">
+          <b> Weekend getaways, events near you etc. just finger tips Away.</b>
+        </p>
+      </div>
+    </div>
+  </div>
+</header>
 <div class="custom-cards">
   <%= form_tag searchevents_path, :method => 'get' do %>
-    <div class="custom_cards">
+    <div style="position: relative;">
       <%= select_tag(:category_id, options_for_select(@categories), :prompt=> "select a categories", :class=>"banner-select-box")%>
+
+      <i style="font-size:30px; color: #8d8d8d;" class="fa arrow pull-right custom-select-box-arrow">&#xf107;</i>
     </div>
-    <div class="custom_cards">
-       <%= select_tag(:state_name, options_for_select(@states), :prompt=> "select a state", :class=>"banner-select-box")%>
+    <div style="position: relative;">
+      <%= select_tag(:state_name, options_for_select(@states), :prompt=> "select a state", :class=>"banner-select-box")%>
+
+      <i style="font-size:30px; color: #8d8d8d;" class="fa arrow pull-right custom-select-box-arrow">&#xf107;</i>
     </div>
-    <div class="custom_cards-cards">
+    <div style="border-right: none;  position: relative;">
       <%= text_field_tag :title, params[:title] ,:placeholder=>"title name",:class=>"banner-select-box"%>
     </div>
-    
-       <%= submit_tag "Search", :name => nil , :class=> "lets-start" %>
+    <div class="lets-start">
+      <%= submit_tag "Search", :name => nil, :class=> "let-submit"%></div>
+    <article class="clearfix"></article>
   <%end%>
 </div>
 <div class="container">
   <div class="content">
     <h3 class="heading"><b>RECENT EVENTS</b></h3>
     <hr class="line">
+    <p class="paragraph">Lorem Ipsum is somply dummy text of the printing and typesetting industry. Lorem Ipsum<br>
+            has been the industry's standard dummy text.
+    </p>
   	<div class="custom-top-cards">
       <%= render 'events/event_detail'%>
       <div class="clearfix"></div>
@@ -29,11 +53,11 @@
   </div>
   <div class="view_all">
       <h2>
-         <a class="ng-binding" href="<%= root_path(:name=>'view_all')%>">View All</a>
+        <a class="ng-binding" href="<%= root_path(:name=>'view_all')%>">View All</a>
       </h2>
    </div>
 </div>
-<!-- <section class="dark">
+<section class="dark">
   <div class="container">
     <div class="content">
       <h3 class="heading-heading"><b>NEAR BY EVENTS</b></h3>
@@ -47,105 +71,104 @@
         <div class="nearby-image">
           <img class="scale-transform1" src="/assets/General-Chicken.jpg">
           <div class="nearby-image-des">
-        <label class="nearby-event-date"><label>01</label><span>Dec</span></label>
-    <div class="nearby-event-title">
-    Turkey Takeaway AT Crowne Plaza Dubai
-    </div>
-    </div>
-    </div>
-    <div class="reflection-wrap">
-    <div class="nearby-content">
-    <p><b>Crowne Plaza Dubai</b></p>
-    <label class="half-border1"></label>
-    <div class="nearby-content-des">
-    Come over and let your kid create their own Christmas cards! Arbian Ranches-Dubai-United Arab Emirates
-    </div>
-    </div>
-    <div class="nearby-date-content">
-    <div class="clock-date">
-    <i class="fa fa-clock-o"></i>
-    <label>09:00</label>
-    </div>
-    <div class="clock-date">
-    <i class="fa fa-calendar"></i>
-    <label>01 Dec to 24 Dec</label>
-    </div>
-    <article class="cl"></article>
-    </div>
-    </div>
-    </div>
-    <div class="nearby-events-wrapper scale-nearby">
-    <div class="nearby-image">
-    <img class="scale-transform1" src="/assets/General-Chicken.jpg">
-    <div class="nearby-image-des">
-    <label class="nearby-event-date" style="background-color: #2b9f9f;"><label>01</label><span>Dec</span></label>
-    <div class="nearby-event-title">
-    Christmas Card Drawing Stations At...
-    </div>
-    </div>
-    </div>
-    <div class="reflection-wrap">
-    <div class="nearby-content1">
-    <p><b>United Arab Emirates</b></p>
-    <label class="half-border2"></label>
-    <div class="nearby-content-des">
-    Come over and let your kid create their own Christmas cards! Arbian Ranches-Dubai-United Arab Emirates
-    </div>
-    </div>
-    <div class="nearby-date-content"  style="border-bottom-color: #2b9f9f !important;">
-    <div class="clock-date">
-    <i class="fa fa-clock-o"></i>
-    <label>09:00</label>
-    </div>
-    <div class="clock-date">
-    <i class="fa fa-calendar"></i>
-    <label>01 Dec to 24 Dec</label>
-    </div>
-    <article class="cl"></article>
-    </div>
-    </div>
-    </div>
-    <div class="nearby-events-wrapper">
-    <div class="nearby-image">
-    <img class="scale-transform1" src="/assets/General-Chicken.jpg">
-    <div class="nearby-image-des">
-    <label class="nearby-event-date" style="background-color: #2a4c67;"><label>01</label><span>Dec</span></label>
-    <div class="nearby-event-title">
-    Turkey Takeaway AT Crowne Plaza Dubai
-    </div>
-    </div>
-    </div>
-    <div class="reflection-wrap">
-    <div class="nearby-content2">
-    <p><b>United Arab Emirates</b></p>
-    <label class="half-border3"></label>
-    <div class="nearby-content-des">
-    Trimmings include parsnips, roast potatoes, sporuts with bacon, chestnuts, sausages and stuffing. Accompanie 3d by gravy and cran[...]
-    </div>
-    </div>
-    <div class="nearby-date-content" style="border-bottom-color: #2a4c67 !important;">
-    <div class="clock-date">
-    <i class="fa fa-clock-o"></i>
-    <label>09:00</label>
-    </div>
-    <div class="clock-date">
-    <i class="fa fa-calendar"></i>
-    <label>01 Dec to 24 Dec</label>
-    </div>
-    <article class="cl"></article>
-    </div>
-    </div>
-    </div>
-    <div class="cl"></div>
-    </div>
-    <div class="view_all" >
-    <h2>
-    <a class="ng-binding" href="#">View All</a>
-    </h2>
-    </div>
+            <label class="nearby-event-date"><label>01</label><span>Dec</span></label>
+            <div class="nearby-event-title">
+              Turkey Takeaway AT Crowne Plaza Dubai
+            </div>
+          </div>
+        </div>
+        <div class="reflection-wrap">
+          <div class="nearby-content">
+            <p><b>Crowne Plaza Dubai</b></p>
+             <label class="half-border1"></label>
+            <div class="nearby-content-des">
+              Come over and let your kid create their own Christmas cards! Arbian Ranches-Dubai-United Arab Emirates
+            </div>
+          </div>
+          <div class="nearby-date-content">
+            <div class="clock-date">
+              <i class="fa fa-clock-o"></i>
+              <label>09:00</label>
+            </div>
+            <div class="clock-date">
+              <i class="fa fa-calendar"></i>
+              <label>01 Dec to 24 Dec</label>
+            </div>
+            <article class="cl"></article>
+          </div>
+        </div>
+      </div>
+      <div class="nearby-events-wrapper scale-nearby">
+        <div class="nearby-image">
+          <img class="scale-transform1" src="/assets/General-Chicken.jpg">
+          <div class="nearby-image-des">
+            <label class="nearby-event-date" style="background-color: #2b9f9f;"><label>01</label><span>Dec</span></label>
+            <div class="nearby-event-title">
+              Christmas Card Drawing Stations At...
+            </div>
+          </div>
+        </div>
+        <div class="reflection-wrap">
+          <div class="nearby-content1">
+            <p><b>United Arab Emirates</b></p>
+            <label class="half-border2"></label>
+            <div class="nearby-content-des">
+              Come over and let your kid create their own Christmas cards! Arbian Ranches-Dubai-United Arab Emirates
+            </div>
+          </div>
+          <div class="nearby-date-content"  style="border-bottom-color: #2b9f9f !important;">
+            <div class="clock-date">
+              <i class="fa fa-clock-o"></i>
+              <label>09:00</label>
+            </div>
+            <div class="clock-date">
+              <i class="fa fa-calendar"></i>
+              <label>01 Dec to 24 Dec</label>
+            </div>
+            <article class="cl"></article>
+          </div>
+        </div>
+      </div>
+      <div class="nearby-events-wrapper">
+        <div class="nearby-image">
+          <img class="scale-transform1" src="/assets/General-Chicken.jpg">
+          <div class="nearby-image-des">
+            <label class="nearby-event-date" style="background-color: #2a4c67;"><label>01</label><span>Dec</span></label>
+            <div class="nearby-event-title">
+              Turkey Takeaway AT Crowne Plaza Dubai
+            </div>
+          </div>
+        </div>
+        <div class="reflection-wrap">
+          <div class="nearby-content2">
+            <p><b>United Arab Emirates</b></p>
+            <label class="half-border3"></label>
+            <div class="nearby-content-des">
+              Trimmings include parsnips, roast potatoes, sporuts with bacon, chestnuts, sausages and stuffing. Accompanie 3d by gravy and cran[...]
+            </div>
+          </div>
+          <div class="nearby-date-content" style="border-bottom-color: #2a4c67 !important;">
+            <div class="clock-date">
+            <i class="fa fa-clock-o"></i>
+            <label>09:00</label>
+            </div>
+            <div class="clock-date">
+            <i class="fa fa-calendar"></i>
+            <label>01 Dec to 24 Dec</label>
+            </div>
+            <article class="cl"></article>
+          </div>
+        </div>
+      </div>
+      <div class="cl"></div>
+      <div class="view_all" >
+        <h2>
+          <a class="ng-binding" href="#">View All</a>
+        </h2>
+      </div>
     </div>
   </div>
-</section> -->
+</section>
 <section class="light">
   <div class="container">
     <div class="content2">
@@ -202,156 +225,152 @@
         <img src="/assets/img-boris.png"></img>
       </div>
     </div>
-  <div class="col-lg-6">
-    <div class="content3">
-      <h3 class="heading"><b>PLUS MINUS W/ BORIS WERNER</b></h3>
-      <hr class="lineP">
-      <div class="time-pikker">
-        <div class="cal-time">
-          <i class="fa fa-clock-o time-time"></i>
-            08:00 PM
+    <div class="col-lg-6">
+      <div class="content3">
+        <h3 class="heading"><b>PLUS MINUS W/ BORIS WERNER</b></h3>
+        <hr class="lineP">
+        <div class="time-pikker">
+          <div class="cal-time">
+            <i class="fa fa-clock-o time-time"></i>
+              08:00 PM
+            </div>
+          <div class="cal-time1">
+            <i class="fa fa-calendar time-time">
+            </i>
+              24 February, 2018
           </div>
-        <div class="cal-time1">
-          <i class="fa fa-calendar time-time">
-          </i>
-            24 February, 2018
         </div>
+        <p class="paragraph">Welcome to PLUS MINUS - a different        experience from the rest of<br>
+         Dubai nightlife.<br>
+           Plus Minus present house music scholar Boris Werner and local<br>
+           heroes Mo Ezaby, Hameed, NUA and Sara H. Farhat aka sarski.<br>
+           His mission to cast everyone under his house music spell is<br>
+           continuing in 2017
+            <a href="#" class="read-more-new1">Read More>></a>
+        </p>
       </div>
-      <p class="paragraph">Welcome to PLUS MINUS - a different experience from the rest of<br>
-       Dubai nightlife.<br>
-         Plus Minus present house music scholar Boris Werner and local<br>
-         heroes Mo Ezaby, Hameed, NUA and Sara H. Farhat aka sarski.<br>
-         His mission to cast everyone under his house music spell is<br>
-         continuing in 2017
-          <!-- <a class="read-more11" href="http://outnaboutme.com/blog/?p=67" style="color: #00a0a0; font-size: 22px; position: relative; right: 75%; float: right; text-decoration:none;">Read more<span style="color:#00a0a0;">>></span></a> -->
-          <a href="#" class="read-more-new1">Read More>></a>
-          </p>
-       </div>
-       <!-- <div>
-          <a class="read-more11" href="http://outnaboutme.com/blog/?p=67" style="color: #00a0a0; font-size: 22px; position: relative; right: 75%; top: 10px; float: right; text-decoration:none;">Read more<span style="color:#00a0a0;">>></span></a>
-          </div> -->
     </div>
- </div>
-         <div class="today-offers">
-         <div class="container">
-            <div class="content4">
-               <h3 class="heading"><b>TODAY HOT OFFERES</b></h3>
-               <hr class="line">
-               <p class="paragraph">Lorem Ipsum is somply dummy text of the printing and typesetting industry. Lorem Ipsum<br>
-                  has been the industry's standard dummy text ever since the 1500.
-               </p>
+  </div>
+  <div class="today-offers">
+    <div class="container">
+      <div class="content4">
+        <h3 class="heading"><b>TODAY HOT OFFERES</b></h3>
+        <hr class="line">
+        <p class="paragraph">Lorem Ipsum is somply dummy text of the printing and typesetting industry. Lorem Ipsum<br>
+          has been the industry's standard dummy text ever since the 1500.
+        </p>
+      </div>
+      <div class="grid-container1">
+        <div class="grid-item1">
+          <img src="/assets/1_img.jpg" class="grid-item-img1">
+        </div>
+        <div class="grid-item11">
+          <div class="top-card-content">
+            <div class="top-card-timing1">
+              <div class="fl">
+                <i class="fa fa-clock-o"></i>
+                 10 Dec 2017 to 24 Dec 2017
+              </div>
+              <div class="fr">
+                <i class="material-icons" style="color: #fff;float:right">share</i>
+              </div>
+              <div class="cl"></div>
             </div>
-            <div class="grid-container1">
-               <div class="grid-item1">
-                  <img src="/assets/1_img.jpg" class="grid-item-img1">
-               </div>
-               <div class="grid-item11">
-                  <div class="top-card-content">
-                     <div class="top-card-timing1">
-                        <div class="fl">
-                           <i class="fa fa-clock-o"></i>
-                           10 Dec 2017 to 24 Dec 2017
-                        </div>
-                        <div class="fr">
-                           <i class="material-icons" style="color: #fff;float:right">share</i>
-                        </div>
-                        <div class="cl"></div>
-                     </div>
-                     <p class="top-card-des1">
-                        Lorem Ipsum is somply dummy text of the
-                        printing and typesetting industry. Lorem
-                        Ipsum has been the industry's standard
-                        dummy text ever since the 1500.
-                     </p>
-                  </div>
-                  <h4 class="heading4"><b>Happy hour @ Trader Vics Mai Tai Loonge</b></h4>
-                  <p class="heart"><span style="font-size:19px; font-family:'Dosis', sans-serif">&hearts;</span>+5K</p>
-               </div>
-               <div class="grid-item1">
-                  <img src="/assets/2_img.jpg" class="grid-item-img1">
-               </div>
-               <div class="grid-item11">
-                  <div class="top-card-content">
-                     <div class="top-card-timing1">
-                        <div class="fl">
-                           <i class="fa fa-clock-o"></i>
-                           10 Dec 2017 to 24 Dec 2017
-                        </div>
-                        <div class="fr">
-                           <i class="material-icons" style="color: #fff;float:right">share</i>
-                        </div>
-                        <div class="cl"></div>
-                     </div>
-                     <p class="top-card-des1">
-                        Lorem Ipsum is somply dummy text of the
-                        printing and typesetting industry. Lorem
-                        Ipsum has been the industry's standard
-                        dummy text ever since the 1500.
-                     </p>
-                  </div>
-                  <h4 class="heading4"><b>Happy hour @ Trader Vics Mai Tai Loonge</b></h4>
-                  <p class="heart"><span style="font-size:19px;">&hearts;</span>+5K</p>
-               </div>
-               <div class="grid-item12">
-                  <div class="top-card-content">
-                     <div class="top-card-timing1">
-                        <div class="fl">
-                           <i class="fa fa-clock-o"></i>
-                           10 Dec 2017 to 24 Dec 2017
-                        </div>
-                        <div class="fr">
-                           <i class="material-icons" style="color: #fff;float:right">share</i>
-                        </div>
-                        <div class="cl"></div>
-                     </div>
-                     <p class="top-card-des1">
-                        Lorem Ipsum is somply dummy text of the
-                        printing and typesetting industry. Lorem
-                        Ipsum has been the industry's standard
-                        dummy text ever since the 1500.
-                     </p>
-                  </div>
-                  <h4 class="heading42"><b>Happy hour @ Trader Vics Mai Tai Loonge</b></h4>
-                  <p class="heart"><span style="font-size:19px;">&hearts;</span>+5K</p>
-               </div>
-               <div class="grid-item1">
-                  <img src="/assets/3_img.jpg" class="grid-item-img1">
-               </div>
-               <div class="grid-item12">
-                  <div class="top-card-content">
-                     <div class="top-card-timing1">
-                        <div class="fl">
-                           <i class="fa fa-clock-o"></i>
-                           10 Dec 2017 to 24 Dec 2017
-                        </div>
-                        <div class="fr">
-                           <i class="material-icons" style="color: #fff;float:right">share</i>
-                        </div>
-                        <div class="cl"></div>
-                     </div>
-                     <p class="top-card-des1">
-                        Lorem Ipsum is somply dummy text of the
-                        printing and typesetting industry. Lorem
-                        Ipsum has been the industry's standard
-                        dummy text ever since the 1500.
-                     </p>
-                  </div>
-                  <h4 class="heading42"><b>Happy hour @ Trader Vics Mai Tai Loonge</b></h4>
-                  <p class="heart"><span style="font-size:19px;">&hearts;</span>+5K</p>
-               </div>
-               <div class="grid-item1">
-                  <img src="/assets/4_img.jpg" class="grid-item-img1">
-               </div>
-               <article class="clearfix"></article>
+            <p class="top-card-des1">
+              Lorem Ipsum is somply dummy text of the
+              printing and typesetting industry. Lorem
+              Ipsum has been the industry's standard
+              dummy text ever since the 1500.
+            </p>
+          </div>
+          <h4 class="heading4"><b>Happy hour @ Trader Vics Mai Tai Loonge</b></h4>
+          <p class="heart"><span style="font-size:19px; font-family:'Dosis', sans-serif">&hearts;</span>+5K</p>
+        </div>
+        <div class="grid-item1">
+          <img src="/assets/2_img.jpg" class="grid-item-img1">
+        </div>
+        <div class="grid-item11">
+          <div class="top-card-content">
+            <div class="top-card-timing1">
+              <div class="fl">
+                 <i class="fa fa-clock-o"></i>
+                 10 Dec 2017 to 24 Dec 2017
+              </div>
+              <div class="fr">
+                 <i class="material-icons" style="color: #fff;float:right">share</i>
+              </div>
+              <div class="cl"></div>
             </div>
-            <div class="view_all">
-               <h2>
-                  <a class="ng-binding" href="#">View All</a>
-               </h2>
+            <p class="top-card-des1">
+              Lorem Ipsum is somply dummy text of the
+              printing and typesetting industry. Lorem
+              Ipsum has been the industry's standard
+              dummy text ever since the 1500.
+            </p>
+          </div>
+          <h4 class="heading4"><b>Happy hour @ Trader Vics Mai Tai Loonge</b></h4>
+          <p class="heart"><span style="font-size:19px;">&hearts;</span>+5K</p>
+        </div>
+        <div class="grid-item12">
+          <div class="top-card-content">
+             <div class="top-card-timing1">
+                <div class="fl">
+                  <i class="fa fa-clock-o"></i>
+                   10 Dec 2017 to 24 Dec 2017
+                </div>
+                <div class="fr">
+                   <i class="material-icons" style="color: #fff;float:right">share</i>
+                </div>
+                <div class="cl"></div>
+             </div>
+             <p class="top-card-des1">
+                Lorem Ipsum is somply dummy text of the
+                printing and typesetting industry. Lorem
+                Ipsum has been the industry's standard
+                dummy text ever since the 1500.
+             </p>
+          </div>
+          <h4 class="heading42"><b>Happy hour @ Trader Vics Mai Tai Loonge</b></h4>
+          <p class="heart"><span style="font-size:19px;">&hearts;</span>+5K</p>
+        </div>
+        <div class="grid-item1">
+          <img src="/assets/3_img.jpg" class="grid-item-img1">
+        </div>
+        <div class="grid-item12">
+          <div class="top-card-content">
+            <div class="top-card-timing1">
+              <div class="fl">
+                <i class="fa fa-clock-o"></i>
+                 10 Dec 2017 to 24 Dec 2017
+              </div>
+              <div class="fr">
+                <i class="material-icons" style="color: #fff;float:right">share</i>
+              </div>
+              <div class="cl"></div>
             </div>
-         </div>
-       </div>
-<div class="new-image">
+            <p class="top-card-des1">
+              Lorem Ipsum is somply dummy text of the
+              printing and typesetting industry. Lorem
+              Ipsum has been the industry's standard
+              dummy text ever since the 1500.
+            </p>
+          </div>
+          <h4 class="heading42"><b>Happy hour @ Trader Vics Mai Tai Loonge</b></h4>
+          <p class="heart"><span style="font-size:19px;">&hearts;</span>+5K</p>
+        </div>
+        <div class="grid-item1">
+          <img src="/assets/4_img.jpg" class="grid-item-img1">
+        </div>
+        <article class="clearfix"></article>
+      </div>
+      <div class="view_all">
+        <h2>
+          <a class="ng-binding" href="#">View All</a>
+        </h2>
+      </div>
+    </div>
+  </div>
+<!-- <div class="new-image">
   <div class="container">
     <div class="content5">
       <h3 class="heading-touch"><b>GET IN TOUCH</b></h3>
@@ -375,28 +394,32 @@
 
   </div>
 </div>
-</div>
-<script>
-  var myIndex = 0;
-  carousel();
-
-  function carousel() {
-    var i;
-    var x = document.getElementsByClassName("mySlides");
-    for (i = 0; i < x.length; i++) {
-       x[i].style.display = "none";  
-    }
-    myIndex++;
-    if (myIndex > x.length) {myIndex = 1}    
-    x[myIndex-1].style.display = "block";  
-    setTimeout(carousel, 3000); // Change image every 3 seconds
-  }
-</script>
-<style>
-  .mySlides {
-    display:none;
-  }
-  img.mySlides {
-    min-width: 100%;
-  }
-</style>
+</div> -->
+  <div class="new-image">
+    <div class="container">
+      <div class="content5">
+        <h3 class="heading-heading"><b>GET IN TOUCH</b></h3>
+        <hr class="line">
+        <form style="padding-top: 3%;">
+          <div class="form-group">
+            <label for="inputEmailid"></label>
+            <input type="email" class="form-control1" id="exampleFormControlInput1" placeholder="Enter Your Email ID">
+            <div class="button">
+               Subscribe
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="dwnld">
+    <div class="container">
+      <h2 class="dwnld-app">DOWNLOAD OUR APP!</h2>
+      <div class="img2">
+        <img src="/assets/available_apple.png" style="width: 40%;">
+        <img src="/assets/appstore-google.png" style="width: 40%">
+      </div>
+    </div>
+    <!-- </div> -->
+  </div>
+</section>
