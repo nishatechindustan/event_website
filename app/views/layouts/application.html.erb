@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>SimplePropject</title>
+    <title>Event Website</title>
     <%= csrf_meta_tags %>
     <script src="/assets/jquery-1.12.4.js"></script>
     <script src="/assets/jquery-ui.js"></script>
@@ -69,12 +69,23 @@
       globalPosition: 'top left'
     });
   }
-    $(window).on("scroll", function(){
-         if ($(this).scrollTop() > 100) {
-         $("nav").css("background","rgba(0, 0, 0, 1) none repeat scroll 0 0");
-         }
-         else {
-         $("nav").css("background","rgba(0, 0, 0, 0.4) none repeat scroll 0 0");
-         }
-         });
+  $(window).on("scroll", function(){
+   if ($(this).scrollTop() > 100) {
+    $("nav").css("background","rgba(0, 0, 0, 1) none repeat scroll 0 0");
+   }
+   else {
+    $("nav").css("background","rgba(0, 0, 0, 0.4) none repeat scroll 0 0");
+   }
+  });
+  $(document).ready(function(){
+   setInterval(function(){
+     if ($(window).width() > 600) {
+       var totalWidth = $('.grid-container1 > div').width();
+       $('.grid-container1 > div').height(totalWidth - 10);
+     }else {
+       $('.grid-container1 > div').height('auto');
+     }
+    }, 100);
+  })
+
 </script>
